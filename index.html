@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="light">
+<html lang="fr" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,16 +62,11 @@
     </style>
 </head>
 <body>
-    <!-- Theme Switcher -->
-    <button class="theme-switch animate-fade-in" id="themeSwitch" aria-label="Changer de thème">
-        <i class="fas fa-moon"></i>
-    </button>
-    
     <nav class="navbar navbar-expand-lg fixed-top animate-fade-in">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <i class="fas fa-bicycle"></i>
-                <span class="brand-text">Avelo</span>
+                <span class="brand-text">Abiclou</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <i class="fas fa-bars"></i>
@@ -86,36 +81,15 @@
             </div>
         </div>
     </nav>
-
-    <header class="hero-section">
-        <div class="container">
-            <h1 class="hero-title">CRÉEZ VOTRE VTT DE RÊVE</h1>
-            <p class="hero-subtitle">Personnalisez chaque composant pour une expérience unique</p>
-            <div class="hero-features">
-                <div class="feature">
-                    <i class="fas fa-tools"></i>
-                    <span>Configuration Pro</span>
-                </div>
-                <div class="feature">
-                    <i class="fas fa-medal"></i>
-                    <span>Composants Premium</span>
-                </div>
-                <div class="feature">
-                    <i class="fas fa-truck"></i>
-                    <span>Livraison Express</span>
-                </div>
-            </div>
-        </div>
-    </header>
-
     <main class="container-fluid main-content">
         <div class="row g-4">
             <!-- Configuration Panel -->
             <div class="col-lg-3">
+                <div class="panel-header animate-slide-in mgl-2">
+                    <h2><i class="fas fa-sliders"></i> CONFIGURATION</h2>
+                </div>
                 <div class="config-panel animate-slide-in">
-                    <div class="panel-header">
-                        <h2><i class="fas fa-sliders"></i> CONFIGURATION</h2>
-                    </div>
+                    
                     <!-- Fork Adjustment Controls -->
                     <!-- <div class="fork-adjustment-controls">
                         <h3>Ajustements de la fourche</h3>
@@ -154,77 +128,63 @@
                     <!-- Component Sections -->
                     <div class="component-section animate-slide-in" style="animation-delay: 0.1s;">
                         <div class="section-header">
-                            <i class="fas fa-cube"></i>
+                            <i class="fas fa-bicycle"></i>
                             <h3>CADRE</h3>
                         </div>
                         <select id="frame-select" class="form-select">
                             <!-- options -->
                         </select>
-                        <div class="component-info frame">
-                            <span class="price">Prix: <span id="frame-price">0 €</span></span>
-                            <span class="weight">Poids: <span id="frame-weight">0 kg</span></span>
-                        </div>
                     </div>
 
                     <div class="component-section animate-slide-in" style="animation-delay: 0.2s;">
                         <div class="section-header">
-                            <i class="fas fa-compress-alt"></i>
+                            <i class="fas fa-wind"></i>
                             <h3>FOURCHE</h3>
                         </div>
                         <select id="fork-select" class="form-select">
                         </select>
-                        <div class="component-info cockpit">
-                            <span class="price">Prix: <span id="fork-price">0 €</span></span>
-                            <span class="weight">Poids: <span id="fork-weight">0 kg</span></span>
+                    </div>
+
+                    <div class="component-section animate-slide-in" style="animation-delay: 0.35s;">
+                        <div class="section-header">
+                            <i class="fas fa-bolt"></i>
+                            <h3>AMORTISSEUR</h3>
                         </div>
+                        <select id="shocks-select" class="form-select">
+                            <!-- options will be populated by JavaScript -->
+                        </select>
                     </div>
 
                     <div class="component-section animate-slide-in" style="animation-delay: 0.3s;">
                         <div class="section-header">
-                            <i class="fas fa-circle"></i>
+                            <i class="fas fa-dharmachakra"></i>
                             <h3>ROUES</h3>
                         </div>
                         <select id="wheels-select" class="form-select"></select>
-                        <div class="component-info wheels">
-                            <span class="price">Prix: <span id="wheels-price">0 €</span></span>
-                            <span class="weight">Poids: <span id="wheels-weight">0 kg</span></span>
-                        </div>
                     </div>
 
                     <div class="component-section animate-slide-in" style="animation-delay: 0.4s;">
                         <div class="section-header">
-                            <i class="fas fa-grip-lines"></i>
+                            <i class="fas fa-grip-horizontal"></i>
                             <h3>GUIDON</h3>
                         </div>
                         <select id="handlebars-select" class="form-select"></select>
-                        <div class="component-info cockpit">
-                            <span class="price">Prix: <span id="handlebars-price">0 €</span></span>
-                            <span class="weight">Poids: <span id="handlebars-weight">0 kg</span></span>
-                        </div>
                     </div>
 
                     <div class="component-section animate-slide-in" style="animation-delay: 0.5s;">
                         <div class="section-header">
-                            <i class="fas fa-dot-circle"></i>
+                            <i class="fas fa-disc"></i>
                             <h3>FREINS</h3>
                         </div>
                         <select id="brakes-select" class="form-select"></select>
-                        <div class="component-info groupset">
-                            <span class="price">Prix: <span id="brakes-price">0 €</span></span>
-                            <span class="weight">Poids: <span id="brakes-weight">0 kg</span></span>
-                        </div>
                     </div>
 
                     <div class="component-section animate-slide-in" style="animation-delay: 0.6s;">
                         <div class="section-header">
-                            <i class="fas fa-cogs"></i>
+                            <i class="fas fa-cog"></i>
                             <h3>TRANSMISSION</h3>
                         </div>
                         <select id="drivetrains-select" class="form-select"></select>
-                        <div class="component-info groupset">
-                            <span class="price">Prix: <span id="drivetrains-price">0 €</span></span>
-                            <span class="weight">Poids: <span id="drivetrains-weight">0 kg</span></span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -235,12 +195,24 @@
                     <div class="viewer-header">
                         <h2><i class="fas fa-eye"></i> APERÇU EN TEMPS RÉEL</h2>
                         <div class="viewer-controls">
-                            <button class="btn btn-control" id="rotate-left"><i class="fas fa-undo"></i></button>
-                            <button class="btn btn-control" id="zoom-in"><i class="fas fa-search-plus"></i></button>
-                            <button class="btn btn-control" id="zoom-out"><i class="fas fa-search-minus"></i></button>
-                            <button class="btn btn-control" id="rotate-right"><i class="fas fa-redo"></i></button>
-                            <button class="btn btn-control" id="screenshot"><i class="fas fa-camera"></i></button>
-                            <button class="btn btn-control" id="reset-view"><i class="fas fa-sync-alt"></i></button>
+                            <button class="btn btn-control" id="rotate-left" data-tooltip="Rotation gauche">
+                                <i class="fas fa-undo"></i>
+                            </button>
+                            <button class="btn btn-control" id="zoom-in" data-tooltip="Zoom avant">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
+                            <button class="btn btn-control" id="zoom-out" data-tooltip="Zoom arrière">
+                                <i class="fas fa-search-minus"></i>
+                            </button>
+                            <button class="btn btn-control" id="rotate-right" data-tooltip="Rotation droite">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                            <button class="btn btn-control" id="screenshot" data-tooltip="Sauvegarder l'image">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                            <button class="btn btn-control" id="reset-view" data-tooltip="Réinitialiser la vue">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
                         </div>
                     </div>
                     <div id="bike-image-container" class="bike-viewer">
@@ -270,9 +242,10 @@
                         <div class="summary-actions">
                             <button class="btn btn-secondary btn-save">
                                 <i class="fas fa-heart"></i> FAVORIS
+                                <span id="fav-count" class="fav-badge">0</span>
                             </button>
-                            <button class="btn btn-primary btn-order">
-                                <i class="fas fa-shopping-cart"></i> COMMANDER
+                            <button class="btn btn-primary btn-load">
+                                <i class="fas fa-folder-open"></i> CHARGER
                             </button>
                         </div>
                     </div>
@@ -280,6 +253,23 @@
             </div>
         </div>
     </main>
+
+    <!-- Ajouter la modal de chargement -->
+    <div class="modal fade" id="loadModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Charger une configuration</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="savedConfigs" class="saved-configs">
+                        <!-- Les configurations seront ajoutées ici dynamiquement -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="site-footer">
         <div class="container">
@@ -316,30 +306,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
-    <script>
-        // Theme Switcher
-        document.addEventListener('DOMContentLoaded', function() {
-            const themeSwitch = document.getElementById('themeSwitch');
-            const icon = themeSwitch.querySelector('i');
-            
-            // Check for saved theme preference
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            updateThemeIcon(savedTheme);
-            
-            themeSwitch.addEventListener('click', () => {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-                
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-                updateThemeIcon(newTheme);
-            });
-            
-            function updateThemeIcon(theme) {
-                icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-            }
-        });
-    </script>
 </body>
 </html>
