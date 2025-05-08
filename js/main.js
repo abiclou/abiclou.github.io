@@ -5,7 +5,12 @@ let bikeComponents = {
     fork: null,
     frontWheel: null,
     rearWheel: null,
-    shock: null  // Nouveau
+    shock: null,
+    handlebar:null  // Nouveau
+};
+let dragOffset = {
+    x: 0,
+    y: 0
 };
 let loadedImages = {};
 let forkConfigs = null;
@@ -141,13 +146,13 @@ const COMPONENTS = {
     ],
     'handlebars': [
         {
-            'id': 'handlebar-1',
+            'id': 'handlebars-0',
             'name': 'Renthal Fatbar Carbon',
             'description': 'Cintre en carbone Renthal Fatbar 800mm',
             'price': 169.99,
             'weight': 0.5,  // kg
-            'image': 'handlebar-1.png',
             'scale': 1.0,
+            "image": "v10cable.png",
             'position': {'top': '50%', 'left': '50%'}
         },
         {
@@ -397,7 +402,12 @@ function drawBike() {
             drawComponent('fork', bikeComponents.fork);
         }
     }
-    
+    if (bikeComponents.handlebar) {
+        const handlebarConfig = getCurrentHandlebarConfig();
+        if (handlebarConfig) {
+            drawComponent('handlebar', bikeComponents.handlebar, handlebarConfig);
+        }
+    }
     // Restaurer le contexte
     ctx.restore();
 }
@@ -500,7 +510,7 @@ function drawComponent(type, component, config = null) {
         ctx.translate(anchor.x, anchor.y);
         
         // 2. Appliquer la rotation autour du centre de la roue
-        ctx.rotate(wheelRotation);
+        // ctx.rotate(wheelRotation);
 
         // 3. Dessiner la roue centrée sur son point d'ancrage
         ctx.drawImage(
@@ -547,7 +557,84 @@ function drawComponent(type, component, config = null) {
             shockWidth,
             shockHeight
         );
+    }else if (type === 'handlebar') {
+        if (!config) {
+            console.warn('No shock config provided');
+            return;
+        }
+        
+        const frameConfig = getCurrentFrameConfig();
+        if (!frameConfig || !frameConfig.handlebarMount) {
+            console.warn('No frame config or shock mount found');
+            return;
+        }
+
+        console.log('Drawing handle with config:', config);
+        // console.log('Frame shock mount:', frameConfig.shockMount);
+        
+        const baseWidth = component.width * config.scale;
+        const baseHeight = component.height * config.scale;
+        const shockWidth = baseWidth * config.dimensions.width;
+        const shockHeight = baseHeight * config.dimensions.height;
+
+        // Déplacer au point de montage
+        ctx.translate(frameConfig.handlebarMount.x, frameConfig.handlebarMount.y);
+        
+        // Appliquer la rotation
+        if (frameConfig.handlebarMount.rotation) {
+            const angleRad = frameConfig.handlebarMount.rotation * Math.PI / 180;
+            ctx.rotate(angleRad);
+        }
+
+        // Dessiner l'amortisseur centré sur son point de rotation
+        ctx.drawImage(
+            component,
+            -shockWidth / 2,
+            -shockHeight / 2,
+            shockWidth,
+            shockHeight
+        );
     }
+    
+    
+    // else if (type === 'handlebar') {
+    //     if (!config) {
+    //         console.warn('No shock config provided');
+    //         return;
+    //     }
+        
+    //     const frameConfig = getCurrentFrameConfig();
+    //     if (!frameConfig || !frameConfig.handlebarMount) {
+    //         console.warn('No frame config or shock mount found');
+    //         return;
+    //     }
+
+    //     // console.log('Drawing shock with config:', config);
+    //     // console.log('Frame shock mount:', frameConfig.shockMount);
+        
+    //     const baseWidth = component.width * config.scale;
+    //     const baseHeight = component.height * config.scale;
+    //     const handlebarWidth = baseWidth * config.dimensions.width;
+    //     const handlebarHeight = baseHeight * config.dimensions.height;
+
+    //     // Déplacer au point de montage
+    //     ctx.translate(frameConfig.handlebarMount.x, frameConfig.handlebarMount.y);
+        
+    //     // Appliquer la rotation
+    //     if (frameConfig.handlebarMount.rotation) {
+    //         const angleRad = frameConfig.handlebarMount.rotation * Math.PI / 180;
+    //         ctx.rotate(angleRad);
+    //     }
+
+    //     // Dessiner l'amortisseur centré sur son point de rotation
+    //     ctx.drawImage(
+    //         component,
+    //         -handlebarWidth / 2,
+    //         -handlebarHeight / 2,
+    //         handlebarWidth,
+    //         handlebarHeight
+    //     );
+    // }
     
     ctx.restore();
 }
@@ -582,11 +669,14 @@ async function updateComponentImage(type, component) {
                 bikeComponents.frontWheel = img;
                 bikeComponents.rearWheel = img;
                 if (wheelAnimationId === null) {
-                    animateWheels();
+                    // animateWheels();
                 }
                 break;
             case 'shocks':  // Nouveau cas
                 bikeComponents.shock = img;
+                break;
+            case 'handlebars':  // Nouveau cas
+                bikeComponents.handlebar = img;
                 break;
         }
         
@@ -823,8 +913,39 @@ function stopWheelAnimation() {
         wheelAnimationId = null;
     }
 }
+// Get current handlebar configuration
+function getCurrentHandlebarConfig() {
+    if (!selectedComponents.handlebars || !forkConfigs || !forkConfigs.handlebars) {
+        return null;
+    }
+    
+    const handlebarIndex = parseInt(selectedComponents.handlebars.id.split('-')[1]);
+    
+    if (isNaN(handlebarIndex) || handlebarIndex >= forkConfigs.handlebars.length) {
+        return null;
+    }
+    
+    return forkConfigs.handlebars[handlebarIndex];
+}
 
-// Ajouter la fonction d'initialisation du son
+// Modifier la fonction getCurrentShockConfig
+function getCurrentShockConfig() {
+    if (!selectedComponents.shocks || !forkConfigs || !forkConfigs.shocks) {
+        console.warn('Missing shock components or configs');
+        return null;
+    }
+    
+    const shockIndex = parseInt(selectedComponents.shocks.id.split('-')[1]);
+    
+    if (isNaN(shockIndex) || shockIndex >= forkConfigs.shocks.length) {
+        console.warn('Invalid shock index:', shockIndex);
+        return null;
+    }
+    
+    const config = forkConfigs.shocks[shockIndex];
+    return config;
+}
+
 function initHubSound() {
     hubSound = new Audio('/static/sounds/hub_tick.mp3');
     hubSound.volume = 0.2; // Réduire le volume à 20%
@@ -1107,6 +1228,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // initHubSound();
     await loadForkConfigs();
     initCanvas();
+    initDragHandlers();
     loadComponents().then(() => {
         // Set initial fork configuration
         if (components.forks && components.forks.length > 0) {
@@ -1179,3 +1301,129 @@ document.addEventListener('DOMContentLoaded', async () => {
     initializeFavoritesCount();
     updateTotals();
 });
+
+// Variables pour le déplacement
+let isDragging = false;
+let startX = 0;
+let startY = 0;
+let offsetX = 0;
+let offsetY = 0;
+let lastOffsetX = 0;
+let lastOffsetY = 0;
+
+// Ajouter les gestionnaires d'événements pour le déplacement
+function initDragHandlers() {
+    const container = document.getElementById('bike-image-container');
+    if (!container || !canvas) return;
+
+    canvas.addEventListener('mousedown', startDrag);
+    window.addEventListener('mousemove', drag);
+    window.addEventListener('mouseup', stopDrag);
+    canvas.addEventListener('mouseleave', stopDrag);
+
+    // Support tactile
+    canvas.addEventListener('touchstart', handleTouch);
+    canvas.addEventListener('touchmove', handleTouch);
+    canvas.addEventListener('touchend', stopDrag);
+
+function startDrag(e) {
+    e.preventDefault();
+    isDragging = true;
+    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+    const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+    startX = clientX - dragOffset.x;
+    startY = clientY - dragOffset.y;
+    canvas.style.cursor = 'grabbing';
+}
+
+function drag(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    
+    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+    const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+    
+    dragOffset.x = clientX - startX;
+    dragOffset.y = clientY - startY;
+    
+    drawBike();
+}
+
+function stopDrag() {
+    isDragging = false;
+    canvas.style.cursor = 'grab';
+}
+
+function handleTouch(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
+        clientX: touch.clientX,
+        clientY: touch.clientY
+    });
+    
+    if (e.type === 'touchstart') {
+        startDrag(mouseEvent);
+    } else if (e.type === 'touchmove') {
+        drag(mouseEvent);
+    }
+}
+function drawBike() {
+    if (!ctx) return;
+    
+    ctx.save();
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    
+    // Apply all transformations in sequence
+    ctx.translate(centerX + dragOffset.x, centerY + dragOffset.y);
+    ctx.translate(offsetX, offsetY);
+    ctx.scale(currentScale, currentScale);
+    ctx.translate(-centerX, -centerY);
+    
+    if (bikeComponents.frontWheel && bikeComponents.rearWheel) {
+        const wheelConfig = getCurrentWheelConfig();
+        if (wheelConfig) {
+            drawComponent('frontWheel', bikeComponents.frontWheel, wheelConfig);
+            drawComponent('rearWheel', bikeComponents.rearWheel, wheelConfig);
+        }
+    }
+
+    if (bikeComponents.shock) {
+        const shockConfig = getCurrentShockConfig();
+        if (shockConfig) {
+            drawComponent('shock', bikeComponents.shock, shockConfig);
+        }
+    }
+
+    const currentConfig = getCurrentForkConfig();
+    if (currentConfig) {
+        if (currentConfig.zIndex === 0 && bikeComponents.fork) {
+            drawComponent('fork', bikeComponents.fork);
+        }
+    }
+    
+    if (bikeComponents.frame) {
+        drawComponent('frame', bikeComponents.frame);
+    }
+
+    if (currentConfig) {
+        if (currentConfig.zIndex > 0 && bikeComponents.fork) {
+            drawComponent('fork', bikeComponents.fork);
+        }
+    }
+
+    if (bikeComponents.handlebar) {
+        const handlebarConfig = getCurrentHandlebarConfig();
+        if (handlebarConfig) {
+            drawComponent('handlebar', bikeComponents.handlebar, handlebarConfig);
+        }
+    }
+    
+    ctx.restore();
+}
+}
+initDragHandlers()
