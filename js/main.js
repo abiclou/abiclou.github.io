@@ -56,14 +56,6 @@ const COMPONENTS = {
             'image': 'v10_2.png'
         },
         {
-            'id': 'dreadnought',
-            'name': 'Forbidden Dreadnought',
-            'description': 'Cadre polyvalent pour toutes les conditions',
-            'price': 4399,
-            'weight': 3.5,  // kg
-            'image': 'dreadnought.png'
-        },
-        {
             'id': 'v5',
             'name': 'Commencal Supreme DH V5',
             'description': 'Cadre en aluminium hyper resistant',
@@ -78,6 +70,14 @@ const COMPONENTS = {
             'price': 3200,
             'weight': 2.5,  // kg
             'image': 'frsspe.png'
+        },
+        {
+            'id': 'dreadnought',
+            'name': 'Forbidden Dreadnought',
+            'description': 'Cadre polyvalent pour toutes les conditions',
+            'price': 4399,
+            'weight': 3.5,  // kg
+            'image': 'dreadnought.png'
         },
         {
             'id': 'rocky',
