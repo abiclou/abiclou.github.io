@@ -8,10 +8,6 @@ let bikeComponents = {
     shock: null,
     handlebar:null  // Nouveau
 };
-let dragOffset = {
-    x: 0,
-    y: 0
-};
 let loadedImages = {};
 let forkConfigs = null;
 let wheelConfigs = null;
@@ -1228,7 +1224,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // initHubSound();
     await loadForkConfigs();
     initCanvas();
-    initDragHandlers();
     loadComponents().then(() => {
         // Set initial fork configuration
         if (components.forks && components.forks.length > 0) {
@@ -1302,128 +1297,3 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateTotals();
 });
 
-// Variables pour le déplacement
-let isDragging = false;
-let startX = 0;
-let startY = 0;
-let offsetX = 0;
-let offsetY = 0;
-let lastOffsetX = 0;
-let lastOffsetY = 0;
-
-// Ajouter les gestionnaires d'événements pour le déplacement
-function initDragHandlers() {
-    const container = document.getElementById('bike-image-container');
-    if (!container || !canvas) return;
-
-    canvas.addEventListener('mousedown', startDrag);
-    window.addEventListener('mousemove', drag);
-    window.addEventListener('mouseup', stopDrag);
-    canvas.addEventListener('mouseleave', stopDrag);
-
-    // Support tactile
-    canvas.addEventListener('touchstart', handleTouch);
-    canvas.addEventListener('touchmove', handleTouch);
-    canvas.addEventListener('touchend', stopDrag);
-
-function startDrag(e) {
-    e.preventDefault();
-    isDragging = true;
-    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-    const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-    startX = clientX - dragOffset.x;
-    startY = clientY - dragOffset.y;
-    canvas.style.cursor = 'grabbing';
-}
-
-function drag(e) {
-    if (!isDragging) return;
-    e.preventDefault();
-    
-    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-    const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-    
-    dragOffset.x = clientX - startX;
-    dragOffset.y = clientY - startY;
-    
-    drawBike();
-}
-
-function stopDrag() {
-    isDragging = false;
-    canvas.style.cursor = 'grab';
-}
-
-function handleTouch(e) {
-    e.preventDefault();
-    const touch = e.touches[0];
-    const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
-        clientX: touch.clientX,
-        clientY: touch.clientY
-    });
-    
-    if (e.type === 'touchstart') {
-        startDrag(mouseEvent);
-    } else if (e.type === 'touchmove') {
-        drag(mouseEvent);
-    }
-}
-function drawBike() {
-    if (!ctx) return;
-    
-    ctx.save();
-    
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    
-    // Apply all transformations in sequence
-    ctx.translate(centerX + dragOffset.x, centerY + dragOffset.y);
-    ctx.translate(offsetX, offsetY);
-    ctx.scale(currentScale, currentScale);
-    ctx.translate(-centerX, -centerY);
-    
-    if (bikeComponents.frontWheel && bikeComponents.rearWheel) {
-        const wheelConfig = getCurrentWheelConfig();
-        if (wheelConfig) {
-            drawComponent('frontWheel', bikeComponents.frontWheel, wheelConfig);
-            drawComponent('rearWheel', bikeComponents.rearWheel, wheelConfig);
-        }
-    }
-
-    if (bikeComponents.shock) {
-        const shockConfig = getCurrentShockConfig();
-        if (shockConfig) {
-            drawComponent('shock', bikeComponents.shock, shockConfig);
-        }
-    }
-
-    const currentConfig = getCurrentForkConfig();
-    if (currentConfig) {
-        if (currentConfig.zIndex === 0 && bikeComponents.fork) {
-            drawComponent('fork', bikeComponents.fork);
-        }
-    }
-    
-    if (bikeComponents.frame) {
-        drawComponent('frame', bikeComponents.frame);
-    }
-
-    if (currentConfig) {
-        if (currentConfig.zIndex > 0 && bikeComponents.fork) {
-            drawComponent('fork', bikeComponents.fork);
-        }
-    }
-
-    if (bikeComponents.handlebar) {
-        const handlebarConfig = getCurrentHandlebarConfig();
-        if (handlebarConfig) {
-            drawComponent('handlebar', bikeComponents.handlebar, handlebarConfig);
-        }
-    }
-    
-    ctx.restore();
-}
-}
-initDragHandlers()
