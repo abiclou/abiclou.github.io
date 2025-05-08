@@ -343,7 +343,7 @@ h2 {
 .navbar {
     background: var(--card-bg);
     border-bottom: 1px solid var(--border);
-    padding: 1rem 0;
+    padding: 0.5rem 0;
 }
 
 .navbar-brand {

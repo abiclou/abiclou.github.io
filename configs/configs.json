@@ -44,12 +44,23 @@
         {
             "name": "Commencal Supreme DH V5",
             "wheelAnchors": {
-                "rear": { "x": 275, "y": 370 }
+                "rear": { "x": 275, "y": 365 }
             },
             "shockMount": {
-                "x": 430,
-                "y": 305,
-                "rotation": 40
+                "x": 452.5,
+                "y": 332.5,
+                "rotation": 10
+            },
+            "diskAnchors": {
+                "rear": { "x": 275, "y": 365 }
+            },
+            "tireAnchors": {
+                "rear": { "x": 275, "y": 365 }
+            },
+            "handlebarMount":{
+                "x": 500,
+                "y": 330,
+                "rotation": 0
             }
         },
         {
@@ -61,6 +72,17 @@
                 "x": 460,
                 "y": 295,
                 "rotation": 30
+            },
+            "diskAnchors": {
+                "rear": { "x": 300, "y": 345 }
+            },
+            "tireAnchors": {
+                "rear": { "x": 300, "y": 345 }
+            },
+            "handlebarMount":{
+                "x": 500,
+                "y": 330,
+                "rotation": 0
             }
         }
     ],
