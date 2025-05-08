@@ -64,6 +64,28 @@
             }
         },
         {
+            "name": "Specialized frs",
+            "wheelAnchors": {
+                "rear": { "x": 285, "y": 375 }
+            },
+            "shockMount": {
+                "x": 460,
+                "y": 340,
+                "rotation": 68
+            },
+            "diskAnchors": {
+                "rear": { "x": 285, "y": 375 }
+            },
+            "tireAnchors": {
+                "rear": { "x": 285, "y": 375 }
+            },
+            "handlebarMount":{
+                "x": 500,
+                "y": 330,
+                "rotation": 0
+            }
+        },
+        {
             "name": "Rocky Mountain Altitude C50",
             "wheelAnchors": {
                 "rear": { "x": 300, "y": 345 }

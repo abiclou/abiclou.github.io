@@ -72,6 +72,14 @@ const COMPONENTS = {
             'image': 'v5.png'
         },
         {
+            'id': 'frsspe',
+            'name': 'Specialized frs',
+            'description': 'Cadre en carbonne hyper resistant',
+            'price': 3200,
+            'weight': 2.5,  // kg
+            'image': 'frsspe.png'
+        },
+        {
             'id': 'rocky',
             'name': 'Rocky Mountain Altitude C50',
             'description': 'Cadre en carbonne haut de gamme',
