@@ -259,11 +259,11 @@ const COMPONENTS = {
         },
         {
             'id': 'shock-2',
-            'name': 'RockShox Super Deluxe Ultimate',
-            'description': 'Amortisseur RockShox Super Deluxe Ultimate 250x75',
+            'name': 'RockShox Vivid Ultimate',
+            'description': 'Amortisseur RockShox Vivid Ultimate 250x75',
             'price': 699.99,
             'weight': 0.8,  // kg
-            'image': 'shock-2.png'
+            'image': 'vivid.png'
         },
         {
             'id': 'shock-3',
