@@ -6,11 +6,16 @@ let bikeComponents = {
     frontWheel: null,
     rearWheel: null,
     shock: null,
-    handlebar:null  // Nouveau
+    frontDisc: null,
+    frontBrake: null,
+    rearDisc: null,
+    rearBrake: null,
+    handlebar:null
 };
 let loadedImages = {};
 let forkConfigs = null;
 let wheelConfigs = null;
+let discConfigs = null;
 let wheelRotation = 0;
 let wheelAnimationId = null;
 let hubSound = null;
@@ -174,17 +179,17 @@ const COMPONENTS = {
     ],
     'brakes': [
         {
-            'id': 'brakes-1',
+            'id': 'brakes-0',
             'name': 'Shimano XTR M9120',
             'description': 'Freins à disque Shimano XTR M9120 4 pistons',
             'price': 599.99,
             'weight': 1.0,  // kg
-            'image': 'brakes-1.png',
+            'image': 'xtdisque.png',
             'scale': 1.0,
             'position': {'top': '50%', 'left': '50%'}
         },
         {
-            'id': 'brakes-2',
+            'id': 'brakes-1',
             'name': 'SRAM Code RSC',
             'description': 'Freins à disque SRAM Code RSC 4 pistons',
             'price': 499.99,
@@ -194,7 +199,7 @@ const COMPONENTS = {
             'position': {'top': '50%', 'left': '50%'}
         },
         {
-            'id': 'brakes-3',
+            'id': 'brakes-2',
             'name': 'Shimano XT M8120',
             'description': 'Freins à disque Shimano XT M8120 4 pistons',
             'price': 349.99,
@@ -375,6 +380,14 @@ function drawBike() {
         }
     }
 
+    if (bikeComponents.frontDisc && bikeComponents.rearDisc) {
+        const discConfig = getCurrentDiscConfig();
+        if (discConfig) {
+            drawComponent('frontDisc', bikeComponents.frontDisc, discConfig);
+            drawComponent('rearDisc', bikeComponents.rearDisc, discConfig);
+        }
+    }
+
     if (bikeComponents.shock) {
         const shockConfig = getCurrentShockConfig();
         if (shockConfig) {
@@ -516,6 +529,43 @@ function drawComponent(type, component, config = null) {
             wheelWidth,
             wheelHeight
         );
+    }else if (type === 'frontDisc' || type === 'rearDisc') {
+        if (!config) return;
+        
+        const baseWidth = component.width * config.scale;
+        const baseHeight = component.height * config.scale;
+        const discWidth = baseWidth * config.dimensions.width;
+        const discHeight = baseHeight * config.dimensions.height;
+
+        // Obtenir les points d'ancrage
+        const frameConfig = getCurrentFrameConfig();
+        const forkConfig = getCurrentForkConfig();
+        if (!frameConfig || !forkConfig) {
+            console.warn('No frame or fork config found');
+            return;
+        }
+
+        // Position différente pour la roue avant et arrière
+        const anchor = type === 'frontDisc' ? 
+            forkConfig.axle : 
+            frameConfig.diskAnchors.rear;
+
+        if (!anchor) return;
+
+        // 1. Déplacer au point d'ancrage
+        ctx.translate(anchor.x, anchor.y);
+        
+        // 2. Appliquer la rotation autour du centre de la roue
+        // ctx.rotate(wheelRotation);
+
+        // 3. Dessiner la roue centrée sur son point d'ancrage
+        ctx.drawImage(
+            component,
+            -discWidth / 2,  // Centre horizontal
+            -discHeight / 2, // Centre vertical
+            discWidth,
+            discHeight
+        );
     } else if (type === 'shock') {
         if (!config) {
             console.warn('No shock config provided');
@@ -643,6 +693,14 @@ function getCurrentWheelConfig() {
     return forkConfigs.wheels[wheelIndex];
 }
 
+function getCurrentDiscConfig() {
+    console.log(forkConfigs)
+    if (!selectedComponents.brakes || !forkConfigs || !forkConfigs.brakes) return null;
+    const discIndex = parseInt(selectedComponents.brakes.id.split('-')[1]);
+    if (isNaN(discIndex) || discIndex >= forkConfigs.brakes.length) return null;
+    return forkConfigs.brakes[discIndex];
+}
+
 // Function to update the component image
 async function updateComponentImage(type, component) {
     if (!component) return;
@@ -665,7 +723,7 @@ async function updateComponentImage(type, component) {
                 bikeComponents.frontWheel = img;
                 bikeComponents.rearWheel = img;
                 if (wheelAnimationId === null) {
-                    // animateWheels();
+                    //animateWheels();
                 }
                 break;
             case 'shocks':  // Nouveau cas
@@ -673,6 +731,13 @@ async function updateComponentImage(type, component) {
                 break;
             case 'handlebars':  // Nouveau cas
                 bikeComponents.handlebar = img;
+                break;
+            case 'brakes':
+                bikeComponents.frontDisc = img;
+                bikeComponents.rearDisc = img;
+                if (wheelAnimationId === null) {
+                    //animateWheels();
+                }
                 break;
         }
         

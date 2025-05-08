@@ -5,6 +5,9 @@
             "wheelAnchors": {
                 "rear": { "x": 290, "y": 370 }
             },
+            "diskAnchors": {
+                "rear": { "x": 290, "y": 370 }
+            },
             "shockMount": {
                 "x": 462,
                 "y": 305,
@@ -25,6 +28,14 @@
                 "x": 440,
                 "y": 290,
                 "rotation": 35
+            },
+            "diskAnchors": {
+                "rear": { "x": 290, "y": 350 }
+            },
+            "handlebarMount":{
+                "x": 500,
+                "y": 330,
+                "rotation": 0
             }
         },
         {
@@ -132,6 +143,13 @@
             "name": "Renthal Fatbar Carbon",
             "scale": 0.7,
             "dimensions": { "width": 0.8, "height": 0.8 }
+        }
+    ],
+    "brakes": [
+        {
+            "name": "Shimano XTR M9120",
+            "scale": 0.7,
+            "dimensions": { "width": 0.19, "height": 0.19 }
         }
     ]
 }
