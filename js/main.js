@@ -112,6 +112,14 @@ const COMPONENTS = {
             'price': 1249,
             'weight': 2.5,  // kg
             'image': 'fork-3.png'
+        },
+        {
+            'id': '3',
+            'name': 'EXT Ferro',
+            'description': 'Fourche EXT Ferro 205mm',
+            'price': 2459,
+            'weight': 2.5,  // kg
+            'image': 'fork-4.png'
         }
     ],
     'wheels': [
