@@ -12,10 +12,12 @@ let bikeComponents = {
     rearBrake: null,
     handlebar:null,
     frontTire: null,
-    rearTire: null
+    rearTire: null,
+    selle: null
 };
 let loadedImages = {};
 let forkConfigs = null;
+let selleConfigs = null;
 let wheelConfigs = null;
 let discConfigs = null;
 let tireConfigs = null;
@@ -53,7 +55,7 @@ const COMPONENTS = {
             'description': 'Cadre en carbone haut de gamme',
             'price': 4299,
             'weight': 3.2,  // kg
-            'image': 'v10_2.png'
+            'image': 'v10_3.png'
         },
         {
             'id': 'v5',
@@ -292,6 +294,18 @@ const COMPONENTS = {
             'position': {'top': '50%', 'left': '50%'}
         }
     ],
+    'selles': [
+        {
+            'id': 'selle-0',
+            'name': 'Selle Reverse Nico Vink',
+            'description': 'Selle Reverse Nico Vink Shovel &amp; Shred noir/blanc ',
+            'price': 57.90,
+            'weight': 0.26,  // kg
+            'image': 'selle-niko-vink.png',
+            'scale': 1.0,
+            'position': {'top': '50%', 'left': '50%'}
+        },
+    ],
     'shocks': [
         {
             'id': 'shock-0',
@@ -462,6 +476,13 @@ function drawBike() {
         }
     }
 
+    if (bikeComponents.selle) {
+        const selleConfig = getCurrentSelleConfig();
+        if (selleConfig) {
+            drawComponent('selle', bikeComponents.selle, selleConfig);
+        }
+    }
+
     const currentConfig = getCurrentForkConfig();
     if (currentConfig) {
         if (currentConfig.zIndex === 0 && bikeComponents.fork) {
@@ -595,6 +616,43 @@ function drawComponent(type, component, config = null) {
             -wheelHeight / 2, // Centre vertical
             wheelWidth,
             wheelHeight
+        );
+    }else if (type === 'selle') {
+        if (!config) {
+            console.warn('No selle config provided');
+            return;
+        }
+        
+        const frameConfig = getCurrentFrameConfig();
+        if (!frameConfig || !frameConfig.selleMount) {
+            console.warn('No frame config or selle mount found');
+            return;
+        }
+
+        // console.log('Drawing shock with config:', config);
+        // console.log('Frame shock mount:', frameConfig.shockMount);
+        
+        const baseWidth = component.width * config.scale;
+        const baseHeight = component.height * config.scale;
+        const selleWidth = baseWidth * config.dimensions.width;
+        const selleHeight = baseHeight * config.dimensions.height;
+
+        // Déplacer au point de montage
+        ctx.translate(frameConfig.selleMount.x, frameConfig.selleMount.y);
+        
+        // Appliquer la rotation
+        if (frameConfig.selleMount.rotation) {
+            const angleRad = frameConfig.selleMount.rotation * Math.PI / 180;
+            ctx.rotate(angleRad);
+        }
+
+        // Dessiner l'amortisseur centré sur son point de rotation
+        ctx.drawImage(
+            component,
+            -selleWidth / 2,
+            -selleHeight / 2,
+            selleWidth,
+            selleHeight
         );
     }else if (type === 'frontDisc' || type === 'rearDisc') {
         if (!config) return;
@@ -818,6 +876,9 @@ async function updateComponentImage(type, component) {
                     //animateWheels();
                 }
                 break;
+            case 'selles':  // Nouveau cas
+                bikeComponents.selle = img;
+                break;
         }
         
         updateSummary();
@@ -841,7 +902,8 @@ let selectedComponents = {
     brakes: null,
     drivetrains: null,
     shocks: null,
-    tires: null
+    tires: null, 
+    selles: null
 };
 
 // Charger les composants depuis l'API avec animation de chargement
@@ -903,7 +965,8 @@ function initializeSelects() {
         brakes: document.getElementById('brakes-select'),
         drivetrains: document.getElementById('drivetrains-select'),
         shocks: document.getElementById('shocks-select'),
-        tires: document.getElementById('tires-select')
+        tires: document.getElementById('tires-select'),
+        selles: document.getElementById('selles-select')
     };
 
     for (const [type, select] of Object.entries(selects)) {
@@ -1094,6 +1157,23 @@ function getCurrentShockConfig() {
     return config;
 }
 
+function getCurrentSelleConfig() {
+    if (!selectedComponents.selles) {
+        console.warn('Missing shock components or configs');
+        return null;
+    }
+    
+    const selleIndex = parseInt(selectedComponents.selles.id.split('-')[1]);
+    
+    if (isNaN(selleIndex) || selleIndex >= forkConfigs.selles.length) {
+        console.warn('Invalid shock index:', selleIndex);
+        return null;
+    }
+    
+    const config = forkConfigs.selles[selleIndex];
+    return config;
+}
+
 function initHubSound() {
     hubSound = new Audio('/static/sounds/hub_tick.mp3');
     hubSound.volume = 0.2; // Réduire le volume à 20%
@@ -1147,7 +1227,7 @@ function captureScreenshot() {
     try {
         // Créer un lien temporaire
         const link = document.createElement('a');
-        link.download = 'mon-velo.png';
+        link.download = 'dreambike.png';
         link.href = canvas.toDataURL('image/png');
         
         // Déclencher le téléchargement
@@ -1376,19 +1456,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     // initHubSound();
     await loadForkConfigs();
     initCanvas();
-    loadComponents();
+    loadComponents().then(() => {
         // Set initial fork configuration
-        // if (components.forks && components.forks.length > 0) {
-        //     BIKE_CONFIG.currentForkIndex = null; // Set to the first fork by default
-        //     const initialFork = components.forks[0];
-        //     updateComponentImage('forks', initialFork).then(() => {
-        //         const forkConfig = getCurrentForkConfig();
-        //         if (forkConfig) {
-        //             forkConfig.scale = (BIKE_CONFIG.frame.scale * 0.45) / initialFork.height; // Adjust scale based on frame
-        //             drawBike();
-        //         }
-        //     });
-        // }
+        if (components.forks && components.forks.length > 0) {
+            BIKE_CONFIG.currentForkIndex = null; // Set to the first fork by default
+            const initialFork = components.forks[0];
+            updateComponentImage('forks', initialFork).then(() => {
+                const forkConfig = getCurrentForkConfig();
+                if (forkConfig) {
+                    forkConfig.scale = (BIKE_CONFIG.frame.scale * 0.45) / initialFork.height; // Adjust scale based on frame
+                    drawBike();
+                }
+            });
+        }
+    });
 
     // Set up event listener for fork selection
     const forkSelect = document.getElementById('fork-select');
@@ -1414,7 +1495,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         brakes: document.getElementById('brakes-select'),
         drivetrains: document.getElementById('drivetrains-select'),
         shocks: document.getElementById('shocks-select'),
-        tires: document.getElementById('tires-select')
+        tires: document.getElementById('tires-select'),
+        selles: document.getElementById('selles-select')
     };
     
     Object.entries(selects).forEach(([type, select]) => {
