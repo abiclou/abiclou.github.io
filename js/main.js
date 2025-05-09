@@ -66,6 +66,14 @@ const COMPONENTS = {
             'image': 'v5.png'
         },
         {
+            'id': 'frs',
+            'name': 'Commencal FRS',
+            'description': 'Cadre en aluminium hyper resistant',
+            'price': 3200,
+            'weight': 2.5,  // kg
+            'image': 'frs.png'
+        },
+        {
             'id': 'frsspe',
             'name': 'Specialized frs',
             'description': 'Cadre en carbonne hyper resistant',
@@ -439,66 +447,62 @@ function drawBike() {
     ctx.translate(centerX, centerY);
     ctx.scale(currentScale, currentScale);
     ctx.translate(-centerX, -centerY);
-    
-    // Dessiner les composants selon leur z-index
-    if (bikeComponents.frontWheel && bikeComponents.rearWheel) {
-        const wheelConfig = getCurrentWheelConfig();
-        if (wheelConfig) {
-            drawComponent('frontWheel', bikeComponents.frontWheel, wheelConfig);
-            drawComponent('rearWheel', bikeComponents.rearWheel, wheelConfig);
+
+    // Créer un tableau de tous les composants à dessiner
+    const componentsToDraw = [];
+
+    // Ajouter tous les composants actifs avec leur z-index
+    Object.entries(bikeComponents).forEach(([type, component]) => {
+        if (!component) return;
+
+        let config = null;
+        switch(type) {
+            case 'frame':
+                config = getCurrentFrameConfig();
+                break;
+            case 'fork':
+                config = getCurrentForkConfig();
+                break;
+            case 'frontWheel':
+            case 'rearWheel':
+                config = getCurrentWheelConfig();
+                break;
+            case 'shock':
+                config = getCurrentShockConfig();
+                break;
+            case 'handlebar':
+                config = getCurrentHandlebarConfig();
+                break;
+            case 'frontDisc':
+            case 'rearDisc':
+                config = getCurrentDiscConfig();
+                break;
+            case 'frontTire':
+            case 'rearTire':
+                config = getCurrentTireConfig();
+                break;
+            case 'selle':
+                config = getCurrentSelleConfig();
+                break;
         }
-    }
 
-    if (bikeComponents.frontDisc && bikeComponents.rearDisc) {
-        const discConfig = getCurrentDiscConfig();
-        if (discConfig) {
-            drawComponent('frontDisc', bikeComponents.frontDisc, discConfig);
-            drawComponent('rearDisc', bikeComponents.rearDisc, discConfig);
+        if (config) {
+            componentsToDraw.push({
+                type,
+                component,
+                config,
+                zIndex: config.zIndex || 0
+            });
         }
-    }
+    });
 
-    if (bikeComponents.frontTire && bikeComponents.rearTire) {
-        const tireConfig = getCurrentTireConfig();
-        if (tireConfig) {
-            drawComponent('frontTire', bikeComponents.frontTire, tireConfig);
-            drawComponent('rearTire', bikeComponents.rearTire, tireConfig);
-        }
-    }
+    // Trier les composants par z-index
+    componentsToDraw.sort((a, b) => a.zIndex - b.zIndex);
 
-    if (bikeComponents.shock) {
-        const shockConfig = getCurrentShockConfig();
-        if (shockConfig) {
-            drawComponent('shock', bikeComponents.shock, shockConfig);
-        }
-    }
-
-    const currentConfig = getCurrentForkConfig();
-    const selleConfig = getCurrentSelleConfig();
-    if (currentConfig) {
-        if (bikeComponents.fork) {
-            drawComponent('fork', bikeComponents.fork);
-        }
-    }
-
-    if (bikeComponents.frame) {
-        drawComponent('frame', bikeComponents.frame);
-    }
-
-    // Dessiner les composants avec z-index 2 à la fin
-    if (currentConfig && currentConfig.zIndex === 2 && bikeComponents.fork) {
-        drawComponent('fork', bikeComponents.fork);
-    }
-
-    if (selleConfig && selleConfig.zIndex === 2 && bikeComponents.selle) {
-        drawComponent('selle', bikeComponents.selle, selleConfig);
-    }
-
-    if (bikeComponents.handlebar) {
-        const handlebarConfig = getCurrentHandlebarConfig();
-        if (handlebarConfig) {
-            drawComponent('handlebar', bikeComponents.handlebar, handlebarConfig);
-        }
-    }
+    // Dessiner les composants dans l'ordre
+    componentsToDraw.forEach(({ type, component, config }) => {
+        drawComponent(type, component, config);
+    });
 
     ctx.restore();
 }
