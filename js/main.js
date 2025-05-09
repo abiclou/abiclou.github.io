@@ -1376,20 +1376,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     // initHubSound();
     await loadForkConfigs();
     initCanvas();
-    loadComponents().then(() => {
+    loadComponents();
         // Set initial fork configuration
-        if (components.forks && components.forks.length > 0) {
-            BIKE_CONFIG.currentForkIndex = 0; // Set to the first fork by default
-            const initialFork = components.forks[0];
-            updateComponentImage('forks', initialFork).then(() => {
-                const forkConfig = getCurrentForkConfig();
-                if (forkConfig) {
-                    forkConfig.scale = (BIKE_CONFIG.frame.scale * 0.45) / initialFork.height; // Adjust scale based on frame
-                    drawBike();
-                }
-            });
-        }
-    });
+        // if (components.forks && components.forks.length > 0) {
+        //     BIKE_CONFIG.currentForkIndex = null; // Set to the first fork by default
+        //     const initialFork = components.forks[0];
+        //     updateComponentImage('forks', initialFork).then(() => {
+        //         const forkConfig = getCurrentForkConfig();
+        //         if (forkConfig) {
+        //             forkConfig.scale = (BIKE_CONFIG.frame.scale * 0.45) / initialFork.height; // Adjust scale based on frame
+        //             drawBike();
+        //         }
+        //     });
+        // }
 
     // Set up event listener for fork selection
     const forkSelect = document.getElementById('fork-select');
