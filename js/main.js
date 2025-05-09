@@ -315,12 +315,20 @@ const COMPONENTS = {
         },
         {
             'id': 'shock-3',
-            'name': 'Öhlins TTX22M',
-            'description': 'Amortisseur Öhlins TTX22M 250x75',
-            'price': 999.99,
+            'name': 'EXT Arma',
+            'description': 'Amortisseur EXT Arma 250x75',
+            'price': 1199.99,
             'weight': 1.0,  // kg
-            'image': 'shock-3.png'
+            'image': 'ext.png'
         }
+        // {
+        //     'id': 'shock-3',
+        //     'name': 'Öhlins TTX22M',
+        //     'description': 'Amortisseur Öhlins TTX22M 250x75',
+        //     'price': 999.99,
+        //     'weight': 1.0,  // kg
+        //     'image': 'shock-3.png'
+        // }
     ]
 }
 

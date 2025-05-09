@@ -179,9 +179,9 @@
             "dimensions": { "width": 0.065, "height": 0.09 }
         },
         {
-            "name": "Öhlins TTX22M",
+            "name": "EXT Arma",
             "scale": 0.9,
-            "dimensions": { "width": 0.8, "height": 0.8 }
+            "dimensions": { "width": 0.065, "height": 0.09 }
         }
     ]
 ,
