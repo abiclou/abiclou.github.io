@@ -18,7 +18,7 @@
             },
             "selleMount": {
                 "x": 415,
-                "y": 180,
+                "y": 182.5,
                 "rotation": -20
             },
             "handlebarMount":{
@@ -198,8 +198,7 @@
             "scale": 0.9,
             "dimensions": { "width": 0.070, "height": 0.09 }
         }
-    ]
-,
+    ],
     "handlebars": [
         {
             "name": "Renthal Fatbar Carbon",

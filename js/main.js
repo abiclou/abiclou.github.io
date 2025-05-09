@@ -430,13 +430,9 @@ function loadImage(src) {
 function drawBike() {
     if (!ctx) return;
     
-    // Sauvegarder le contexte
     ctx.save();
-    
-    // Effacer le canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    // Appliquer le zoom depuis le centre
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     
@@ -444,7 +440,7 @@ function drawBike() {
     ctx.scale(currentScale, currentScale);
     ctx.translate(-centerX, -centerY);
     
-    // Dessiner les composants
+    // Dessiner les composants selon leur z-index
     if (bikeComponents.frontWheel && bikeComponents.rearWheel) {
         const wheelConfig = getCurrentWheelConfig();
         if (wheelConfig) {
@@ -476,36 +472,34 @@ function drawBike() {
         }
     }
 
-    if (bikeComponents.selle) {
-        const selleConfig = getCurrentSelleConfig();
-        if (selleConfig) {
-            drawComponent('selle', bikeComponents.selle, selleConfig);
-        }
-    }
-
     const currentConfig = getCurrentForkConfig();
+    const selleConfig = getCurrentSelleConfig();
     if (currentConfig) {
-        if (currentConfig.zIndex === 0 && bikeComponents.fork) {
+        if (bikeComponents.fork) {
             drawComponent('fork', bikeComponents.fork);
         }
     }
-    
+
     if (bikeComponents.frame) {
         drawComponent('frame', bikeComponents.frame);
     }
 
-    if (currentConfig) {
-        if (currentConfig.zIndex > 0 && bikeComponents.fork) {
-            drawComponent('fork', bikeComponents.fork);
-        }
+    // Dessiner les composants avec z-index 2 à la fin
+    if (currentConfig && currentConfig.zIndex === 2 && bikeComponents.fork) {
+        drawComponent('fork', bikeComponents.fork);
     }
+
+    if (selleConfig && selleConfig.zIndex === 2 && bikeComponents.selle) {
+        drawComponent('selle', bikeComponents.selle, selleConfig);
+    }
+
     if (bikeComponents.handlebar) {
         const handlebarConfig = getCurrentHandlebarConfig();
         if (handlebarConfig) {
             drawComponent('handlebar', bikeComponents.handlebar, handlebarConfig);
         }
     }
-    // Restaurer le contexte
+
     ctx.restore();
 }
 
@@ -618,6 +612,7 @@ function drawComponent(type, component, config = null) {
             wheelHeight
         );
     }else if (type === 'selle') {
+        config = getCurrentSelleConfig();
         if (!config) {
             console.warn('No selle config provided');
             return;
