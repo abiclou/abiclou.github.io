@@ -187,14 +187,14 @@
         {
             "name": "Hydra Enduro S Carbon",
             "scale": 0.85,
-            "dimensions": { "width": 0.245, "height": 0.245 },
+            "dimensions": { "width": 0.240, "height": 0.240 },
             "zIndex": -2
         },
         {
-            "name": "DT Swiss XRC 1200",
+            "name": "Mavic Deemax",
             "scale": 0.9,
-            "dimensions": { "width": 0.2, "height": 0.2 },
-            "zIndex": 0
+            "dimensions": { "width": 0.240, "height": 0.240 },
+            "zIndex": -2
         },
         {
             "name": "DT Swiss XR 1700",

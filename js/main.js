@@ -156,11 +156,11 @@ const COMPONENTS = {
         },
         {
             'id': 'wheels-1',
-            'name': 'DT Swiss XRC 1200',
+            'name': 'Mavic Deemax',
             'description': 'Roues en carbone DT Swiss XRC 1200 29"',
-            'price': 2499.99,
+            'price': 649.99,
             'weight': 2.0,  // kg
-            'image': 'wheels-1.png',
+            'image': 'mavic-deemax.png',
             'scale': 1.0,
             'position': {'top': '50%', 'left': '50%'}
         },
