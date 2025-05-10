@@ -14,7 +14,9 @@ let bikeComponents = {
     rearTire: null,
     selle: null,
     drivetrain: null,
-    cassette: null
+    cassette: null,
+    frontPad: null,
+    rearPad: null
 };
 let loadedImages = {};
 let forkConfigs = null;
@@ -325,6 +327,18 @@ const COMPONENTS = {
             'position': {'top': '50%', 'left': '50%'}
         }
     ],
+    'pads': [
+        {
+            'id': 'pad-0',
+            'name': 'Shimano Deore XT',
+            'description': 'Transmission Shimano XTR M9100 12 vitesses',
+            'price': 43.13,
+            'weight': 1.5,  // kg
+            'image': 'shimano-deore-xt.png',
+            'scale': 1.0,
+            'position': {'top': '50%', 'left': '50%'}
+        }
+    ],
     'selles': [
         {
             'id': 'selle-0',
@@ -551,6 +565,10 @@ function drawBike() {
             case 'cassette':
                 config = getCurrentCassetteConfig();
                 break;
+            case 'frontPad':
+            case 'rearPad':
+                config = getCurrentPadConfig();
+                break;
         }
 
         if (config) {
@@ -682,6 +700,43 @@ function drawComponent(type, component, config = null) {
             wheelWidth,
             wheelHeight
         );
+    }else if (type === 'frontDisc' || type === 'rearDisc') {
+        if (!config) return;
+        
+        const baseWidth = component.width * config.scale;
+        const baseHeight = component.height * config.scale;
+        const discWidth = baseWidth * config.dimensions.width;
+        const discHeight = baseHeight * config.dimensions.height;
+
+        // Obtenir les points d'ancrage
+        const frameConfig = getCurrentFrameConfig();
+        const forkConfig = getCurrentForkConfig();
+        if (!frameConfig || !forkConfig) {
+            console.warn('No frame or fork config found');
+            return;
+        }
+
+        // Position différente pour la roue avant et arrière
+        const anchor = type === 'frontDisc' ? 
+            forkConfig.axle : 
+            frameConfig.diskAnchors.rear;
+
+        if (!anchor) return;
+
+        // 1. Déplacer au point d'ancrage
+        ctx.translate(anchor.x, anchor.y);
+        
+        // 2. Appliquer la rotation autour du centre de la roue
+        ctx.rotate(wheelRotation);
+
+        // 3. Dessiner la roue centrée sur son point d'ancrage
+        ctx.drawImage(
+            component,
+            -discWidth / 2,  // Centre horizontal
+            -discHeight / 2, // Centre vertical
+            discWidth,
+            discHeight
+        );
     }else if (type === 'drivetrain') {
         config = getCurrentDriveConfig();
         if (!config) {
@@ -793,13 +848,13 @@ function drawComponent(type, component, config = null) {
             selleWidth,
             selleHeight
         );
-    }else if (type === 'frontDisc' || type === 'rearDisc') {
+    }else if (type === 'frontPad' || type === 'rearPad') {
         if (!config) return;
         
         const baseWidth = component.width * config.scale;
         const baseHeight = component.height * config.scale;
-        const discWidth = baseWidth * config.dimensions.width;
-        const discHeight = baseHeight * config.dimensions.height;
+        const padWidth = baseWidth * config.dimensions.width;
+        const padHeight = baseHeight * config.dimensions.height;
 
         // Obtenir les points d'ancrage
         const frameConfig = getCurrentFrameConfig();
@@ -810,9 +865,9 @@ function drawComponent(type, component, config = null) {
         }
 
         // Position différente pour la roue avant et arrière
-        const anchor = type === 'frontDisc' ? 
-            forkConfig.axle : 
-            frameConfig.diskAnchors.rear;
+        const anchor = type === 'frontPad' ? 
+            forkConfig.padPosition : 
+            frameConfig.padAnchors.rear;
 
         if (!anchor) return;
 
@@ -820,15 +875,21 @@ function drawComponent(type, component, config = null) {
         ctx.translate(anchor.x, anchor.y);
         
         // 2. Appliquer la rotation autour du centre de la roue
-        ctx.rotate(wheelRotation);
+        if (type === 'rearPad') {
+            const angleRad = frameConfig.padAnchors.rear.rotation * Math.PI / 180;
+            ctx.rotate(angleRad);
+        }else{
+            const angleRad =  forkConfig.padRotation* Math.PI / 180;
+            ctx.rotate(angleRad);
+        }
 
         // 3. Dessiner la roue centrée sur son point d'ancrage
         ctx.drawImage(
             component,
-            -discWidth / 2,  // Centre horizontal
-            -discHeight / 2, // Centre vertical
-            discWidth,
-            discHeight
+            -padWidth / 2,  // Centre horizontal
+            -padHeight / 2, // Centre vertical
+            padWidth,
+            padHeight
         );
     }else if (type === 'frontTire' || type === 'rearTire') {
         if (!config) return;
@@ -954,6 +1015,13 @@ function getCurrentWheelConfig() {
     return forkConfigs.wheels[wheelIndex];
 }
 
+function getCurrentPadConfig() {
+    if (!selectedComponents.pads || !forkConfigs || !forkConfigs.pads) return null;
+    const padIndex = parseInt(selectedComponents.pads.id.split('-')[1]);
+    if (isNaN(padIndex) || padIndex >= forkConfigs.pads.length) return null;
+    return forkConfigs.pads[padIndex];
+}
+
 function getCurrentDiscConfig() {
     console.log(forkConfigs)
     if (!selectedComponents.brakes || !forkConfigs || !forkConfigs.brakes) return null;
@@ -991,9 +1059,6 @@ async function updateComponentImage(type, component) {
             case 'wheels':
                 bikeComponents.frontWheel = img;
                 bikeComponents.rearWheel = img;
-                if (wheelAnimationId === null) {
-                    // animateWheels();
-                }
                 break;
             case 'shocks':  // Nouveau cas
                 bikeComponents.shock = img;
@@ -1004,16 +1069,10 @@ async function updateComponentImage(type, component) {
             case 'brakes':
                 bikeComponents.frontDisc = img;
                 bikeComponents.rearDisc = img;
-                if (wheelAnimationId === null) {
-                    // animateWheels();
-                }
                 break;
             case 'tires':
                 bikeComponents.frontTire = img;
                 bikeComponents.rearTire = img;
-                if (wheelAnimationId === null) {
-                    //animateWheels();
-                }
                 break;
             case 'selles':  // Nouveau cas
                 bikeComponents.selle = img;
@@ -1023,6 +1082,10 @@ async function updateComponentImage(type, component) {
                 break;
             case 'cassettes':  // Nouveau cas
                 bikeComponents.cassette = img;
+                break;
+            case 'pads':
+                bikeComponents.frontPad = img;
+                bikeComponents.rearPad = img;
                 break;
         }
         
@@ -1049,7 +1112,8 @@ let selectedComponents = {
     shocks: null,
     tires: null, 
     selles: null,
-    cassettes: null
+    cassettes: null,
+    pads: null
 };
 
 // Charger les composants depuis l'API avec animation de chargement
@@ -1113,7 +1177,8 @@ function initializeSelects() {
         shocks: document.getElementById('shocks-select'),
         tires: document.getElementById('tires-select'),
         selles: document.getElementById('selles-select'),
-        cassettes: document.getElementById('cassettes-select')
+        cassettes: document.getElementById('cassettes-select'),
+        pads: document.getElementById('pads-select')
     };
 
     for (const [type, select] of Object.entries(selects)) {
@@ -1733,7 +1798,8 @@ function setupEventListeners() {
         shocks: document.getElementById('shocks-select'),
         tires: document.getElementById('tires-select'),
         selles: document.getElementById('selles-select'),
-        cassettes: document.getElementById('cassettes-select')
+        cassettes: document.getElementById('cassettes-select'),
+        pads: document.getElementById('pads-select')
     };
 
     Object.entries(selects).forEach(([type, select]) => {
