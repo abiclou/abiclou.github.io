@@ -1,4 +1,3 @@
-// Variables globales pour le canvas
 let canvas, ctx;
 let bikeComponents = {
     frame: null,
@@ -44,7 +43,6 @@ const MIN_WHEELIE_ANGLE = 0;
 const WHEELIE_SPEED = 0.05;
 let wheelieAnimationId = null;
 
-// Configuration du vélo (style Bikeologi)
 const BIKE_CONFIG = {
     canvas: {
         width: 1000,
@@ -338,6 +336,16 @@ const COMPONENTS = {
             'scale': 1.0,
             'position': {'top': '50%', 'left': '50%'}
         },
+        {
+            'id': 'selle-1',
+            'name': 'Selle Reverse',
+            'description': 'Selle Reverse Nico Vink Shovel &amp; Shred noir/blanc ',
+            'price': 57.90,
+            'weight': 0.26,  // kg
+            'image': 'selle-reverse.png',
+            'scale': 1.0,
+            'position': {'top': '50%', 'left': '50%'}
+        },
     ],
     'shocks': [
         {
@@ -362,6 +370,14 @@ const COMPONENTS = {
         },
         {
             'id': 'shock-2',
+            'name': 'RockShox Super Deluxe Coil',
+            'description': 'Amortisseur RockShox Vivid Ultimate 250x75',
+            'price': 399.99,
+            'weight': 0.8,  // kg
+            'image': 'super-deluxe-coil.png'
+        },
+        {
+            'id': 'shock-3',
             'name': 'RockShox Vivid Ultimate',
             'description': 'Amortisseur RockShox Vivid Ultimate 250x75',
             'price': 699.99,
