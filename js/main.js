@@ -13,7 +13,9 @@ let bikeComponents = {
     handlebar:null,
     frontTire: null,
     rearTire: null,
-    selle: null
+    selle: null,
+    drivetrain: null,
+    cassette: null
 };
 let loadedImages = {};
 let forkConfigs = null;
@@ -64,7 +66,7 @@ const COMPONENTS = {
             'id': 'v10',
             'name': 'Santa Cruz V10 Factory',
             'description': 'Cadre en carbone haut de gamme',
-            'price': 4299,
+            'price': 3700,
             'weight': 3.2,  // kg
             'image': 'v10_3.png'
         },
@@ -80,7 +82,7 @@ const COMPONENTS = {
             'id': 'frs',
             'name': 'Commencal FRS',
             'description': 'Cadre en aluminium hyper resistant',
-            'price': 3200,
+            'price': 1669.99,
             'weight': 2.5,  // kg
             'image': 'frs.png'
         },
@@ -280,35 +282,15 @@ const COMPONENTS = {
             'scale': 1.0,
             'position': {'top': '50%', 'left': '50%'}
         }
-        // {
-        //     'id': 'brakes-1',
-        //     'name': 'SRAM Code RSC',
-        //     'description': 'Freins à disque SRAM Code RSC 4 pistons',
-        //     'price': 499.99,
-        //     'weight': 0.9,  // kg
-        //     'image': 'brakes-2.png',
-        //     'scale': 1.0,
-        //     'position': {'top': '50%', 'left': '50%'}
-        // },
-        // {
-        //     'id': 'brakes-2',
-        //     'name': 'Shimano XT M8120',
-        //     'description': 'Freins à disque Shimano XT M8120 4 pistons',
-        //     'price': 349.99,
-        //     'weight': 0.8,  // kg
-        //     'image': 'brakes-3.png',
-        //     'scale': 1.0,
-        //     'position': {'top': '50%', 'left': '50%'}
-        // }
     ],
     'drivetrains': [
         {
-            'id': 'drivetrain-1',
+            'id': 'drivetrain-0',
             'name': 'Shimano XTR M9100',
             'description': 'Transmission Shimano XTR M9100 12 vitesses',
             'price': 999.99,
             'weight': 1.5,  // kg
-            'image': 'drivetrain-1.png',
+            'image': 'shimano-xtr.png',
             'scale': 1.0,
             'position': {'top': '50%', 'left': '50%'}
         },
@@ -329,6 +311,18 @@ const COMPONENTS = {
             'price': 599.99,
             'weight': 1.2,  // kg
             'image': 'drivetrain-3.png',
+            'scale': 1.0,
+            'position': {'top': '50%', 'left': '50%'}
+        }
+    ],
+    'cassettes': [
+        {
+            'id': 'cassette-0',
+            'name': 'Shimano Box 7V',
+            'description': 'Transmission Shimano XTR M9100 12 vitesses',
+            'price': 43.13,
+            'weight': 1.5,  // kg
+            'image': 'shimano-box-components.png',
             'scale': 1.0,
             'position': {'top': '50%', 'left': '50%'}
         }
@@ -535,6 +529,12 @@ function drawBike() {
             case 'selle':
                 config = getCurrentSelleConfig();
                 break;
+            case 'drivetrain':
+                config = getCurrentDriveConfig();
+                break;
+            case 'cassette':
+                config = getCurrentCassetteConfig();
+                break;
         }
 
         if (config) {
@@ -665,6 +665,82 @@ function drawComponent(type, component, config = null) {
             -wheelHeight / 2, // Centre vertical
             wheelWidth,
             wheelHeight
+        );
+    }else if (type === 'drivetrain') {
+        config = getCurrentDriveConfig();
+        if (!config) {
+            console.warn('No drivetrain config provided');
+            return;
+        }
+        
+        const frameConfig = getCurrentFrameConfig();
+        if (!frameConfig || !frameConfig.driveMount) {
+            console.warn('No frame config or selle mount found');
+            return;
+        }
+
+        // console.log('Drawing shock with config:', config);
+        // console.log('Frame shock mount:', frameConfig.shockMount);
+        
+        const baseWidth = component.width * config.scale;
+        const baseHeight = component.height * config.scale;
+        const driveWidth = baseWidth * config.dimensions.width;
+        const driveHeight = baseHeight * config.dimensions.height;
+
+        // Déplacer au point de montage
+        ctx.translate(frameConfig.driveMount.x, frameConfig.driveMount.y);
+        
+        // Appliquer la rotation
+        if (frameConfig.driveMount.rotation) {
+            const angleRad = frameConfig.driveMount.rotation * Math.PI / 180;
+            ctx.rotate(angleRad);
+        }
+
+        // Dessiner l'amortisseur centré sur son point de rotation
+        ctx.drawImage(
+            component,
+            -driveWidth / 2,
+            -driveHeight / 2,
+            driveWidth,
+            driveHeight
+        );
+    }else if (type === 'cassette') {
+        config = getCurrentCassetteConfig();
+        if (!config) {
+            console.warn('No cassette config provided');
+            return;
+        }
+        
+        const frameConfig = getCurrentFrameConfig();
+        if (!frameConfig || !frameConfig.cassetteMount) {
+            console.warn('No frame config or cassette mount found');
+            return;
+        }
+
+        // console.log('Drawing shock with config:', config);
+        // console.log('Frame shock mount:', frameConfig.shockMount);
+        
+        const baseWidth = component.width * config.scale;
+        const baseHeight = component.height * config.scale;
+        const cassetteWidth = baseWidth * config.dimensions.width;
+        const cassetteHeight = baseHeight * config.dimensions.height;
+
+        // Déplacer au point de montage
+        ctx.translate(frameConfig.cassetteMount.x, frameConfig.cassetteMount.y);
+        
+        // Appliquer la rotation
+        if (frameConfig.cassetteMount.rotation) {
+            const angleRad = frameConfig.cassetteMount.rotation * Math.PI / 180;
+            ctx.rotate(angleRad);
+        }
+
+        // Dessiner l'amortisseur centré sur son point de rotation
+        ctx.drawImage(
+            component,
+            -cassetteWidth / 2,
+            -cassetteHeight / 2,
+            cassetteWidth,
+            cassetteHeight
         );
     }else if (type === 'selle') {
         config = getCurrentSelleConfig();
@@ -929,6 +1005,12 @@ async function updateComponentImage(type, component) {
             case 'selles':  // Nouveau cas
                 bikeComponents.selle = img;
                 break;
+            case 'drivetrains':  // Nouveau cas
+                bikeComponents.drivetrain = img;
+                break;
+            case 'cassettes':  // Nouveau cas
+                bikeComponents.cassette = img;
+                break;
         }
         
         updateSummary();
@@ -953,7 +1035,8 @@ let selectedComponents = {
     drivetrains: null,
     shocks: null,
     tires: null, 
-    selles: null
+    selles: null,
+    cassettes: null
 };
 
 // Charger les composants depuis l'API avec animation de chargement
@@ -1016,7 +1099,8 @@ function initializeSelects() {
         drivetrains: document.getElementById('drivetrains-select'),
         shocks: document.getElementById('shocks-select'),
         tires: document.getElementById('tires-select'),
-        selles: document.getElementById('selles-select')
+        selles: document.getElementById('selles-select'),
+        cassettes: document.getElementById('cassettes-select')
     };
 
     for (const [type, select] of Object.entries(selects)) {
@@ -1226,6 +1310,40 @@ function getCurrentSelleConfig() {
     }
     
     const config = forkConfigs.selles[selleIndex];
+    return config;
+}
+
+function getCurrentCassetteConfig() {
+    if (!selectedComponents.cassettes) {
+        console.warn('Missing shock components or configs');
+        return null;
+    }
+    
+    const cassetteIndex = parseInt(selectedComponents.cassettes.id.split('-')[1]);
+    
+    if (isNaN(cassetteIndex) || cassetteIndex >= forkConfigs.cassettes.length) {
+        console.warn('Invalid shock index:', cassetteIndex);
+        return null;
+    }
+    
+    const config = forkConfigs.cassettes[cassetteIndex];
+    return config;
+}
+
+function getCurrentDriveConfig() {
+    if (!selectedComponents.drivetrains) {
+        console.warn('Missing shock components or configs');
+        return null;
+    }
+    
+    const driveIndex = parseInt(selectedComponents.drivetrains.id.split('-')[1]);
+    
+    if (isNaN(driveIndex) || driveIndex >= forkConfigs.drivetrains.length) {
+        console.warn('Invalid shock index:', driveIndex);
+        return null;
+    }
+    
+    const config = forkConfigs.drivetrains[driveIndex];
     return config;
 }
 
@@ -1601,7 +1719,8 @@ function setupEventListeners() {
         drivetrains: document.getElementById('drivetrains-select'),
         shocks: document.getElementById('shocks-select'),
         tires: document.getElementById('tires-select'),
-        selles: document.getElementById('selles-select')
+        selles: document.getElementById('selles-select'),
+        cassettes: document.getElementById('cassettes-select')
     };
 
     Object.entries(selects).forEach(([type, select]) => {

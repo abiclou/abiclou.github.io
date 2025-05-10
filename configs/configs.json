@@ -26,6 +26,16 @@
                 "y": 330,
                 "rotation": 0
             },
+            "driveMount":{
+                "x": 465,
+                "y": 370,
+                "rotation": 0
+            },
+            "cassetteMount":{
+                "x": 290,
+                "y": 370,
+                "rotation": 0
+            },
             "zIndex": 1
         },
         {
@@ -277,6 +287,22 @@
             "scale": 0.85,
             "dimensions": { "width": 0.09, "height": 0.09 },
             "zIndex": 2
+        }
+    ],
+    "drivetrains": [
+        {
+            "name": "Shimano XTR M9100",
+            "scale": 1.1,
+            "dimensions": { "width": 0.09, "height": 0.09 },
+            "zIndex": 2
+        }
+    ],
+    "cassettes": [
+        {
+            "name": "Shimano Box 7v",
+            "scale": 0.7,
+            "dimensions": { "width": 0.09, "height": 0.09 },
+            "zIndex": 0
         }
     ]
 }
