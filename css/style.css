@@ -1513,3 +1513,12 @@ h2 {
 #wheelie:hover i {
     transform: translateY(-2px);
 }
+
+.btn:hover {
+    color: var(--bs-btn-hover-color);
+  
+    background-color: var(--bs-btn-hover-bg) !important;
+  
+    border-color: var(--bs-btn-hover-border-color);
+  
+}
