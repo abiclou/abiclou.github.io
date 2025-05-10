@@ -729,10 +729,7 @@ function drawComponent(type, component, config = null) {
         ctx.translate(frameConfig.cassetteMount.x, frameConfig.cassetteMount.y);
         
         // Appliquer la rotation
-        if (frameConfig.cassetteMount.rotation) {
-            const angleRad = frameConfig.cassetteMount.rotation * Math.PI / 180;
-            ctx.rotate(angleRad);
-        }
+        ctx.rotate(wheelRotation);
 
         // Dessiner l'amortisseur centré sur son point de rotation
         ctx.drawImage(
