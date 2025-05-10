@@ -259,6 +259,16 @@ const COMPONENTS = {
             'image': 'shwalbe.png',
             'scale': 1.0,
             'position': {'top': '50%', 'left': '50%'}
+        },
+        {
+            'id': 'tires-1',
+            'name': 'Michelin DH Mud',
+            'description': 'Freins à disque Shimano XTR M9120 4 pistons',
+            'price': 99.99,
+            'weight': 1.0,  // kg
+            'image': 'dh-michelin-mud.png',
+            'scale': 1.0,
+            'position': {'top': '50%', 'left': '50%'}
         }
         // {
         //     'id': 'brakes-1',
