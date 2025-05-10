@@ -385,7 +385,7 @@ const COMPONENTS = {
             'image': 'vivid.png'
         },
         {
-            'id': 'shock-3',
+            'id': 'shock-4',
             'name': 'EXT Arma',
             'description': 'Amortisseur EXT Arma 250x75',
             'price': 1199.99,
