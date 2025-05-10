@@ -269,6 +269,16 @@ const COMPONENTS = {
             'image': 'dh-michelin-mud.png',
             'scale': 1.0,
             'position': {'top': '50%', 'left': '50%'}
+        },
+        {
+            'id': 'tires-2',
+            'name': 'Pirelli Scorpion',
+            'description': 'Freins à disque Shimano XTR M9120 4 pistons',
+            'price': 99.99,
+            'weight': 1.0,  // kg
+            'image': 'dh-scorpion.png',
+            'scale': 1.0,
+            'position': {'top': '50%', 'left': '50%'}
         }
         // {
         //     'id': 'brakes-1',
