@@ -31,6 +31,17 @@ const SCALE_FACTOR = 1.2;
 const MIN_SCALE = 0.5;
 const MAX_SCALE = 2;
 
+// Ajouter cette variable globale pour stocker l'angle de rotation du vélo
+let bikeRotation = 0;
+
+// Modifier les constantes du wheeling
+let isWheeling = false;
+let wheelieAngle = 0;
+const MAX_WHEELIE_ANGLE = -Math.PI / 4; // Angle négatif pour monter
+const MIN_WHEELIE_ANGLE = 0;
+const WHEELIE_SPEED = 0.05;
+let wheelieAnimationId = null;
+
 // Configuration du vélo (style Bikeologi)
 const BIKE_CONFIG = {
     canvas: {
@@ -40,11 +51,11 @@ const BIKE_CONFIG = {
     frame: {
         scale: 0.9,
         position: {
-            x: 500,  // Centre du canvas
-            y: 300   // Centre du canvas
+            x: 500,
+            y: 300
         }
     },
-    currentForkIndex: null // Start with no fork selected
+    currentForkIndex: null
 };
 
 const COMPONENTS = {
@@ -444,9 +455,29 @@ function drawBike() {
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     
+    // Appliquer le zoom
     ctx.translate(centerX, centerY);
     ctx.scale(currentScale, currentScale);
     ctx.translate(-centerX, -centerY);
+
+    // Obtenir le point d'ancrage de la roue arrière
+    const frameConfig = getCurrentFrameConfig();
+    if (frameConfig && frameConfig.wheelAnchors && frameConfig.wheelAnchors.rear) {
+        const rearWheel = frameConfig.wheelAnchors.rear;
+        
+        // Appliquer la rotation du wheeling autour de la roue arrière
+        ctx.translate(rearWheel.x, rearWheel.y);
+        ctx.rotate(wheelieAngle);
+        ctx.translate(-rearWheel.x, -rearWheel.y);
+    }
+
+    // Calculer et appliquer la rotation du vélo
+    bikeRotation = calculateBikeRotation();
+    if (bikeRotation !== 0) {
+        ctx.translate(centerX, centerY);
+        ctx.rotate(bikeRotation);
+        ctx.translate(-centerX, -centerY);
+    }
 
     // Créer un tableau de tous les composants à dessiner
     const componentsToDraw = [];
@@ -1091,7 +1122,12 @@ function switchForkConfig(index) {
 // Ajouter une fonction pour obtenir la configuration du cadre actuel
 function getCurrentFrameConfig() {
     if (!selectedComponents.frames || !forkConfigs.frames) return null;
-    return forkConfigs.frames.find(frame => frame.name === selectedComponents.frames.name);
+    const config = forkConfigs.frames.find(frame => frame.name === selectedComponents.frames.name);
+    if (config) {
+        // Ajouter l'angle de rotation au config
+        config.rotation = bikeRotation;
+    }
+    return config;
 }
 
 // Ajouter la fonction d'animation des roues
@@ -1451,42 +1487,92 @@ function initializeFavoritesCount() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-    // initHubSound();
-    await loadForkConfigs();
-    initCanvas();
-    loadComponents().then(() => {
-        // Set initial fork configuration
-        if (components.forks && components.forks.length > 0) {
-            BIKE_CONFIG.currentForkIndex = null; // Set to the first fork by default
-            const initialFork = components.forks[0];
-            updateComponentImage('forks', initialFork).then(() => {
-                const forkConfig = getCurrentForkConfig();
-                if (forkConfig) {
-                    forkConfig.scale = (BIKE_CONFIG.frame.scale * 0.45) / initialFork.height; // Adjust scale based on frame
-                    drawBike();
-                }
-            });
+document.addEventListener('DOMContentLoaded', function() {
+    // Ajouter le bouton de wheeling avec une construction HTML plus sûre
+    const wheelieBtn = document.createElement('button');
+    wheelieBtn.className = 'btn btn-control';
+    wheelieBtn.id = 'wheelie';
+    wheelieBtn.setAttribute('data-tooltip', 'Wheeling');
+    
+    const icon = document.createElement('i');
+    icon.className = 'fas fa-angle-double-up';
+    wheelieBtn.appendChild(icon);
+    
+    const viewerControls = document.querySelector('.viewer-controls');
+    if (viewerControls) {
+        viewerControls.appendChild(wheelieBtn);
+    }
+
+    // Gérer les événements du bouton de wheeling
+    wheelieBtn.addEventListener('mousedown', () => {
+        isWheeling = true;
+        if (!wheelieAnimationId) {
+            animateWheelie();
         }
     });
 
-    // Set up event listener for fork selection
+    wheelieBtn.addEventListener('mouseup', () => {
+        isWheeling = false;
+    });
+
+    wheelieBtn.addEventListener('mouseleave', () => {
+        isWheeling = false;
+    });
+
+    // Gérer les événements tactiles
+    wheelieBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        isWheeling = true;
+        if (!wheelieAnimationId) {
+            animateWheelie();
+        }
+    });
+
+    wheelieBtn.addEventListener('touchend', () => {
+        isWheeling = false;
+    });
+
+    // Initialiser les autres composants
+    initializeComponents();
+});
+
+// Déplacer l'initialisation dans une fonction séparée pour plus de clarté
+function initializeComponents() {
+    // initHubSound();
+    loadForkConfigs().then(() => {
+        initCanvas();
+        return loadComponents();
+    }).then(() => {
+        if (components.forks && components.forks.length > 0) {
+            BIKE_CONFIG.currentForkIndex = null;
+            const initialFork = components.forks[0];
+            return updateComponentImage('forks', initialFork);
+        }
+    }).then(() => {
+        setupEventListeners();
+        handleFavorites();
+        handleLoadConfig();
+        initializeFavoritesCount();
+        updateTotals();
+    }).catch(error => {
+        console.error('Error initializing components:', error);
+    });
+}
+
+// Regrouper la configuration des écouteurs d'événements
+function setupEventListeners() {
+    // Configuration des sélecteurs
     const forkSelect = document.getElementById('fork-select');
     if (forkSelect) {
         forkSelect.addEventListener('change', (event) => {
-            const selectedValue = event.target.value;
-            // console.log('Selected fork value:', selectedValue); // Debugging log
-            const selectedIndex = parseInt(selectedValue, 10);
-            // console.log('Parsed fork index:', selectedIndex); // Debugging log
+            const selectedIndex = parseInt(event.target.value, 10);
             if (!isNaN(selectedIndex)) {
                 switchForkConfig(selectedIndex);
-            } else {
-                console.error('Invalid fork index:', selectedIndex); // Error log for invalid index
             }
         });
     }
 
-    // Ajouter les écouteurs d'événements pour les autres sélections
+    // Configuration des autres sélecteurs
     const selects = {
         frames: document.getElementById('frame-select'),
         wheels: document.getElementById('wheels-select'),
@@ -1497,38 +1583,82 @@ document.addEventListener('DOMContentLoaded', async () => {
         tires: document.getElementById('tires-select'),
         selles: document.getElementById('selles-select')
     };
-    
+
     Object.entries(selects).forEach(([type, select]) => {
         if (select) {
             select.addEventListener('change', (event) => updateSelection(event, type));
         }
     });
-    
-    // Initialiser la gestion du panier
-    handleCart();
 
-    // Ajouter les écouteurs pour les boutons de zoom et capture
+    // Configuration des boutons de contrôle
     const zoomInBtn = document.getElementById('zoom-in');
     const zoomOutBtn = document.getElementById('zoom-out');
     const screenshotBtn = document.getElementById('screenshot');
-    
+
     if (zoomInBtn) {
         zoomInBtn.addEventListener('click', () => handleZoom(true));
     }
-    
     if (zoomOutBtn) {
         zoomOutBtn.addEventListener('click', () => handleZoom(false));
     }
-    
     if (screenshotBtn) {
         screenshotBtn.addEventListener('click', captureScreenshot);
     }
 
-    handleFavorites();
-    handleLoadConfig();
-    initializeFavoritesCount();
-    updateTotals();
-});
+    handleCart();
+}
+
+// Ajouter cette fonction après la fonction calculateBikeRotation
+function animateWheelie() {
+    if (!isWheeling) {
+        // Retour à la position normale (0)
+        wheelieAngle = Math.min(MIN_WHEELIE_ANGLE, wheelieAngle + WHEELIE_SPEED);
+    } else {
+        // Monter la roue avant (angle négatif)
+        wheelieAngle = Math.max(MAX_WHEELIE_ANGLE, wheelieAngle - WHEELIE_SPEED);
+    }
+
+    // Lancer l'animation des roues pendant le wheeling
+    if (wheelAnimationId === null) {
+        animateWheels();
+    }
+
+    // Continuer l'animation tant que nécessaire
+    if (wheelieAngle < 0 || isWheeling) {
+        drawBike();
+        wheelieAnimationId = requestAnimationFrame(animateWheelie);
+    } else {
+        wheelieAnimationId = null;
+        // Arrêter l'animation des roues si on n'est pas en train de rouler
+        if (i === 0) {
+            stopWheelAnimation();
+        }
+    }
+}
+
+// Ajouter cette fonction pour calculer l'angle du vélo
+function calculateBikeRotation() {
+    const frameConfig = getCurrentFrameConfig();
+    const forkConfig = getCurrentForkConfig();
+    
+    if (!frameConfig || !forkConfig) return 0;
+
+    // Obtenir les positions des axes des roues
+    const frontAxle = forkConfig.axle;
+    const rearAxle = frameConfig.wheelAnchors.rear;
+
+    if (!frontAxle || !rearAxle) return 0;
+
+    // Calculer la différence de hauteur
+    const deltaY = frontAxle.y - rearAxle.y;
+    const deltaX = frontAxle.x - rearAxle.x;
+
+    // Calculer l'angle en radians
+    const angle = Math.atan2(deltaY, deltaX);
+
+    // Convertir en degrés et retourner l'angle négatif pour la correction
+    return -angle;
+}
 
 var i = 0;
 

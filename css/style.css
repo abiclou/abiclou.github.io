@@ -1494,3 +1494,22 @@ h2 {
 .empty-state {
     color: var(--text-light);
 }
+
+/* Style pour le bouton de wheeling */
+#wheelie {
+    background: var(--accent-gradient);
+    color: white;
+    border: none;
+}
+
+#wheelie:active {
+    transform: translateY(2px);
+}
+
+#wheelie i {
+    transition: transform 0.3s ease;
+}
+
+#wheelie:hover i {
+    transform: translateY(-2px);
+}
