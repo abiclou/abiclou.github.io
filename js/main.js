@@ -168,11 +168,11 @@ const COMPONENTS = {
         },
         {
             'id': 'wheels-2',
-            'name': 'DT Swiss XR 1700',
+            'name': 'Bontrager Paradigm',
             'description': 'Roues en aluminium DT Swiss XR 1700 29"',
             'price': 899.99,
             'weight': 1.9,  // kg
-            'image': 'wheels-2.png',
+            'image': 'bontrager-paradigm.png',
             'scale': 1.0,
             'position': {'top': '50%', 'left': '50%'}
         },
