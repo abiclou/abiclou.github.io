@@ -170,8 +170,8 @@
                 "rear": { "x": 302.5, "y": 350 }
             },
             "shockMount": {
-                "x": 485,
-                "y": 260,
+                "x": 488,
+                "y": 262.5,
                 "rotation": 235
             },
             "selleMount": {
@@ -242,6 +242,47 @@
             "cassetteMount":{
                 "x": 310,
                 "y": 355,
+                "rotation": 0
+            },
+            "zIndex": 1
+        },
+        {
+            "name": "Atherton S.170",
+            "wheelAnchors": {
+                "rear": { "x": 287.5, "y": 361 }
+            },
+            "shockMount": {
+                "x": 457.5,
+                "y": 335,
+                "rotation": 8
+            },
+            "selleMount": {
+                "x": 407.5,
+                "y": 142.5,
+                "rotation": -5
+            },
+            "diskAnchors": {
+                "rear": { "x": 287.5, "y": 361 }
+            },
+            "padAnchors": {
+                "rear": { "x": 302.5, "y": 335, "rotation": -10}
+            },
+            "tireAnchors": {
+                "rear": { "x": 287.5, "y": 361 }
+            },
+            "handlebarMount":{
+                "x": 500,
+                "y": 330,
+                "rotation": 0
+            },
+            "driveMount":{
+                "x": 462.5,
+                "y": 371,
+                "rotation": 0
+            },
+            "cassetteMount":{
+                "x": 287.5,
+                "y": 361,
                 "rotation": 0
             },
             "zIndex": 1
@@ -458,7 +499,7 @@
             "name": "Rockshox ZEB Select+",
             "scale": 0.9,
             "anchor": { "x": 480, "y": 250 },
-            "offset": { "x": -13.5, "y": 26.5, "depth": 0 },
+            "offset": { "x": -13.5, "y": 26, "depth": 0 },
             "dimensions": { "width": 1.1, "height": 1.1, "depth": 50 },
             "rotation": -23.900,
             "zIndex": 0,

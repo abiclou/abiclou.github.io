@@ -104,6 +104,14 @@ const COMPONENTS = {
             'image': 'sb160.png'
         },
         {
+            'id': 'atherton-s-170',
+            'name': 'Atherton S.170',
+            'description': 'Cadre en aluminium hyper resistant',
+            'price': 2799.00,
+            'weight': 2.5,  // kg
+            'image': 'atherton-s-170.png'
+        },
+        {
             'id': 'firebird',
             'name': 'Pivot Firebird',
             'description': 'Cadre en aluminium hyper resistant',
