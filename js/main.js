@@ -87,6 +87,23 @@ const COMPONENTS = {
             'image': 'frs.png'
         },
         {
+            'id': 'spicy-pro-team',
+            'name': 'Spicy Pro Team',
+            'description': 'Cadre en aluminium hyper resistant',
+            'price': 1669.99,
+            'weight': 2.5,  // kg
+            'image': 'spicy-pro-team.png'
+        },
+
+        {
+            'id': 'sb160',
+            'name': 'Yeti SB160',
+            'description': 'Cadre en aluminium hyper resistant',
+            'price': 1669.99,
+            'weight': 2.5,  // kg
+            'image': 'sb160.png'
+        },
+        {
             'id': 'frsspe',
             'name': 'Specialized frs',
             'description': 'Cadre en carbonne hyper resistant',
@@ -178,11 +195,11 @@ const COMPONENTS = {
         },
         {
             'id': 'wheels-3',
-            'name': 'DT Swiss X 1900',
+            'name': 'Cranbrothers Iodine 2',
             'description': 'Roues en aluminium DT Swiss X 1900 29"',
             'price': 499.99,
             'weight': 1.7,  // kg
-            'image': 'wheels-3.png',
+            'image': 'crankbrothers-iodine.png',
             'scale': 1.0,
             'position': {'top': '50%', 'left': '50%'}
         }

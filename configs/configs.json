@@ -144,6 +144,89 @@
             "zIndex": 1
         },
         {
+            "name": "Yeti SB160",
+            "wheelAnchors": {
+                "rear": { "x": 250, "y": 350 }
+            },
+            "shockMount": {
+                "x": 480,
+                "y": 250,
+                "rotation": 70
+            },
+            "padAnchors": {
+                "rear": { "x": 305, "y": 315, "rotation": -20}
+            },
+            "diskAnchors": {
+                "rear": { "x": 245, "y": 355 }
+            },
+            "tireAnchors": {
+                "rear": { "x": 250, "y": 350 }
+            },
+            "handlebarMount":{
+                "x": 500,
+                "y": 330,
+                "rotation": 0
+            },
+            "selleMount": {
+                "x": 422.5,
+                "y": 180,
+                "rotation": -20
+            },
+            "driveMount":{
+                "x": 467.5,
+                "y": 355,
+                "rotation": 0
+            },
+            "cassetteMount":{
+                "x": 300,
+                "y": 348,
+                "rotation": 0
+            },
+            "zIndex": 1
+        },
+
+        {
+            "name": "Spicy Pro Team",
+            "wheelAnchors": {
+                "rear": { "x": 317.5, "y": 380 }
+            },
+            "shockMount": {
+                "x": 477.5,
+                "y": 315,
+                "rotation": 65
+            },
+            "padAnchors": {
+                "rear": { "x": 327.5, "y": 350, "rotation": -20}
+            },
+            "diskAnchors": {
+                "rear": { "x": 317.5, "y": 380 }
+            },
+            "tireAnchors": {
+                "rear": { "x": 317.5, "y": 380 }
+            },
+            "handlebarMount":{
+                "x": 500,
+                "y": 330,
+                "rotation": 0
+            },
+            "selleMount": {
+                "x": 410,
+                "y": 150,
+                "rotation": -10
+            },
+            "driveMount":{
+                "x": 482.5,
+                "y": 380,
+                "rotation": 0
+            },
+            "cassetteMount":{
+                "x": 317.5,
+                "y": 380,
+                "rotation": 0
+            },
+            "zIndex": 1
+        },
+        {
             "name": "Specialized frs",
             "wheelAnchors": {
                 "rear": { "x": 285, "y": 375 }
@@ -254,47 +337,47 @@
             "zIndex": -2
         },
         {
-            "name": "DT Swiss XR 1700",
+            "name": "Bontrager Paradigm",
             "scale": 0.9,
             "dimensions": { "width": 0.2, "height": 0.2 },
-            "zIndex": 0
+            "zIndex": -2
         },
         {
-            "name": "DT Swiss X 1900",
+            "name": "Cranbrothers Iodine 2",
             "scale": 0.9,
             "dimensions": { "width": 0.2, "height": 0.2 },
-            "zIndex": 0
+            "zIndex": -2
         }
     ],
     "shocks": [
         {
             "name": "Fox DHX2 Factory",
             "scale": 0.9,
-            "dimensions": { "width": 0.065, "height": 0.09 },
+            "dimensions": { "width": 0.07, "height": 0.09 },
             "zIndex": 0
         },
         {
             "name": "Fox Float X2 Factory",
             "scale": 0.9,
-            "dimensions": { "width": 0.065, "height": 0.09 },
+            "dimensions": { "width": 0.07, "height": 0.09 },
             "zIndex": 0
         },
         {
             "name": "RockShox Super Deluxe Coil",
             "scale": 0.9,
-            "dimensions": { "width": 0.065, "height": 0.09 },
+            "dimensions": { "width": 0.07, "height": 0.09 },
             "zIndex": 0
         },
         {
             "name": "RockShox Vivid Ultimate",
             "scale": 0.9,
-            "dimensions": { "width": 0.065, "height": 0.09 },
+            "dimensions": { "width": 0.07, "height": 0.09 },
             "zIndex": 0
         },
         {
             "name": "EXT Arma",
             "scale": 0.9,
-            "dimensions": { "width": 0.070, "height": 0.09 },
+            "dimensions": { "width": 0.07, "height": 0.09 },
             "zIndex": 0
         }
     ],
