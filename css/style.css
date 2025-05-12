@@ -208,6 +208,21 @@
     border-radius: 0 0 var(--radius-xl) var(--radius-xl) !important;
 }
 
+/* Styles pour le mode plein écran */
+#bike-image-container:fullscreen {
+    background: var(--background);
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#bike-image-container:fullscreen canvas {
+    max-height: 90vh;
+    max-width: 90vw;
+    object-fit: contain;
+}
+
 /* Price Category Colors */
 .price-category-entry {
     padding: var(--spacing-sm) !important;
@@ -768,6 +783,11 @@ h2 {
     gap: var(--spacing-sm);
     position: relative;
     z-index: 2;
+}
+
+.viewer-controls {
+    position: relative;
+    z-index: 1000;
 }
 
 .btn-control {

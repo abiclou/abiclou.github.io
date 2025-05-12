@@ -47,16 +47,37 @@
                 "rear": { "x": 290, "y": 350 }
             },
             "shockMount": {
-                "x": 440,
+                "x": 445,
                 "y": 290,
                 "rotation": 35
             },
             "diskAnchors": {
                 "rear": { "x": 290, "y": 350 }
             },
+            "padAnchors": {
+                "rear": { "x": 280, "y": 330, "rotation": -20}
+            },
+            "tireAnchors": {
+                "rear": { "x": 290, "y": 350 }
+            },
             "handlebarMount":{
                 "x": 500,
                 "y": 330,
+                "rotation": 0
+            },
+            "selleMount": {
+                "x": 400,
+                "y": 100,
+                "rotation": -20
+            },
+            "driveMount":{
+                "x": 455,
+                "y": 375,
+                "rotation": 0
+            },
+            "cassetteMount":{
+                "x": 275,
+                "y": 365,
                 "rotation": 0
             },
             "zIndex": 1
@@ -146,21 +167,21 @@
         {
             "name": "Yeti SB160",
             "wheelAnchors": {
-                "rear": { "x": 250, "y": 350 }
+                "rear": { "x": 247.5, "y": 355 }
             },
             "shockMount": {
-                "x": 480,
+                "x": 490,
                 "y": 250,
                 "rotation": 70
             },
             "padAnchors": {
-                "rear": { "x": 305, "y": 315, "rotation": -20}
+                "rear": { "x": 270, "y": 322.5, "rotation": 0}
             },
             "diskAnchors": {
-                "rear": { "x": 245, "y": 355 }
+                "rear": { "x": 247.5, "y": 355 }
             },
             "tireAnchors": {
-                "rear": { "x": 250, "y": 350 }
+                "rear": { "x": 247.5, "y": 355 }
             },
             "handlebarMount":{
                 "x": 500,
@@ -168,18 +189,18 @@
                 "rotation": 0
             },
             "selleMount": {
-                "x": 422.5,
-                "y": 180,
-                "rotation": -20
+                "x": 385,
+                "y": 115,
+                "rotation": -5
             },
             "driveMount":{
-                "x": 467.5,
-                "y": 355,
+                "x": 437.5,
+                "y": 375,
                 "rotation": 0
             },
             "cassetteMount":{
-                "x": 300,
-                "y": 348,
+                "x": 247.5,
+                "y": 355,
                 "rotation": 0
             },
             "zIndex": 1

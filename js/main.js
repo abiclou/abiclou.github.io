@@ -103,14 +103,14 @@ const COMPONENTS = {
             'weight': 2.5,  // kg
             'image': 'sb160.png'
         },
-        {
-            'id': 'frsspe',
-            'name': 'Specialized frs',
-            'description': 'Cadre en carbonne hyper resistant',
-            'price': 3200,
-            'weight': 2.5,  // kg
-            'image': 'frsspe.png'
-        },
+        // {
+        //     'id': 'frsspe',
+        //     'name': 'Specialized frs',
+        //     'description': 'Cadre en carbonne hyper resistant',
+        //     'price': 3200,
+        //     'weight': 2.5,  // kg
+        //     'image': 'frsspe.png'
+        // },
         {
             'id': 'dreadnought',
             'name': 'Forbidden Dreadnought',
@@ -119,14 +119,14 @@ const COMPONENTS = {
             'weight': 3.5,  // kg
             'image': 'dreadnought.png'
         },
-        {
-            'id': 'rocky',
-            'name': 'Rocky Mountain Altitude C50',
-            'description': 'Cadre en carbonne haut de gamme',
-            'price': 3629,
-            'weight': 3.0,  // kg
-            'image': 'rocky.png'
-        }
+        // {
+        //     'id': 'rocky',
+        //     'name': 'Rocky Mountain Altitude C50',
+        //     'description': 'Cadre en carbonne haut de gamme',
+        //     'price': 3629,
+        //     'weight': 3.0,  // kg
+        //     'image': 'rocky.png'
+        // }
     ],
     'forks': [
         {
@@ -1695,7 +1695,15 @@ function loadConfig(configId) {
             if (select) {
                 select.value = fullComponent.id;
             }
-            updateComponentImage(type, fullComponent);
+            
+            // Gestion spéciale pour les fourches
+            if (type === 'forks') {
+                const forkIndex = parseInt(fullComponent.id);
+                BIKE_CONFIG.currentForkIndex = forkIndex;
+                switchForkConfig(forkIndex);
+            } else {
+                updateComponentImage(type, fullComponent);
+            }
         }
     });
     
@@ -1841,6 +1849,39 @@ function setupEventListeners() {
     }
 
     handleCart();
+
+    // Ajouter le bouton fullscreen
+    const fullscreenBtn = document.createElement('button');
+    fullscreenBtn.className = 'btn btn-control';
+    fullscreenBtn.id = 'fullscreen';
+    fullscreenBtn.setAttribute('data-tooltip', 'Plein écran');
+    fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+    
+    const viewerControls = document.querySelector('.viewer-controls');
+    if (viewerControls) {
+        viewerControls.appendChild(fullscreenBtn);
+    }
+
+    // Écouteur pour le bouton fullscreen
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+    // Écouteur pour les changements de state fullscreen
+    document.addEventListener('fullscreenchange', () => {
+        isFullscreen = !!document.fullscreenElement;
+        const icon = fullscreenBtn.querySelector('i');
+        icon.className = isFullscreen ? 'fas fa-compress' : 'fas fa-expand';
+    });
+
+    // Écouteur pour les touches du clavier
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'f') {
+            toggleFullscreen();
+            e.preventDefault();
+        } else if (e.key.toLowerCase() === 'p') {
+            toggleAutoPlay();
+            e.preventDefault();
+        }
+    });
 }
 
 // Ajouter cette fonction après la fonction calculateBikeRotation
@@ -1893,6 +1934,89 @@ function calculateBikeRotation() {
 
     // Convertir en degrés et retourner l'angle négatif pour la correction
     return -angle;
+}
+
+// Ajouter ces variables globales au début du fichier
+let isFullscreen = false;
+let currentFrameIndex = 0;
+let isAutoPlaying = false;
+let autoPlayInterval = null;
+const AUTO_PLAY_SPEED = 300; // 2 secondes entre chaque changement
+
+// Ajouter cette fonction pour gérer le fullscreen
+function toggleFullscreen() {
+    const container = document.getElementById('bike-image-container');
+    
+    if (!isFullscreen) {
+        if (container.requestFullscreen) {
+            container.requestFullscreen();
+        } else if (container.webkitRequestFullscreen) {
+            container.webkitRequestFullscreen();
+        } else if (container.msRequestFullscreen) {
+            container.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+}
+
+// Ajouter cette fonction pour naviguer entre les cadres
+function changeFrame(direction) {
+    const frames = COMPONENTS.frames;
+    if (frames.length === 0) return;
+
+    // Arrêter le défilement automatique si on change manuellement
+    if (isAutoPlaying) {
+        toggleAutoPlay();
+    }
+
+    currentFrameIndex = (currentFrameIndex + direction + frames.length) % frames.length;
+    const newFrame = frames[currentFrameIndex];
+    
+    const frameSelect = document.getElementById('frame-select');
+    if (frameSelect) {
+        frameSelect.value = newFrame.id;
+        selectedComponents.frames = newFrame;
+        updateComponentImage('frames', newFrame);
+    }
+}
+
+// Ajouter cette fonction pour gérer le défilement automatique
+function toggleAutoPlay() {
+    isAutoPlaying = !isAutoPlaying;
+    
+    if (isAutoPlaying) {
+        // Démarrer le défilement automatique
+        autoPlayInterval = setInterval(() => {
+            const frames = COMPONENTS.frames;
+            if (frames.length === 0) return;
+            
+            currentFrameIndex = (currentFrameIndex + 1) % frames.length;
+            const newFrame = frames[currentFrameIndex];
+            
+            const frameSelect = document.getElementById('frame-select');
+            if (frameSelect) {
+                frameSelect.value = newFrame.id;
+                selectedComponents.frames = newFrame;
+                updateComponentImage('frames', newFrame);
+            }
+        }, AUTO_PLAY_SPEED);
+        
+        showNotification('Défilement automatique activé', 'info');
+    } else {
+        // Arrêter le défilement automatique
+        if (autoPlayInterval) {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = null;
+        }
+        showNotification('Défilement automatique désactivé', 'info');
+    }
 }
 
 var i = 0;
