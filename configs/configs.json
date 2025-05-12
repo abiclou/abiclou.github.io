@@ -206,6 +206,47 @@
             "zIndex": 1
         },
         {
+            "name": "Marin Trail XR",
+            "wheelAnchors": {
+                "rear": { "x": 310, "y": 355 }
+            },
+            "shockMount": {
+                "x": 465,
+                "y": 320,
+                "rotation": 2
+            },
+            "selleMount": {
+                "x": 407.5,
+                "y": 137.5,
+                "rotation": -5
+            },
+            "diskAnchors": {
+                "rear": { "x": 310, "y": 355 }
+            },
+            "padAnchors": {
+                "rear": { "x": 317.5, "y": 322.5, "rotation": -15}
+            },
+            "tireAnchors": {
+                "rear": { "x": 310, "y": 355 }
+            },
+            "handlebarMount":{
+                "x": 500,
+                "y": 330,
+                "rotation": 0
+            },
+            "driveMount":{
+                "x": 470,
+                "y": 362.5,
+                "rotation": 0
+            },
+            "cassetteMount":{
+                "x": 310,
+                "y": 355,
+                "rotation": 0
+            },
+            "zIndex": 1
+        },
+        {
             "name": "Commencal FRS",
             "wheelAnchors": {
                 "rear": { "x": 300, "y": 348 }
@@ -410,6 +451,18 @@
             "rotation": -23.778,
             "zIndex": 0,
             "axle": { "x": 720, "y": 375 },
+            "padPosition": { "x": 685, "y": 365 },
+            "padRotation": -105
+        },
+        {
+            "name": "Rockshox ZEB Select+",
+            "scale": 0.9,
+            "anchor": { "x": 480, "y": 250 },
+            "offset": { "x": -13.5, "y": 26.5, "depth": 0 },
+            "dimensions": { "width": 1.1, "height": 1.1, "depth": 50 },
+            "rotation": -23.900,
+            "zIndex": 0,
+            "axle": { "x": 720, "y": 370 },
             "padPosition": { "x": 685, "y": 365 },
             "padRotation": -105
         },

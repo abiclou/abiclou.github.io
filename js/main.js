@@ -119,6 +119,14 @@ const COMPONENTS = {
             'weight': 2.5,  // kg
             'image': 'metav5.png'
         },
+        {
+            'id': 'marin-trail',
+            'name': 'Marin Trail XR',
+            'description': 'Cadre en aluminium hyper resistant',
+            'price': 1900.00,
+            'weight': 2.5,  // kg
+            'image': 'marin-trail.png'
+        },
         // {
         //     'id': 'frsspe',
         //     'name': 'Specialized frs',
@@ -171,11 +179,19 @@ const COMPONENTS = {
         },
         {
             'id': '3',
+            'name': 'Rockshox ZEB Select+',
+            'description': 'Fourche Rockshox ZEB Ultimate 180mm',
+            'price': 1249,
+            'weight': 2.5,  // kg
+            'image': 'fork-4.png'
+        },
+        {
+            'id': '4',
             'name': 'EXT Ferro',
             'description': 'Fourche EXT Ferro 205mm',
             'price': 2459,
             'weight': 2.5,  // kg
-            'image': 'fork-4.png'
+            'image': 'fork-5.png'
         }
     ],
     'wheels': [
