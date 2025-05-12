@@ -165,6 +165,47 @@
             "zIndex": 1
         },
         {
+            "name": "Commencal Meta V5",
+            "wheelAnchors": {
+                "rear": { "x": 302.5, "y": 350 }
+            },
+            "shockMount": {
+                "x": 485,
+                "y": 260,
+                "rotation": 235
+            },
+            "selleMount": {
+                "x": 405,
+                "y": 127.5,
+                "rotation": -5
+            },
+            "diskAnchors": {
+                "rear": { "x": 302.5, "y": 350 }
+            },
+            "padAnchors": {
+                "rear": { "x": 310, "y": 320, "rotation": -5}
+            },
+            "tireAnchors": {
+                "rear": { "x": 302.5, "y": 350 }
+            },
+            "handlebarMount":{
+                "x": 500,
+                "y": 330,
+                "rotation": 0
+            },
+            "driveMount":{
+                "x": 470,
+                "y": 360,
+                "rotation": 0
+            },
+            "cassetteMount":{
+                "x": 302.5,
+                "y": 350,
+                "rotation": 0
+            },
+            "zIndex": 1
+        },
+        {
             "name": "Commencal FRS",
             "wheelAnchors": {
                 "rear": { "x": 300, "y": 348 }

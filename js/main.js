@@ -111,6 +111,14 @@ const COMPONENTS = {
             'weight': 2.5,  // kg
             'image': 'firebird.png'
         },
+        {
+            'id': 'metav5',
+            'name': 'Commencal Meta V5',
+            'description': 'Cadre en aluminium hyper resistant',
+            'price': 1900.00,
+            'weight': 2.5,  // kg
+            'image': 'metav5.png'
+        },
         // {
         //     'id': 'frsspe',
         //     'name': 'Specialized frs',
