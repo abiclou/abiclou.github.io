@@ -103,6 +103,14 @@ const COMPONENTS = {
             'weight': 2.5,  // kg
             'image': 'sb160.png'
         },
+        {
+            'id': 'firebird',
+            'name': 'Pivot Firebird',
+            'description': 'Cadre en aluminium hyper resistant',
+            'price': 1669.99,
+            'weight': 2.5,  // kg
+            'image': 'firebird.png'
+        },
         // {
         //     'id': 'frsspe',
         //     'name': 'Specialized frs',

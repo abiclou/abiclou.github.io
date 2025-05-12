@@ -47,37 +47,37 @@
                 "rear": { "x": 290, "y": 350 }
             },
             "shockMount": {
-                "x": 445,
-                "y": 290,
-                "rotation": 35
+                "x": 460,
+                "y": 310,
+                "rotation": 85
             },
             "diskAnchors": {
-                "rear": { "x": 290, "y": 350 }
+                "rear": { "x": 292.5, "y": 352.5 }
             },
             "padAnchors": {
-                "rear": { "x": 280, "y": 330, "rotation": -20}
+                "rear": { "x": 302, "y": 320, "rotation": -20}
             },
             "tireAnchors": {
-                "rear": { "x": 290, "y": 350 }
+                "rear": { "x": 292.5, "y": 352.5 }
             },
             "handlebarMount":{
                 "x": 500,
-                "y": 330,
+                "y": 332.5,
                 "rotation": 0
             },
             "selleMount": {
-                "x": 400,
-                "y": 100,
-                "rotation": -20
+                "x": 410,
+                "y": 125,
+                "rotation": 0
             },
             "driveMount":{
-                "x": 455,
-                "y": 375,
+                "x": 465,
+                "y": 365,
                 "rotation": 0
             },
             "cassetteMount":{
-                "x": 275,
-                "y": 365,
+                "x": 292.5,
+                "y": 352.5,
                 "rotation": 0
             },
             "zIndex": 1
@@ -119,6 +119,47 @@
             "cassetteMount":{
                 "x": 275,
                 "y": 365,
+                "rotation": 0
+            },
+            "zIndex": 1
+        },
+        {
+            "name": "Pivot Firebird",
+            "wheelAnchors": {
+                "rear": { "x": 290, "y": 375 }
+            },
+            "shockMount": {
+                "x": 470,
+                "y": 335,
+                "rotation": -10
+            },
+            "selleMount": {
+                "x": 387.5,
+                "y": 142.5,
+                "rotation": -10
+            },
+            "diskAnchors": {
+                "rear": { "x": 290, "y": 375 }
+            },
+            "padAnchors": {
+                "rear": { "x": 300, "y": 345, "rotation": -5}
+            },
+            "tireAnchors": {
+                "rear": { "x": 290, "y": 375 }
+            },
+            "handlebarMount":{
+                "x": 500,
+                "y": 330,
+                "rotation": 0
+            },
+            "driveMount":{
+                "x": 465,
+                "y": 385,
+                "rotation": 0
+            },
+            "cassetteMount":{
+                "x": 290,
+                "y": 375,
                 "rotation": 0
             },
             "zIndex": 1
@@ -374,31 +415,31 @@
         {
             "name": "Fox DHX2 Factory",
             "scale": 0.9,
-            "dimensions": { "width": 0.07, "height": 0.09 },
+            "dimensions": { "width": 0.075, "height": 0.09 },
             "zIndex": 0
         },
         {
             "name": "Fox Float X2 Factory",
             "scale": 0.9,
-            "dimensions": { "width": 0.07, "height": 0.09 },
+            "dimensions": { "width": 0.075, "height": 0.09 },
             "zIndex": 0
         },
         {
             "name": "RockShox Super Deluxe Coil",
             "scale": 0.9,
-            "dimensions": { "width": 0.07, "height": 0.09 },
+            "dimensions": { "width": 0.075, "height": 0.09 },
             "zIndex": 0
         },
         {
             "name": "RockShox Vivid Ultimate",
             "scale": 0.9,
-            "dimensions": { "width": 0.07, "height": 0.09 },
+            "dimensions": { "width": 0.075, "height": 0.09 },
             "zIndex": 0
         },
         {
             "name": "EXT Arma",
             "scale": 0.9,
-            "dimensions": { "width": 0.07, "height": 0.09 },
+            "dimensions": { "width": 0.075, "height": 0.09 },
             "zIndex": 0
         }
     ],
