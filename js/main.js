@@ -1034,7 +1034,7 @@ function drawComponent(type, component, config = null) {
             return;
         }
 
-        console.log('Drawing handle with config:', config);
+        // console.log('Drawing handle with config:', config);
         // console.log('Frame shock mount:', frameConfig.shockMount);
         
         const baseWidth = component.width * config.scale;
@@ -1080,7 +1080,6 @@ function getCurrentPadConfig() {
 }
 
 function getCurrentDiscConfig() {
-    console.log(forkConfigs)
     if (!selectedComponents.brakes || !forkConfigs || !forkConfigs.brakes) return null;
     const discIndex = parseInt(selectedComponents.brakes.id.split('-')[1]);
     if (isNaN(discIndex) || discIndex >= forkConfigs.brakes.length) return null;
@@ -1088,7 +1087,6 @@ function getCurrentDiscConfig() {
 }
 
 function getCurrentTireConfig() {
-    console.log(forkConfigs)
     if (!selectedComponents.tires || !forkConfigs || !forkConfigs.tires) return null;
     const tiresIndex = parseInt(selectedComponents.tires.id.split('-')[1]);
     if (isNaN(tiresIndex) || tiresIndex >= forkConfigs.tires.length) return null;
@@ -1420,6 +1418,7 @@ function getCurrentShockConfig() {
         return null;
     }
     
+    // Récupérer l'index depuis l'ID (par exemple 'shock-0' -> 0)
     const shockIndex = parseInt(selectedComponents.shocks.id.split('-')[1]);
     
     if (isNaN(shockIndex) || shockIndex >= forkConfigs.shocks.length) {
@@ -1496,9 +1495,6 @@ function getCurrentShockConfig() {
     
     // Récupérer l'index depuis l'ID (par exemple 'shock-0' -> 0)
     const shockIndex = parseInt(selectedComponents.shocks.id.split('-')[1]);
-    // console.log('Shock index:', shockIndex);
-    // console.log('Selected shock:', selectedComponents.shocks);
-    // console.log('Available shock configs:', forkConfigs.shocks);
     
     if (isNaN(shockIndex) || shockIndex >= forkConfigs.shocks.length) {
         console.warn('Invalid shock index:', shockIndex);
@@ -1506,7 +1502,6 @@ function getCurrentShockConfig() {
     }
     
     const config = forkConfigs.shocks[shockIndex];
-    // console.log('Selected shock config:', config);
     return config;
 }
 
@@ -2060,21 +2055,20 @@ function toggleAutoPlay() {
 }
 
 var i = 0;
-
 $("#play").click(function(){
     if(i === 0){
-        $(this).children().remove();
-        $(this).html(`<i class="fas fa-stop"></i>`);
+        $(this).html('<i class="fas fa-stop"></i>');
         i=1;
         animateWheels();
     }else{
-        $(this).children().remove();
-        $(this).html(`<i class="fas fa-play"></i>`);
+        $(this).html('<i class="fas fa-play"></i>');
         i=0;
         stopWheelAnimation();
     }
-})
-
-if ((document.location.href != "https://abiclou.github.io/launch.html")) {
-    document.location.href = "https://abiclou.github.io/launch.html";
+});
+// Redirection optimisée (évite double redirection)
+if (window.location.pathname === "/" || window.location.pathname.endsWith("index.html")) {
+    if (window.location.hostname === "abiclou.github.io" && window.location.href.indexOf("launch.html") === -1) {
+        window.location.href = "https://abiclou.github.io/launch.html";
+    }
 }

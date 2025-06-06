@@ -2,209 +2,154 @@
 <html lang="fr" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abiclou - Make your dream "bicyclette"</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Abiclou - Configurez votre vélo de rêve</title>
+    <meta name="description" content="Configurez et visualisez votre vélo de rêve avec Abiclou. Choisissez cadre, fourche, roues, freins, et plus. Comparez prix et poids, sauvegardez vos configurations favorites.">
+    <meta name="keywords" content="vélo, configuration, VTT, abiclou, cadre, fourche, roues, composants, personnalisation, mountain bike, bike builder">
+    <meta name="author" content="Abiclou">
+    <meta property="og:title" content="Abiclou - Configurez votre vélo de rêve">
+    <meta property="og:description" content="Créez et visualisez votre configuration de vélo idéale.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://abiclou.github.io/">
+    <meta property="og:image" content="https://abiclou.github.io/images/logo.png">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        .animate-fade-in {
-            animation: fade-in 0.5s;
-        }
-        
-        .animate-slide-in {
-            animation: slide-in 0.5s;
-        }
-        
-        @keyframes fade-in {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        
-        @keyframes slide-in {
-            from {
-                transform: translateX(-100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        #bike-image-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .fork-controls-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 10;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .control-group.fork-controls {
-            pointer-events: auto;
-        }
-    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg fixed-top animate-fade-in">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="images/logo.png" alt="" srcset="" width="70px">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <div class="nav-links ms-auto">
-                    <a href="#" class="nav-link active"><i class="fas fa-home"></i> ACCUEIL</a>
-                    <a href="#" class="nav-link"><i class="fas fa-images"></i> GALERIE</a>
-                    <a href="#" class="nav-link"><i class="fas fa-envelope"></i> CONTACT</a>
-                    <a href="#" class="nav-link btn-connect"><i class="fas fa-user"></i> CONNEXION</a>
+    <header>
+        <nav class="navbar navbar-expand-lg fixed-top" aria-label="Navigation principale">
+            <div class="container">
+                <a class="navbar-brand" href="#" aria-label="Accueil Abiclou">
+                    <img src="images/logo.png" alt="Logo Abiclou" width="70">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Ouvrir le menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="nav-links ms-auto">
+                        <a href="#" class="nav-link active"><i class="fas fa-home"></i> <span>Accueil</span></a>
+                        <a href="#" class="nav-link"><i class="fas fa-images"></i> <span>Galerie</span></a>
+                        <a href="mailto:abiclou@gmail.com" class="nav-link"><i class="fas fa-envelope"></i> <span>Contact</span></a>
+                    </div>
                 </div>
             </div>
+        </nav>
+        <div class="container mt-5 pt-5">
+            <h1 class="text-center">Configurez votre vélo de rêve</h1>
+            <p class="lead text-center">Personnalisez chaque composant et visualisez instantanément votre configuration idéale.</p>
         </div>
-    </nav>
-    <main class="container-fluid main-content">
+    </header>
+    <main class="container-fluid main-content" itemscope itemtype="https://schema.org/Product">
         <div class="row g-4">
-            <!-- Configuration Panel -->
             <div class="col-lg-3">
-                <div class="panel-header animate-slide-in mgl-2">
+                <div class="panel-header mgl-2">
                     <h2><i class="fas fa-sliders"></i> CONFIGURATION</h2>
                 </div>
-                <div class="config-panel animate-slide-in">
+                <div class="config-panel">
                     <!-- Component Sections -->
-                    <div class="component-section animate-slide-in" style="animation-delay: 0.1s;">
+                    <section class="component-section animate-slide-in" style="animation-delay: 0.1s;">
                         <div class="section-header">
                             <i class="fas fa-mountain"></i>
-                            <h3>CADRE</h3>
+                            <h2 id="cadre-title">Cadre</h2>
                         </div>
-                        <select id="frame-select" class="form-select">
-                            <!-- options -->
-                        </select>
-                    </div>
-
-                    <div class="component-section animate-slide-in" style="animation-delay: 0.2s;">
+                        <label for="frame-select" class="form-label">Choisissez un cadre</label>
+                        <select id="frame-select" class="form-select" aria-labelledby="cadre-title"></select>
+                    </section>
+                    <section class="component-section animate-slide-in" style="animation-delay: 0.2s;">
                         <div class="section-header">
                             <i class="fas fa-sort"></i>
-                            <h3>FOURCHE</h3>
+                            <h2 id="fourche-title">Fourche</h2>
                         </div>
-                        <select id="fork-select" class="form-select">
-                        </select>
-                    </div>
-
-                    <div class="component-section animate-slide-in" style="animation-delay: 0.35s;">
+                        <label for="fork-select" class="form-label">Choisissez une fourche</label>
+                        <select id="fork-select" class="form-select" aria-labelledby="fourche-title"></select>
+                    </section>
+                    <section class="component-section animate-slide-in" style="animation-delay: 0.35s;">
                         <div class="section-header">
                             <i class="fas fa-wave-square"></i>
-                            <h3>AMORTISSEUR</h3>
+                            <h2 id="amortisseur-title">Amortisseur</h2>
                         </div>
-                        <select id="shocks-select" class="form-select">
-                            <!-- options will be populated by JavaScript -->
-                        </select>
-                    </div>
-
-                    <div class="component-section animate-slide-in" style="animation-delay: 0.3s;">
+                        <label for="shocks-select" class="form-label">Choisissez un amortisseur</label>
+                        <select id="shocks-select" class="form-select" aria-labelledby="amortisseur-title"></select>
+                    </section>
+                    <section class="component-section animate-slide-in" style="animation-delay: 0.3s;">
                         <div class="section-header">
                             <i class="fas fa-circle"></i>
-                            <h3>ROUES</h3>
+                            <h2 id="roues-title">Roues</h2>
                         </div>
-                        <select id="wheels-select" class="form-select"></select>
-                    </div>
-
-                    <div class="component-section animate-slide-in" style="animation-delay: 0.4s;">
+                        <label for="wheels-select" class="form-label">Choisissez des roues</label>
+                        <select id="wheels-select" class="form-select" aria-labelledby="roues-title"></select>
+                    </section>
+                    <section class="component-section animate-slide-in" style="animation-delay: 0.4s;">
                         <div class="section-header">
                             <i class="fas fa-grip-lines"></i>
-                            <h3>GUIDON</h3>
+                            <h2 id="guidon-title">Guidon</h2>
                         </div>
-                        <select id="handlebars-select" class="form-select"></select>
-                    </div>
-
-                    <div class="component-section animate-slide-in" style="animation-delay: 0.5s;">
+                        <label for="handlebars-select" class="form-label">Choisissez un guidon</label>
+                        <select id="handlebars-select" class="form-select" aria-labelledby="guidon-title"></select>
+                    </section>
+                    <section class="component-section animate-slide-in" style="animation-delay: 0.5s;">
                         <div class="section-header">
                             <i class="fas fa-ban"></i>
-                            <h3>Disques</h3>
+                            <h2 id="disques-title">Disques</h2>
                         </div>
-                        <select id="brakes-select" class="form-select"></select>
-                    </div>
-
-                    <div class="component-section animate-slide-in" style="animation-delay: 0.5s;">
+                        <label for="brakes-select" class="form-label">Choisissez des disques</label>
+                        <select id="brakes-select" class="form-select" aria-labelledby="disques-title"></select>
+                    </section>
+                    <section class="component-section animate-slide-in" style="animation-delay: 0.5s;">
                         <div class="section-header">
                             <i class="fas fa-ban"></i>
-                            <h3>Etriers</h3>
+                            <h2 id="etriers-title">Etriers</h2>
                         </div>
-                        <select id="pads-select" class="form-select"></select>
-                    </div>
-
-                    <div class="component-section animate-slide-in" style="animation-delay: 0.6s;">
+                        <label for="pads-select" class="form-label">Choisissez des étriers</label>
+                        <select id="pads-select" class="form-select" aria-labelledby="etriers-title"></select>
+                    </section>
+                    <section class="component-section animate-slide-in" style="animation-delay: 0.6s;">
                         <div class="section-header">
                             <i class="fas fa-link"></i>
-                            <h3>Pedalier</h3>
+                            <h2 id="pedalier-title">Pédalier</h2>
                         </div>
-                        <select id="drivetrains-select" class="form-select"></select>
-                    </div>
-
-                    <div class="component-section animate-slide-in" style="animation-delay: 0.6s;">
+                        <label for="drivetrains-select" class="form-label">Choisissez un pédalier</label>
+                        <select id="drivetrains-select" class="form-select" aria-labelledby="pedalier-title"></select>
+                    </section>
+                    <section class="component-section animate-slide-in" style="animation-delay: 0.6s;">
                         <div class="section-header">
                             <i class="fas fa-link"></i>
-                            <h3>Cassette</h3>
+                            <h2 id="cassette-title">Cassette</h2>
                         </div>
-                        <select id="cassettes-select" class="form-select"></select>
-                    </div>
-
-                    <div class="component-section animate-slide-in" style="animation-delay: 0.5s;">
+                        <label for="cassettes-select" class="form-label">Choisissez une cassette</label>
+                        <select id="cassettes-select" class="form-select" aria-labelledby="cassette-title"></select>
+                    </section>
+                    <section class="component-section animate-slide-in" style="animation-delay: 0.5s;">
                         <div class="section-header">
                             <i class="fa-solid fa-tire"></i>
-                            <h3>Pneus</h3>
+                            <h2 id="pneus-title">Pneus</h2>
                         </div>
-                        <select id="tires-select" class="form-select"></select>
-                    </div>
-
-                    <div class="component-section animate-slide-in" style="animation-delay: 0.5s;">
+                        <label for="tires-select" class="form-label">Choisissez des pneus</label>
+                        <select id="tires-select" class="form-select" aria-labelledby="pneus-title"></select>
+                    </section>
+                    <section class="component-section animate-slide-in" style="animation-delay: 0.5s;">
                         <div class="section-header">
                             <i class="fa-solid fa-tire"></i>
-                            <h3>Selles</h3>
+                            <h2 id="selles-title">Selles</h2>
                         </div>
-                        <select id="selles-select" class="form-select"></select>
-                    </div>
+                        <label for="selles-select" class="form-label">Choisissez une selle</label>
+                        <select id="selles-select" class="form-select" aria-labelledby="selles-title"></select>
+                    </section>
                 </div>
             </div>
-
-            <!-- Viewer Panel -->
             <div class="col-lg-6">
-                <div class="viewer-container animate-fade-in" style="animation-delay: 0.2s;">
+                <div class="viewer-container">
                     <div class="viewer-header">
                         <h2><i class="fas fa-eye"></i>APERÇU</h2>
                         <div class="viewer-controls">
-                            <button class="btn btn-control" id="play" data-tooltip="Play">
-                                <i class="fas fa-play"></i>
-                            </button>
-                            <button class="btn btn-control" id="zoom-in" data-tooltip="Zoom avant">
-                                <i class="fas fa-search-plus"></i>
-                            </button>
-                            <button class="btn btn-control" id="zoom-out" data-tooltip="Zoom arrière">
-                                <i class="fas fa-search-minus"></i>
-                            </button>
-                            <button class="btn btn-control" id="screenshot" data-tooltip="Sauvegarder l'image">
-                                <i class="fas fa-camera"></i>
-                            </button>
-                            <button class="btn btn-control" id="reset-view" data-tooltip="Réinitialiser la vue">
-                                <i class="fas fa-sync-alt"></i>
-                            </button>
+                            <button class="btn btn-control" id="play" data-tooltip="Play"><i class="fas fa-play"></i></button>
+                            <button class="btn btn-control" id="zoom-in" data-tooltip="Zoom avant"><i class="fas fa-search-plus"></i></button>
+                            <button class="btn btn-control" id="zoom-out" data-tooltip="Zoom arrière"><i class="fas fa-search-minus"></i></button>
+                            <button class="btn btn-control" id="screenshot" data-tooltip="Sauvegarder l'image"><i class="fas fa-camera"></i></button>
+                            <button class="btn btn-control" id="reset-view" data-tooltip="Réinitialiser la vue"><i class="fas fa-sync-alt"></i></button>
                         </div>
                     </div>
                     <div id="bike-image-container" class="bike-viewer">
@@ -212,41 +157,26 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Summary Panel -->
             <div class="col-lg-3">
-                <div class="summary-panel animate-slide-in" style="animation-delay: 0.3s;">
+                <div class="summary-panel">
                     <div class="summary-header">
                         <h2><i class="fas fa-clipboard-list"></i> RÉSUMÉ</h2>
                     </div>
                     <div class="summary-content">
                         <div id="selected-components"></div>
                         <div class="summary-stats">
-                            <div class="stat-item animate-fade-in" style="animation-delay: 0.4s;">
-                                <span class="stat-label">POIDS TOTAL</span>
-                                <span class="stat-value" id="total-weight">0 kg</span>
-                            </div>
-                            <div class="stat-item animate-fade-in" style="animation-delay: 0.5s;">
-                                <span class="stat-label">PRIX TOTAL</span>
-                                <span class="stat-value" id="total-price">0 €</span>
-                            </div>
+                            <div class="stat-item"><span class="stat-label">POIDS TOTAL</span><span class="stat-value" id="total-weight">0 kg</span></div>
+                            <div class="stat-item"><span class="stat-label">PRIX TOTAL</span><span class="stat-value" id="total-price">0 €</span></div>
                         </div>
                         <div class="summary-actions">
-                            <button class="btn btn-secondary btn-save">
-                                <i class="fas fa-heart"></i> FAVORIS
-                                <span id="fav-count" class="fav-badge">0</span>
-                            </button>
-                            <button class="btn btn-primary btn-load">
-                                <i class="fas fa-folder-open"></i> CHARGER
-                            </button>
+                            <button class="btn btn-secondary btn-save"><i class="fas fa-heart"></i> FAVORIS <span id="fav-count" class="fav-badge">0</span></button>
+                            <button class="btn btn-primary btn-load"><i class="fas fa-folder-open"></i> CHARGER</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-
-    <!-- Ajouter la modal de chargement -->
     <div class="modal fade" id="loadModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -255,14 +185,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <div id="savedConfigs" class="saved-configs">
-                        <!-- Les configurations seront ajoutées ici dynamiquement -->
-                    </div>
+                    <div id="savedConfigs" class="saved-configs"></div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
 </body>
