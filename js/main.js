@@ -2075,8 +2075,6 @@ $("#play").click(function(){
     }
 })
 
-const date = new Date();
-
-if ((document.location.href != "https://abiclou.github.io/launch.html") && (date.getMonth() < 6)) {
+if ((document.location.href != "https://abiclou.github.io/launch.html")) {
     document.location.href = "https://abiclou.github.io/launch.html";
 }
