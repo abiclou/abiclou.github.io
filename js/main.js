@@ -2074,3 +2074,9 @@ $("#play").click(function(){
         stopWheelAnimation();
     }
 })
+
+const date = new Date();
+
+if (document.location.href === "https://abiclou.github.io/" &&  date.getMonth < 7) {
+    document.location.href = "https://abiclou.github.io/launch.html";
+}
