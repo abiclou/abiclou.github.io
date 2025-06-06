@@ -2066,9 +2066,3 @@ $("#play").click(function(){
         stopWheelAnimation();
     }
 });
-// Redirection optimisée (évite double redirection)
-if (window.location.pathname === "/" || window.location.pathname.endsWith("index.html")) {
-    if (window.location.hostname === "abiclou.github.io" && window.location.href.indexOf("launch.html") === -1) {
-        window.location.href = "https://abiclou.github.io/launch.html";
-    }
-}
