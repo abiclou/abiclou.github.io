@@ -482,15 +482,15 @@ const COMPONENTS = {
             'price': 1199.99,
             'weight': 1.0,  // kg
             'image': 'ext.png'
+        },
+        {
+            'id': 'shock-5',
+            'name': 'Öhlins TTX22',
+            'description': 'Amortisseur Öhlins TTX22 250x75',
+            'price': 999.99,
+            'weight': 1.0,  // kg
+            'image': 'ohlinsttx2.png'
         }
-        // {
-        //     'id': 'shock-3',
-        //     'name': 'Öhlins TTX22M',
-        //     'description': 'Amortisseur Öhlins TTX22M 250x75',
-        //     'price': 999.99,
-        //     'weight': 1.0,  // kg
-        //     'image': 'shock-3.png'
-        // }
     ]
 }
 

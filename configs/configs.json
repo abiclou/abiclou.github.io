@@ -874,6 +874,15 @@
         "height": 0.09
       },
       "zIndex": 0
+    },
+    {
+      "name": "Öhlins TTX22",
+      "scale": 0.9,
+      "dimensions": {
+        "width": 0.075,
+        "height": 0.09
+      },
+      "zIndex": 0
     }
   ],
   "handlebars": [
