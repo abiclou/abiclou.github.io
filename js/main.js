@@ -202,6 +202,14 @@ const COMPONENTS = {
             'price': 2459,
             'weight': 2.5,  // kg
             'image': 'fork-5.png'
+        },
+        {
+            'id': '5',
+            'name': 'ÖHLINS RXF38 m.2',
+            'description': 'Fourche ÖHLINS RXF38 m.2 170mm',
+            'price': 1675,
+            'weight': 2.32,  // kg
+            'image': 'fork-6.png'
         }
     ],
     'wheels': [

@@ -760,6 +760,35 @@
         "y": 370
       },
       "padRotation": -130
+    },
+    {
+      "name": "ÖHLINS RXF38 m.2",
+      "scale": 0.1,
+      "anchor": {
+        "x": 480,
+        "y": 250
+      },
+      "offset": {
+        "x": -13.5,
+        "y": 26.5,
+        "depth": 0
+      },
+      "dimensions": {
+        "width": 1.1,
+        "height": 1.1,
+        "depth": 50
+      },
+      "rotation": -23.778,
+      "zIndex": 0,
+      "axle": {
+        "x": 725,
+        "y": 382.5
+      },
+      "padPosition": {
+        "x": 690,
+        "y": 375
+      },
+      "padRotation": -105
     }
   ],
   "wheels": [
