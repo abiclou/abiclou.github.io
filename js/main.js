@@ -1242,7 +1242,27 @@ function showNotification(message, type = 'info') {
 
 // Initialiser les menus déroulants avec animation
 function initializeSelects() {
-    const selects = {
+    const selectOrder = [
+        'frame-select',
+        'forks-select',
+        'shocks-select',
+        'wheels-select',
+        'handlebars-select',
+        'brakes-select',
+        'pads-select',
+        'drivetrains-select',
+        'cassettes-select',
+        'tires-select',
+        'selles-select'
+    ];
+    selectOrder.forEach((id, idx) => {
+        const sel = document.getElementById(id);
+        if (sel && sel.closest('.component-section')) {
+            sel.closest('.component-section').style.display = (idx === 0) ? '' : 'none';
+        }
+    });
+
+        const selects = {
         frames: document.getElementById('frame-select'),
         forks: document.getElementById('forks-select'), // Correction ici : forks-select
         wheels: document.getElementById('wheels-select'),
@@ -1255,6 +1275,7 @@ function initializeSelects() {
         cassettes: document.getElementById('cassettes-select'),
         pads: document.getElementById('pads-select')
     };
+
 
     for (const [type, select] of Object.entries(selects)) {
         if (components[type] && select) {
@@ -1283,7 +1304,173 @@ function populateSelect(select, items, defaultText) {
 // Mettre à jour la sélection et le résumé avec animation
 function updateSelection(event, type) {
     const selectedId = event.target.value;
-    
+
+    // Sélection automatique des dépendances (cascade)
+    if (type === 'forks' && !selectedComponents.frames) {
+        // fourche → cadre
+        const frameSelect = document.getElementById('frame-select');
+        if (frameSelect && frameSelect.options.length > 1) {
+            frameSelect.selectedIndex = 1;
+            const frameId = frameSelect.options[1].value;
+            const frame = components.frames.find(c => c.id === frameId);
+            if (frame) {
+                selectedComponents.frames = frame;
+                updateComponentImage('frames', frame);
+            }
+        }
+    }
+    if (type === 'shocks' && !selectedComponents.forks) {
+        // amortisseur → fourche
+        const forkSelect = document.getElementById('forks-select');
+        if (forkSelect && forkSelect.options.length > 1) {
+            forkSelect.selectedIndex = 1;
+            const forkId = forkSelect.options[1].value;
+            const fork = components.forks.find(c => c.id === forkId);
+            if (fork) {
+                selectedComponents.forks = fork;
+                updateComponentImage('forks', fork);
+                BIKE_CONFIG.currentForkIndex = parseInt(fork.id);
+            }
+        }
+    }
+    if ((type === 'wheels' || type === 'handlebars') && !selectedComponents.shocks) {
+        // roue/guidon → amortisseur
+        const shockSelect = document.getElementById('shocks-select');
+        if (shockSelect && shockSelect.options.length > 1) {
+            shockSelect.selectedIndex = 1;
+            const shockId = shockSelect.options[1].value;
+            const shock = components.shocks.find(c => c.id === shockId);
+            if (shock) {
+                selectedComponents.shocks = shock;
+                updateComponentImage('shocks', shock);
+            }
+        }
+    }
+    if (type === 'discs' && !selectedComponents.wheels) {
+        // disque → roue
+        const wheelSelect = document.getElementById('wheels-select');
+        if (wheelSelect && wheelSelect.options.length > 1) {
+            wheelSelect.selectedIndex = 1;
+            const wheelId = wheelSelect.options[1].value;
+            const wheel = components.wheels.find(c => c.id === wheelId);
+            if (wheel) {
+                selectedComponents.wheels = wheel;
+                updateComponentImage('wheels', wheel);
+            }
+        }
+    }
+    if (type === 'brakes' && !selectedComponents.handlebars) {
+        // étrier → guidon
+        const handlebarSelect = document.getElementById('handlebars-select');
+        if (handlebarSelect && handlebarSelect.options.length > 1) {
+            handlebarSelect.selectedIndex = 1;
+            const handlebarId = handlebarSelect.options[1].value;
+            const handlebar = components.handlebars.find(c => c.id === handlebarId);
+            if (handlebar) {
+                selectedComponents.handlebars = handlebar;
+                updateComponentImage('handlebars', handlebar);
+            }
+        }
+    }
+    if (type === 'drivetrains' && !selectedComponents.discs) {
+        // pédalier → disque
+        const discSelect = document.getElementById('discs-select');
+        if (discSelect && discSelect.options.length > 1) {
+            discSelect.selectedIndex = 1;
+            const discId = discSelect.options[1].value;
+            const disc = components.discs.find(c => c.id === discId);
+            if (disc) {
+                selectedComponents.discs = disc;
+                updateComponentImage('discs', disc);
+            }
+        }
+    }
+    if (type === 'cassettes' && !selectedComponents.brakes) {
+        // cassette → étrier
+        const brakeSelect = document.getElementById('brakes-select');
+        if (brakeSelect && brakeSelect.options.length > 1) {
+            brakeSelect.selectedIndex = 1;
+            const brakeId = brakeSelect.options[1].value;
+            const brake = components.brakes.find(c => c.id === brakeId);
+            if (brake) {
+                selectedComponents.brakes = brake;
+                updateComponentImage('brakes', brake);
+            }
+        }
+    }
+    if (type === 'tires' && (!selectedComponents.drivetrains || !selectedComponents.cassettes)) {
+        // pneus → pédalier et cassette
+        if (!selectedComponents.drivetrains) {
+            const driveSelect = document.getElementById('drivetrains-select');
+            if (driveSelect && driveSelect.options.length > 1) {
+                driveSelect.selectedIndex = 1;
+                const driveId = driveSelect.options[1].value;
+                const drive = components.drivetrains.find(c => c.id === driveId);
+                if (drive) {
+                    selectedComponents.drivetrains = drive;
+                    updateComponentImage('drivetrains', drive);
+                }
+            }
+        }
+        if (!selectedComponents.cassettes) {
+            const cassetteSelect = document.getElementById('cassettes-select');
+            if (cassetteSelect && cassetteSelect.options.length > 1) {
+                cassetteSelect.selectedIndex = 1;
+                const cassetteId = cassetteSelect.options[1].value;
+                const cassette = components.cassettes.find(c => c.id === cassetteId);
+                if (cassette) {
+                    selectedComponents.cassettes = cassette;
+                    updateComponentImage('cassettes', cassette);
+                }
+            }
+        }
+    }
+    if (type === 'selles' && !selectedComponents.tires) {
+        // selle → pneus
+        const tireSelect = document.getElementById('tires-select');
+        if (tireSelect && tireSelect.options.length > 1) {
+            tireSelect.selectedIndex = 1;
+            const tireId = tireSelect.options[1].value;
+            const tire = components.tires.find(c => c.id === tireId);
+            if (tire) {
+                selectedComponents.tires = tire;
+                updateComponentImage('tires', tire);
+            }
+        }
+    }
+
+    // Hiérarchie d'affichage dynamique
+    const showNext = {
+        'frames': 'forks-select',
+        'forks': 'shocks-select',
+        'shocks': 'wheels-select',
+        'wheels': 'handlebars-select',
+        'handlebars': 'brakes-select',
+        'brakes': 'pads-select',
+        'pads': 'drivetrains-select',
+        'drivetrains': 'cassettes-select',
+        'cassettes': 'tires-select',
+        'tires': 'selles-select'
+    };
+    // Masquer tous les selects enfants
+    let found = false;
+    Object.entries(showNext).forEach(([parent, childId]) => {
+        if (parent === type) found = true;
+        if (found) {
+            const childSel = document.getElementById(childId);
+            if (childSel && childSel.closest('.component-section')) {
+                childSel.closest('.component-section').style.display = 'none';
+            }
+        }
+    });
+    // Afficher le select suivant si sélection (y compris pour le tout premier)
+    if (selectedId && showNext[type]) {
+        const nextSel = document.getElementById(showNext[type]);
+        if (nextSel && nextSel.closest('.component-section')) {
+            nextSel.closest('.component-section').style.display = '';
+        }
+    }
+
     if (!selectedId) {
         selectedComponents[type] = null;
         if (type === 'wheels') {
@@ -1924,6 +2111,7 @@ function setupEventListeners() {
     });
 
     // Écouteur pour les touches du clavier
+   
     document.addEventListener('keydown', (e) => {
         if (e.key === 'f') {
             toggleFullscreen();
