@@ -1,3 +1,5 @@
+let isShockSplit = false;
+let isShockSplitHorizontal = false;
 let canvas, ctx;
 let bikeComponents = {
     frame: null,
@@ -746,7 +748,7 @@ function drawComponent(type, component, config = null) {
         // 1. Déplacer au point d'ancrage
         ctx.translate(anchor.x, anchor.y);
         
-        // 2. Appliquer la rotation autour du centre de la roue
+        // 2. Appliquer la rotation autour de la roue
         ctx.rotate(wheelRotation);
 
         // 3. Dessiner la roue centrée sur son point d'ancrage
@@ -783,7 +785,7 @@ function drawComponent(type, component, config = null) {
         // 1. Déplacer au point d'ancrage
         ctx.translate(anchor.x, anchor.y);
         
-        // 2. Appliquer la rotation autour du centre de la roue
+        // 2. Appliquer la rotation autour de la roue
         ctx.rotate(wheelRotation);
 
         // 3. Dessiner la roue centrée sur son point d'ancrage
@@ -990,31 +992,30 @@ function drawComponent(type, component, config = null) {
             console.warn('No shock config provided');
             return;
         }
-        
         const frameConfig = getCurrentFrameConfig();
         if (!frameConfig || !frameConfig.shockMount) {
             console.warn('No frame config or shock mount found');
             return;
         }
-
-        // console.log('Drawing shock with config:', config);
-        // console.log('Frame shock mount:', frameConfig.shockMount);
-        
-        const baseWidth = component.width * config.scale;
-        const baseHeight = component.height * config.scale;
-        const shockWidth = baseWidth * config.dimensions.width;
-        const shockHeight = baseHeight * config.dimensions.height;
-
-        // Déplacer au point de montage
-        ctx.translate(frameConfig.shockMount.x, frameConfig.shockMount.y);
-        
-        // Appliquer la rotation
+        const baseWidth = component.width * (config.scale || 1);
+        const baseHeight = component.height * (config.scale || 1);
+        const shockWidth = baseWidth * (config.dimensions?.width || 1);
+        const shockHeight = baseHeight * (config.dimensions?.height || 1);
+        ctx.save();
+        // Flip dépendant du cadre (frameConfig)
+        const flipVertical = frameConfig.shockFlipVertical || false;
+        const flipHorizontal = frameConfig.shockFlipHorizontal || false;
+        // Appliquer le décalage de 30px uniquement si flip horizontal
+        const offsetX = flipHorizontal ? 12.5 : 0;
+        ctx.translate(frameConfig.shockMount.x + offsetX, frameConfig.shockMount.y);
         if (frameConfig.shockMount.rotation) {
             const angleRad = frameConfig.shockMount.rotation * Math.PI / 180;
             ctx.rotate(angleRad);
         }
-
-        // Dessiner l'amortisseur centré sur son point de rotation
+        // Flip horizontal, vertical, ou les deux, toujours centré
+        let scaleX = flipHorizontal ? -1 : 1;
+        let scaleY = flipVertical ? -1 : 1;
+        ctx.scale(scaleX, scaleY);
         ctx.drawImage(
             component,
             -shockWidth / 2,
@@ -1022,6 +1023,7 @@ function drawComponent(type, component, config = null) {
             shockWidth,
             shockHeight
         );
+        ctx.restore();
     }else if (type === 'handlebar') {
         if (!config) {
             console.warn('No shock config provided');
