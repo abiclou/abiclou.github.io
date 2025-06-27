@@ -934,8 +934,17 @@
       "name": "Shimano Box 7v",
       "scale": 0.7,
       "dimensions": {
-        "width": 0.09,
-        "height": 0.09
+        "width": 0.225,
+        "height": 0.225
+      },
+      "zIndex": 0
+    },
+    {
+      "name": "Sram GX Eagle 12V",
+      "scale": 0.7,
+      "dimensions": {
+        "width": 0.225,
+        "height": 0.225
       },
       "zIndex": 0
     }

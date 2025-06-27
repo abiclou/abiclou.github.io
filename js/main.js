@@ -381,7 +381,17 @@ const COMPONENTS = {
             'description': 'Transmission Shimano XTR M9100 12 vitesses',
             'price': 43.13,
             'weight': 1.5,  // kg
-            'image': 'shimano-box-components.png',
+            'image': 'shimano-box-components-2.png',
+            'scale': 1.0,
+            'position': {'top': '50%', 'left': '50%'}
+        },
+        {
+            'id': 'cassette-1',
+            'name': 'Sram GX Eagle 12V',
+            'description': 'Transmission Sram Eagle 12 vitesses',
+            'price': 43.13,
+            'weight': 1.5,  // kg
+            'image': 'sram-gx-eagle.png',
             'scale': 1.0,
             'position': {'top': '50%', 'left': '50%'}
         }
