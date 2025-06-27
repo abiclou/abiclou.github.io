@@ -1226,7 +1226,7 @@ function showNotification(message, type = 'info') {
 function initializeSelects() {
     const selects = {
         frames: document.getElementById('frame-select'),
-        forks: document.getElementById('fork-select'),
+        forks: document.getElementById('forks-select'), // Correction ici : forks-select
         wheels: document.getElementById('wheels-select'),
         handlebars: document.getElementById('handlebars-select'),
         brakes: document.getElementById('brakes-select'),
@@ -1239,7 +1239,7 @@ function initializeSelects() {
     };
 
     for (const [type, select] of Object.entries(selects)) {
-        if (components[type]) {
+        if (components[type] && select) {
             populateSelect(select, components[type], `Choisir ${type}`);
             select.classList.add('initialized');
         }
@@ -1587,13 +1587,12 @@ function handleFavorites() {
     let favorites = JSON.parse(localStorage.getItem('bikeFavorites') || '[]');
 
     favBtn.addEventListener('click', () => {
+        // Vérifier qu'au moins un composant est sélectionné (hors cadre)
         const hasComponents = Object.values(selectedComponents).some(component => component !== null);
-        
         if (!hasComponents) {
             showNotification('Veuillez sélectionner au moins un composant', 'error');
             return;
         }
-
         // Créer un objet configuration
         const config = {
             id: Date.now(),
@@ -1602,7 +1601,6 @@ function handleFavorites() {
             totalPrice: parseFloat(document.getElementById('total-price').textContent),
             totalWeight: parseFloat(document.getElementById('total-weight').textContent)
         };
-
         // Sauvegarder les composants sélectionnés
         Object.entries(selectedComponents).forEach(([type, component]) => {
             if (component) {
@@ -1614,13 +1612,10 @@ function handleFavorites() {
                 };
             }
         });
-
         // Ajouter aux favoris
         favorites.push(config);
         localStorage.setItem('bikeFavorites', JSON.stringify(favorites));
-
         showNotification('Configuration ajoutée aux favoris !', 'success');
-        
         // Mettre à jour le badge des favoris si existant
         const favCount = document.getElementById('fav-count');
         if (favCount) {
@@ -1629,7 +1624,7 @@ function handleFavorites() {
     });
 }
 
-// Ajouter la fonction de chargement des configurations
+// Charger les configurations depuis le stockage local
 function handleLoadConfig() {
     const loadBtn = document.querySelector('.btn-load');
     const modal = new bootstrap.Modal(document.getElementById('loadModal'));
@@ -1840,7 +1835,7 @@ function initializeComponents() {
 // Regrouper la configuration des écouteurs d'événements
 function setupEventListeners() {
     // Configuration des sélecteurs
-    const forkSelect = document.getElementById('fork-select');
+    const forkSelect = document.getElementById('forks-select');
     if (forkSelect) {
         forkSelect.addEventListener('change', (event) => {
             const selectedIndex = parseInt(event.target.value, 10);
@@ -1853,6 +1848,7 @@ function setupEventListeners() {
     // Configuration des autres sélecteurs
     const selects = {
         frames: document.getElementById('frame-select'),
+        forks: document.getElementById('forks-select'), // Correction ici : forks-select
         wheels: document.getElementById('wheels-select'),
         handlebars: document.getElementById('handlebars-select'),
         brakes: document.getElementById('brakes-select'),
