@@ -151,13 +151,13 @@ const COMPONENTS = {
         {"id":"2","name":"RockShox ZEB Ultimate","description":"Fourche RockShox ZEB Ultimate 180mm","price":1159,"weight":2.34,"image":"fork-3.png"},
         {"id":"3","name":"RockShox ZEB Select+","description":"Fourche RockShox ZEB Select+ 180mm","price":1159,"weight":2.34,"image":"fork-4.png"},
         {"id":"4","name":"EXT Ferro","description":"Fourche EXT Ferro 205mm","price":2459,"weight":4.3,"image":"fork-5.png"},
-        {"id":"5","name":"Öhlins RXF38 m.2","description":"Fourche Öhlins RXF38 m.2 180mm","price":1345,"weight":2.32,"image":"fork-6.png"}
+        {"id":"5","name":"Öhlins RXF38 m.2","description":"Fourche Öhlins RXF38 m.2 180mm","price":1345,"weight":2.32,"image":"fork-6.png"},
+        {"id":"6","name":"Fox 38 Factory GRIP X2","description":"Fourche Fox 38 Factory GRIP X2 180mm","price":1249,"weight":2.2,"image":"fork-7.png"}
     ],
     "wheels": [
         {"id":"wheels-0","name":"Industry Nine Hydra Enduro S Carbon","description":"Roues Industry Nine Hydra Enduro S Carbon 29\"","price":1850,"weight":1.755,"image":"hydra-enduro-s-carbon.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
         {"id":"wheels-1","name":"Mavic Deemax","description":"Roues Mavic Deemax DH 29\"","price":755,"weight":2.08,"image":"mavic-deemax.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
-        {"id":"wheels-2","name":"Bontrager Paradigm","description":"Roues Bontrager Paradigm 29\"","price":899.99,"weight":1.9,"image":"bontrager-paradigm.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
-        {"id":"wheels-3","name":"Cranbrothers Iodine 2","description":"Roues Crankbrothers Iodine 2 29\"","price":499.99,"weight":1.7,"image":"crankbrothers-iodine.png","scale":1.0,"position":{"top":"50%","left":"50%"}}
+        {"id":"wheels-2","name":"Bontrager Paradigm","description":"Roues Bontrager Paradigm 29\"","price":899.99,"weight":1.9,"image":"bontrager-paradigm.png","scale":1.0,"position":{"top":"50%","left":"50%"}}
     ],
     "handlebars": [
         {"id":"handlebars-0","name":"Renthal Fatbar Carbon","description":"Cintre carbone Renthal Fatbar 800mm","price":169.99,"weight":0.50,"image":"v10cable.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
@@ -947,7 +947,7 @@ function showNotification(message, type = 'info') {
 function initializeSelects() {
     const selects = {
         frames: document.getElementById('frame-select'),
-        forks: document.getElementById('forks-select'), // Correction ici : forks-select
+        forks: document.getElementById('forks-select'),
         wheels: document.getElementById('wheels-select'),
         handlebars: document.getElementById('handlebars-select'),
         brakes: document.getElementById('brakes-select'),
@@ -961,7 +961,7 @@ function initializeSelects() {
 
     for (const [type, select] of Object.entries(selects)) {
         if (components[type] && select) {
-            populateSelect(select, components[type], `Choisir ${type}`);
+            fillSelectWithData(select.id, components[type]);
             select.classList.add('initialized');
         }
     }
@@ -983,8 +983,34 @@ function populateSelect(select, items, defaultText) {
     });
 }
 
+// Remplissage des selects avec data-img, data-price, data-weight, data-specs
+function fillSelectWithData(selectId, dataArray) {
+  var select = document.getElementById(selectId);
+  if (!select) return;
+  select.innerHTML = '';
+  // Option vide
+  var empty = document.createElement('option');
+  empty.value = '';
+  empty.text = 'Choisir...';
+  select.appendChild(empty);
+  dataArray.forEach(function(item) {
+    var option = document.createElement('option');
+    option.value = item.id || '';
+    option.text = item.name || '';
+    if(item.image) option.dataset.img = item.image;
+    if(item.price) option.dataset.price = item.price;
+    if(item.weight) option.dataset.weight = item.weight;
+    if(item.description) option.dataset.specs = item.description;
+    select.appendChild(option);
+  });
+}
+// Exemple d'utilisation pour chaque composant :
+// fillSelectWithData('frame-select', COMPONENTS.frames);
+// fillSelectWithData('forks-select', COMPONENTS.forks);
+// ...etc pour chaque select/composant...
 // Mettre à jour la sélection et le résumé avec animation
 function updateSelection(event, type) {
+    if (!components || !components[type]) return; // Correction sécurité
     const selectedId = event.target.value;
     
     if (!selectedId) {

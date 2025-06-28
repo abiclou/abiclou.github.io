@@ -158,25 +158,25 @@
                     </section>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="viewer-container">
-                    <div class="viewer-header">
-                        <h2><i class="fas fa-eye"></i>APERÇU</h2>
-                        <div class="viewer-controls">
-                            <button class="btn btn-control" id="play" data-tooltip="Play"><i class="fas fa-play"></i></button>
-                            <button class="btn btn-control" id="zoom-in" data-tooltip="Zoom avant"><i class="fas fa-search-plus"></i></button>
-                            <button class="btn btn-control" id="zoom-out" data-tooltip="Zoom arrière"><i class="fas fa-search-minus"></i></button>
-                            <button class="btn btn-control" id="screenshot" data-tooltip="Sauvegarder l'image"><i class="fas fa-camera"></i></button>
-                            <button class="btn btn-control" id="reset-view" data-tooltip="Réinitialiser la vue"><i class="fas fa-sync-alt"></i></button>
-                        </div>
-                    </div>
-                    <div id="bike-image-container" class="bike-viewer">
-                        <canvas id="bike-canvas"></canvas>
-                    </div>
+            <div class="col-12 col-lg-6 mx-auto">
+              <div class="viewer-container">
+                <div class="viewer-header">
+                  <h2><i class="fas fa-eye"></i>APERÇU</h2>
+                  <div class="viewer-controls">
+                    <button class="btn btn-control" id="play" data-tooltip="Play"><i class="fas fa-play"></i></button>
+                    <button class="btn btn-control" id="zoom-in" data-tooltip="Zoom avant"><i class="fas fa-search-plus"></i></button>
+                    <button class="btn btn-control" id="zoom-out" data-tooltip="Zoom arrière"><i class="fas fa-search-minus"></i></button>
+                    <button class="btn btn-control" id="screenshot" data-tooltip="Sauvegarder l'image"><i class="fas fa-camera"></i></button>
+                    <button class="btn btn-control" id="reset-view" data-tooltip="Réinitialiser la vue"><i class="fas fa-sync-alt"></i></button>
+                  </div>
                 </div>
+                <div id="bike-image-container" class="bike-viewer">
+                  <canvas id="bike-canvas"></canvas>
+                </div>
+              </div>
             </div>
-            <div class="col-lg-3">
-                <div class="summary-panel">
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="summary-panel d-none-mobile">
                     <div class="summary-header">
                         <h2><i class="fas fa-clipboard-list"></i> RÉSUMÉ</h2>
                     </div>
@@ -195,6 +195,20 @@
             </div>
         </div>
     </main>
+    <div class="bottom-nav d-lg-none">
+      <button class="bottom-nav-btn" data-target="frame-select"><i class="fas fa-mountain"></i><span>Cadre</span></button>
+      <button class="bottom-nav-btn" data-target="forks-select"><i class="fas fa-sort"></i><span>Fourche</span></button>
+      <button class="bottom-nav-btn" data-target="shocks-select"><i class="fas fa-wave-square"></i><span>Amorto</span></button>
+      <button class="bottom-nav-btn" data-target="wheels-select"><i class="fas fa-circle"></i><span>Roues</span></button>
+      <button class="bottom-nav-btn" data-target="handlebars-select"><i class="fas fa-grip-lines"></i><span>Guidon</span></button>
+      <button class="bottom-nav-btn" data-target="brakes-select"><i class="fas fa-ban"></i><span>Disques</span></button>
+      <button class="bottom-nav-btn" data-target="pads-select"><i class="fas fa-ban"></i><span>Etriers</span></button>
+      <button class="bottom-nav-btn" data-target="drivetrains-select"><i class="fas fa-link"></i><span>Pédalier</span></button>
+      <button class="bottom-nav-btn" data-target="cassettes-select"><i class="fas fa-link"></i><span>Cassette</span></button>
+      <button class="bottom-nav-btn" data-target="tires-select"><i class="fa-solid fa-tire"></i><span>Pneus</span></button>
+      <button class="bottom-nav-btn" data-target="selles-select"><i class="fas fa-chair"></i><span>Selle</span></button>
+      <button class="bottom-nav-btn btn-load-modal" type="button"><i class="fas fa-folder-open"></i><span>Charger</span></button>
+    </div>
     <div class="modal fade" id="loadModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -208,8 +222,151 @@
             </div>
         </div>
     </div>
+    <!-- Panneau de choix de composant mobile (type slide) -->
+    <div class="component-chooser-panel d-lg-none" id="componentChooserPanel" style="display:none;">
+      <div class="chooser-content">
+        <div class="container-sliding">
+          <button class="chooser-slider-prev"><i class="fa-solid fa-arrow-left"></i></button>
+            <div class="chooser-slider-wrap">
+                <div class="chooser-slider" id="chooserSlider">
+                    <!-- Slides injectées par JS -->
+                </div>
+            </div>
+            <button class="chooser-slider-next"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+        <div class="chooser-details" id="chooserDetails">
+          <!-- Détails du composant injectés par JS -->
+        </div>
+        <button class="btn chooser-add" id="chooserAddBtn"><i class="fa-solid fa-cart-shopping"></i> Ajouter</button>
+      </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
+    <script>
+      let chooserCurrentIdx = 0;
+      $(function() {
+        // Ouvre le panneau de choix de composant au clic sur une icône
+        $('.bottom-nav-btn').not('.btn-load-modal').on('click', function() {
+          $('.bottom-nav-btn').removeClass('active');
+          $(this).addClass('active');
+          var selectId = $(this).data('target');
+          var select = $('#' + selectId);
+          if (!select.length || select[0].options.length <= 1) return;
+          var options = Array.from(select[0].options);
+          chooserCurrentIdx = select[0].selectedIndex > 0 ? select[0].selectedIndex - 1 : 0;
+          var slides = options.map(function(option, idx) {
+            if (idx === 0 && (!option.value || option.value === '' || !option.text || option.text === '')) return '';
+            var name = option.text;
+            var img = option.dataset ? option.dataset.img : '';
+            if (img && !img.startsWith('http') && !img.startsWith('images/')) {
+              if (selectId.includes('frame')) img = 'images/frames/' + img;
+              else if (selectId.includes('fork')) img = 'images/forks/' + img;
+              else if (selectId.includes('shock')) img = 'images/shocks/' + img;
+              else if (selectId.includes('wheel')) img = 'images/wheels/' + img;
+              else if (selectId.includes('tire')) img = 'images/tires/' + img;
+              else if (selectId.includes('selle')) img = 'images/selles/' + img;
+              else if (selectId.includes('handlebar')) img = 'images/handlebars/' + img;
+              else if (selectId.includes('brake')) img = 'images/brakes/' + img;
+              else if (selectId.includes('cassette')) img = 'images/cassettes/' + img;
+              else if (selectId.includes('drivetrain')) img = 'images/drivetrains/' + img;
+              else img = 'images/' + img;
+            }
+            return `
+              <div class="component-slide" data-idx="${idx}${option.value === '' ? ' data-empty="1"' : ''}" data-select="${selectId}">
+                <div class="slide-img-container">
+                  ${img ? `<img src="${img}" alt="${name}">` : `<span style='font-size:2.5rem;color:#94A3B8;'><i class='fa-regular fa-image'></i></span>`}
+                </div>
+              </div>
+            `;
+          }).filter(Boolean).join('');
+          $('#chooserSlider').html(slides);
+          updateChooserDetails(select[0].options[chooserCurrentIdx+1], chooserCurrentIdx);
+          $('#componentChooserPanel').fadeIn(200);
+          updateChooserPosition(chooserCurrentIdx);
+        });
+        function updateChooserDetails(option, idx) {
+          if (!option) return;
+          var name = option.text || $(option).find('.slide-title').text();
+          var desc = option.dataset ? (option.dataset.specs || option.dataset.description || '') : $(option).find('.slide-desc').text();
+          var price = option.dataset ? option.dataset.price : $(option).find('.slide-price').text();
+          var weight = option.dataset ? option.dataset.weight : $(option).find('.slide-weight').text();
+          $('#chooserDetails').html(`
+            <div class="slide-title">${name || ''}</div>
+            ${desc ? `<div class='slide-desc'>${desc}</div>` : ''}
+            ${price ? `<div class='slide-price'>${price}${price && !price.includes('€') ? ' €' : ''}</div>` : ''}
+            ${weight ? `<div class='slide-weight'>${weight}${weight && !weight.includes('kg') ? ' kg' : ''}</div>` : ''}
+          `);
+        }
+        function updateChooserPosition(idx) {
+          var $slider = $('#chooserSlider');
+          var slideWidth = 240; // largeur fixe
+          $slider.css('transform', `translateX(${-idx * slideWidth}px)`);
+          // Désactive/active les flèches selon la position
+          var $prev = $('.chooser-slider-prev');
+          var $next = $('.chooser-slider-next');
+          var $slides = $slider.find('.component-slide');
+          if (idx <= 0) {
+            $prev.css("opacity", 0)
+          } else {
+            $prev.css("opacity", 1);
+          }
+          if (idx >= $slides.length - 1) {
+            $next.css("opacity", 0);
+          } else {
+            $next.css("opacity", 1);
+          }
+        }
+        $(document).on('click', '.chooser-slider-prev', function() {
+          var $slider = $('#chooserSlider');
+          var $slides = $slider.find('.component-slide');
+          if (chooserCurrentIdx > 0) {
+            chooserCurrentIdx--;
+            updateChooserPosition(chooserCurrentIdx);
+            var selectId = $slides.eq(chooserCurrentIdx).data('select');
+            var select = $('#' + selectId);
+            if (select.length) {
+              updateChooserDetails(select[0].options[chooserCurrentIdx+1], chooserCurrentIdx);
+            }
+          }
+        });
+        $(document).on('click', '.chooser-slider-next', function() {
+          var $slider = $('#chooserSlider');
+          var $slides = $slider.find('.component-slide');
+          if (chooserCurrentIdx < $slides.length - 1) {
+            chooserCurrentIdx++;
+            updateChooserPosition(chooserCurrentIdx);
+            var selectId = $slides.eq(chooserCurrentIdx).data('select');
+            var select = $('#' + selectId);
+            if (select.length) {
+              updateChooserDetails(select[0].options[chooserCurrentIdx+1], chooserCurrentIdx);
+            }
+          }
+        });
+        $(document).on('click', '.component-slide', function() {
+          var idx = $(this).data('idx');
+          var selectId = $(this).data('select');
+          var select = $('#' + selectId);
+          if (select.length) {
+            chooserCurrentIdx = idx;
+            updateChooserPosition(chooserCurrentIdx);
+            updateChooserDetails(select[0].options[chooserCurrentIdx+1], chooserCurrentIdx);
+          }
+        });
+        $('#chooserAddBtn').on('click', function() {
+          var $slider = $('#chooserSlider');
+          var $slides = $slider.find('.component-slide');
+          var idx = chooserCurrentIdx;
+          var selectId = $slides.eq(idx).data('select');
+          var select = $('#' + selectId);
+          if (select.length) {
+            select[0].selectedIndex = idx+1;
+            select.trigger('change'); // jQuery trigger pour compatibilité avec addEventListener
+            select[0].dispatchEvent(new Event('change', { bubbles: true })); // Ajout : force le handler natif vanilla JS
+          }
+          $('#componentChooserPanel').fadeOut(200);
+        });
+      });
+    </script>
 </body>
 </html>

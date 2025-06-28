@@ -549,70 +549,6 @@
         "rotation": 0
       },
       "zIndex": 1
-    },
-    {
-      "name": "Specialized frs",
-      "wheelAnchors": {
-        "rear": {
-          "x": 285,
-          "y": 375
-        }
-      },
-      "shockMount": {
-        "x": 460,
-        "y": 340,
-        "rotation": 68
-      },
-      "diskAnchors": {
-        "rear": {
-          "x": 285,
-          "y": 375
-        }
-      },
-      "tireAnchors": {
-        "rear": {
-          "x": 285,
-          "y": 375
-        }
-      },
-      "handlebarMount": {
-        "x": 500,
-        "y": 330,
-        "rotation": 0
-      },
-      "zIndex": 1
-    },
-    {
-      "name": "Rocky Mountain Altitude C50",
-      "wheelAnchors": {
-        "rear": {
-          "x": 300,
-          "y": 345
-        }
-      },
-      "shockMount": {
-        "x": 460,
-        "y": 295,
-        "rotation": 30
-      },
-      "diskAnchors": {
-        "rear": {
-          "x": 300,
-          "y": 345
-        }
-      },
-      "tireAnchors": {
-        "rear": {
-          "x": 300,
-          "y": 345
-        }
-      },
-      "handlebarMount": {
-        "x": 500,
-        "y": 330,
-        "rotation": 0
-      },
-      "zIndex": 1
     }
   ],
   "forks": [
@@ -787,6 +723,35 @@
       "padPosition": {
         "x": 690,
         "y": 375
+      },
+      "padRotation": -105
+    },
+    {
+      "name": "Fox 38 Factory GRIP X2",
+      "scale": 0.9,
+      "anchor": {
+        "x": 480,
+        "y": 250
+      },
+      "offset": {
+        "x": -13.5,
+        "y": 26,
+        "depth": 0
+      },
+      "dimensions": {
+        "width": 1.1,
+        "height": 1.1,
+        "depth": 50
+      },
+      "rotation": -23.9,
+      "zIndex": 0,
+      "axle": {
+        "x": 722.5,
+        "y": 377.5
+      },
+      "padPosition": {
+        "x": 692.5,
+        "y": 372.5
       },
       "padRotation": -105
     }
