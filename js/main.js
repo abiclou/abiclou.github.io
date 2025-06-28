@@ -63,424 +63,139 @@ const BIKE_CONFIG = {
 };
 
 const COMPONENTS = {
-    'frames': [
+    "frames": [
         {
-            'id': 'v10',
-            'name': 'Santa Cruz V10 Factory',
-            'description': 'Cadre en carbone haut de gamme',
-            'price': 3700,
-            'weight': 3.2,  // kg
-            'image': 'v10_3.png'
+            "id": "v10",
+            "name": "Santa Cruz V10 Factory",
+            "description": "Cadre en carbone haut de gamme",
+            "price": 3949,
+            "weight": 4.41,
+            "image": "v10_3.png"
         },
         {
-            'id': 'v5',
-            'name': 'Commencal Supreme DH V5',
-            'description': 'Cadre en aluminium hyper resistant',
-            'price': 3200,
-            'weight': 2.5,  // kg
-            'image': 'v5.png'
+            "id": "v5",
+            "name": "Commencal Supreme DH V5",
+            "description": "Cadre aluminium DH Racing",
+            "price": 3200,
+            "weight": 5.4,
+            "image": "v5.png"
         },
         {
-            'id': 'frs',
-            'name': 'Commencal FRS',
-            'description': 'Cadre en aluminium hyper resistant',
-            'price': 1669.99,
-            'weight': 2.5,  // kg
-            'image': 'frs.png'
+            "id": "frs",
+            "name": "Commencal FRS",
+            "description": "Cadre aluminium hyper résistant",
+            "price": 1700,
+            "weight": 4.1,
+            "image": "frs.png"
         },
         {
-            'id': 'spicy-pro-team',
-            'name': 'Spicy Pro Team',
-            'description': 'Cadre en aluminium hyper resistant',
-            'price': 1669.99,
-            'weight': 2.5,  // kg
-            'image': 'spicy-pro-team.png'
-        },
-
-        {
-            'id': 'sb160',
-            'name': 'Yeti SB160',
-            'description': 'Cadre en aluminium hyper resistant',
-            'price': 1669.99,
-            'weight': 2.5,  // kg
-            'image': 'sb160.png'
+            "id": "spicy-pro-team",
+            "name": "Spicy Pro Team",
+            "description": "Cadre aluminium hyper résistant",
+            "price": 2999,
+            "weight": 3.2,
+            "image": "spicy-pro-team.png"
         },
         {
-            'id': 'atherton-s-170',
-            'name': 'Atherton S.170',
-            'description': 'Cadre en aluminium hyper resistant',
-            'price': 2799.00,
-            'weight': 2.5,  // kg
-            'image': 'atherton-s-170.png'
+            "id": "sb160",
+            "name": "Yeti SB160",
+            "description": "Cadre carbone Enduro",
+            "price": 4000,
+            "weight": 3.97,
+            "image": "sb160.png"
         },
         {
-            'id': 'firebird',
-            'name': 'Pivot Firebird',
-            'description': 'Cadre en aluminium hyper resistant',
-            'price': 1669.99,
-            'weight': 2.5,  // kg
-            'image': 'firebird.png'
+            "id": "atherton-s-170",
+            "name": "Atherton S.170",
+            "description": "Cadre aluminium hyper résistant",
+            "price": 2491,
+            "weight": 4.1,
+            "image": "atherton-s-170.png"
         },
         {
-            'id': 'metav5',
-            'name': 'Commencal Meta V5',
-            'description': 'Cadre en aluminium hyper resistant',
-            'price': 1900.00,
-            'weight': 2.5,  // kg
-            'image': 'metav5.png'
+            "id": "firebird",
+            "name": "Pivot Firebird",
+            "description": "Cadre carbone Enduro",
+            "price": 4399,
+            "weight": 3.2,
+            "image": "firebird.png"
         },
         {
-            'id': 'marin-trail',
-            'name': 'Marin Trail XR',
-            'description': 'Cadre en aluminium hyper resistant',
-            'price': 1900.00,
-            'weight': 2.5,  // kg
-            'image': 'marin-trail.png'
-        },
-        // {
-        //     'id': 'frsspe',
-        //     'name': 'Specialized frs',
-        //     'description': 'Cadre en carbonne hyper resistant',
-        //     'price': 3200,
-        //     'weight': 2.5,  // kg
-        //     'image': 'frsspe.png'
-        // },
-        {
-            'id': 'dreadnought',
-            'name': 'Forbidden Dreadnought',
-            'description': 'Cadre polyvalent pour toutes les conditions',
-            'price': 4399,
-            'weight': 3.5,  // kg
-            'image': 'dreadnought.png'
-        },
-        // {
-        //     'id': 'rocky',
-        //     'name': 'Rocky Mountain Altitude C50',
-        //     'description': 'Cadre en carbonne haut de gamme',
-        //     'price': 3629,
-        //     'weight': 3.0,  // kg
-        //     'image': 'rocky.png'
-        // }
-    ],
-    'forks': [
-        {
-            'id': '0',
-            'name': 'Fox 40 Factory',
-            'description': 'Fourche Fox 40 Factory GRIP2 200mm',
-            'price': 1849,
-            'weight': 2.7,  // kg
-            'image': 'fork-1.png'
+            "id": "metav5",
+            "name": "Commencal Meta V5",
+            "description": "Cadre aluminium hyper résistant",
+            "price": 1900,
+            "weight": 3.3,
+            "image": "metav5.png"
         },
         {
-            'id': '1',
-            'name': 'Rockshox Boxxer Ultimate',
-            'description': 'Fourche Rockshox Boxxer Ultimate 200mm',
-            'price': 2279,
-            'weight': 2.9,  // kg
-            'image': 'fork-2.png'
+            "id": "marin-trail",
+            "name": "Marin Alpine Trail XR",
+            "description": "Cadre aluminium hyper résistant",
+            "price": 1199,
+            "weight": 3.8,
+            "image": "marin-trail.png"
         },
         {
-            'id': '2',
-            'name': 'Rockshox ZEB Ultimate',
-            'description': 'Fourche Rockshox ZEB Ultimate 180mm',
-            'price': 1249,
-            'weight': 2.5,  // kg
-            'image': 'fork-3.png'
-        },
-        {
-            'id': '3',
-            'name': 'Rockshox ZEB Select+',
-            'description': 'Fourche Rockshox ZEB Ultimate 180mm',
-            'price': 1249,
-            'weight': 2.5,  // kg
-            'image': 'fork-4.png'
-        },
-        {
-            'id': '4',
-            'name': 'EXT Ferro',
-            'description': 'Fourche EXT Ferro 205mm',
-            'price': 2459,
-            'weight': 2.5,  // kg
-            'image': 'fork-5.png'
-        },
-        {
-            'id': '5',
-            'name': 'ÖHLINS RXF38 m.2',
-            'description': 'Fourche ÖHLINS RXF38 m.2 170mm',
-            'price': 1675,
-            'weight': 2.32,  // kg
-            'image': 'fork-6.png'
+            "id": "dreadnought",
+            "name": "Forbidden Dreadnought",
+            "description": "Cadre carbone polyvalent",
+            "price": 4299,
+            "weight": 3.86,
+            "image": "dreadnought.png"
         }
     ],
-    'wheels': [
-        {
-            'id': 'wheels-0',
-            'name': 'Hydra Enduro S Carbon',
-            'description': 'Roues Industry Nine Hydra',
-            'price': 781.20,
-            'weight': 1.8,  // kg par roue
-            'image': 'hydra-enduro-s-carbon.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        },
-        {
-            'id': 'wheels-1',
-            'name': 'Mavic Deemax',
-            'description': 'Roues en carbone DT Swiss XRC 1200 29"',
-            'price': 649.99,
-            'weight': 2.0,  // kg
-            'image': 'mavic-deemax.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        },
-        {
-            'id': 'wheels-2',
-            'name': 'Bontrager Paradigm',
-            'description': 'Roues en aluminium DT Swiss XR 1700 29"',
-            'price': 899.99,
-            'weight': 1.9,  // kg
-            'image': 'bontrager-paradigm.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        },
-        {
-            'id': 'wheels-3',
-            'name': 'Cranbrothers Iodine 2',
-            'description': 'Roues en aluminium DT Swiss X 1900 29"',
-            'price': 499.99,
-            'weight': 1.7,  // kg
-            'image': 'crankbrothers-iodine.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        }
+    "forks": [
+        {"id":"0","name":"Fox 40 Factory GRIP2","description":"Fourche Fox 40 Factory GRIP2 203mm","price":1849,"weight":2.745,"image":"fork-1.png"},
+        {"id":"1","name":"RockShox Boxxer Ultimate","description":"Fourche RockShox Boxxer Ultimate 200mm","price":1899,"weight":2.88,"image":"fork-2.png"},
+        {"id":"2","name":"RockShox ZEB Ultimate","description":"Fourche RockShox ZEB Ultimate 180mm","price":1159,"weight":2.34,"image":"fork-3.png"},
+        {"id":"3","name":"RockShox ZEB Select+","description":"Fourche RockShox ZEB Select+ 180mm","price":1159,"weight":2.34,"image":"fork-4.png"},
+        {"id":"4","name":"EXT Ferro","description":"Fourche EXT Ferro 205mm","price":2459,"weight":4.3,"image":"fork-5.png"},
+        {"id":"5","name":"Öhlins RXF38 m.2","description":"Fourche Öhlins RXF38 m.2 180mm","price":1345,"weight":2.32,"image":"fork-6.png"}
     ],
-    'handlebars': [
-        {
-            'id': 'handlebars-0',
-            'name': 'Renthal Fatbar Carbon',
-            'description': 'Cintre en carbone Renthal Fatbar 800mm',
-            'price': 169.99,
-            'weight': 0.5,  // kg
-            'scale': 1.0,
-            "image": "v10cable.png",
-            'position': {'top': '50%', 'left': '50%'}
-        },
-        {
-            'id': 'handlebar-2',
-            'name': 'Race Face Next R',
-            'description': 'Cintre en carbone Race Face Next R 780mm',
-            'price': 149.99,
-            'weight': 0.4,  // kg
-            'image': 'handlebar-2.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        },
-        {
-            'id': 'handlebar-3',
-            'name': 'Race Face Aeffect R',
-            'description': 'Cintre en aluminium Race Face Aeffect R 780mm',
-            'price': 79.99,
-            'weight': 0.3,  // kg
-            'image': 'handlebar-3.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        }
+    "wheels": [
+        {"id":"wheels-0","name":"Industry Nine Hydra Enduro S Carbon","description":"Roues Industry Nine Hydra Enduro S Carbon 29\"","price":1850,"weight":1.755,"image":"hydra-enduro-s-carbon.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"wheels-1","name":"Mavic Deemax","description":"Roues Mavic Deemax DH 29\"","price":755,"weight":2.08,"image":"mavic-deemax.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"wheels-2","name":"Bontrager Paradigm","description":"Roues Bontrager Paradigm 29\"","price":899.99,"weight":1.9,"image":"bontrager-paradigm.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"wheels-3","name":"Cranbrothers Iodine 2","description":"Roues Crankbrothers Iodine 2 29\"","price":499.99,"weight":1.7,"image":"crankbrothers-iodine.png","scale":1.0,"position":{"top":"50%","left":"50%"}}
     ],
-    'brakes': [
-        {
-            'id': 'brakes-0',
-            'name': 'Shimano XTR M9120',
-            'description': 'Freins à disque Shimano XTR M9120 4 pistons',
-            'price': 599.99,
-            'weight': 1.0,  // kg
-            'image': 'xtdisque.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        },
-        {
-            'id': 'brakes-1',
-            'name': 'SRAM Code RSC',
-            'description': 'Freins à disque SRAM Code RSC 4 pistons',
-            'price': 499.99,
-            'weight': 0.9,  // kg
-            'image': 'brakes-2.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        },
-        {
-            'id': 'brakes-2',
-            'name': 'Shimano XT M8120',
-            'description': 'Freins à disque Shimano XT M8120 4 pistons',
-            'price': 349.99,
-            'weight': 0.8,  // kg
-            'image': 'brakes-3.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        }
+    "handlebars": [
+        {"id":"handlebars-0","name":"Renthal Fatbar Carbon","description":"Cintre carbone Renthal Fatbar 800mm","price":169.99,"weight":0.50,"image":"v10cable.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"handlebar-2","name":"Race Face Next R","description":"Cintre carbone Race Face Next R 780mm","price":149.99,"weight":0.40,"image":"handlebar-2.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"handlebar-3","name":"Race Face Aeffect R","description":"Cintre alu Race Face Aeffect R 780mm","price":79.99,"weight":0.30,"image":"handlebar-3.png","scale":1.0,"position":{"top":"50%","left":"50%"}}
     ],
-    'tires': [
-        {
-            'id': 'tires-0',
-            'name': 'Shwalbe Dirty Dan',
-            'description': 'Freins à disque Shimano XTR M9120 4 pistons',
-            'price': 99.99,
-            'weight': 1.0,  // kg
-            'image': 'shwalbe.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        },
-        {
-            'id': 'tires-1',
-            'name': 'Michelin DH Mud',
-            'description': 'Freins à disque Shimano XTR M9120 4 pistons',
-            'price': 99.99,
-            'weight': 1.0,  // kg
-            'image': 'dh-michelin-mud.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        },
-        {
-            'id': 'tires-2',
-            'name': 'Pirelli Scorpion',
-            'description': 'Freins à disque Shimano XTR M9120 4 pistons',
-            'price': 99.99,
-            'weight': 1.0,  // kg
-            'image': 'dh-scorpion.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        }
+    "brakes": [
+        {"id":"brakes-0","name":"Shimano XTR M9120","description":"Freins disque Shimano XTR M9120 4 pistons","price":279.95,"weight":0.77,"image":"xtdisque.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"brakes-1","name":"SRAM Code RSC","description":"Freins disque SRAM Code RSC 4 pistons","price":499.99,"weight":0.90,"image":"brakes-2.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"brakes-2","name":"Shimano XT M8120","description":"Freins disque Shimano XT M8120 4 pistons","price":349.99,"weight":0.80,"image":"brakes-3.png","scale":1.0,"position":{"top":"50%","left":"50%"}}
     ],
-    'drivetrains': [
-        {
-            'id': 'drivetrain-0',
-            'name': 'Shimano XTR M9100',
-            'description': 'Transmission Shimano XTR M9100 12 vitesses',
-            'price': 999.99,
-            'weight': 1.5,  // kg
-            'image': 'shimano-xtr.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        },
-        {
-            'id': 'drivetrain-1',
-            'name': 'SRAM GX Eagle',
-            'description': 'Transmission SRAM GX Eagle 12 vitesses',
-            'price': 1299.99,
-            'weight': 1.8,  // kg
-            'image': 'sram-gx-eagle.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        }
+    "tires": [
+        {"id":"tires-0","name":"Schwalbe Dirty Dan","description":"Pneu Schwalbe Dirty Dan Super Downhill 27.5\"","price":108,"weight":1.26,"image":"shwalbe.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"tires-1","name":"Michelin DH Mud","description":"Pneu Michelin DH Mud 27.5\" Tubeless Ready","price":96,"weight":1.25,"image":"dh-michelin-mud.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"tires-2","name":"Pirelli Scorpion Enduro M","description":"Pneu Pirelli Scorpion Enduro M 27.5\" DualWALL","price":90,"weight":1.21,"image":"dh-scorpion.png","scale":1.0,"position":{"top":"50%","left":"50%"}}
     ],
-    'cassettes': [
-        {
-            'id': 'cassette-0',
-            'name': 'Shimano Box 7V',
-            'description': 'Transmission Shimano XTR M9100 12 vitesses',
-            'price': 43.13,
-            'weight': 1.5,  // kg
-            'image': 'shimano-box-components-2.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        },
-        {
-            'id': 'cassette-1',
-            'name': 'Sram GX Eagle 12V',
-            'description': 'Transmission Sram Eagle 12 vitesses',
-            'price': 43.13,
-            'weight': 1.5,  // kg
-            'image': 'sram-gx-eagle.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        }
+    "drivetrains": [
+        {"id":"drivetrain-0","name":"Shimano XTR M9100","description":"Transmission Shimano XTR M9100 12 vitesses","price":999.99,"weight":1.45,"image":"shimano-xtr.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"drivetrain-1","name":"SRAM GX Eagle","description":"Transmission SRAM GX Eagle 12 vitesses","price":545,"weight":1.73,"image":"sram-gx-eagle.png","scale":1.0,"position":{"top":"50%","left":"50%"}}
     ],
-    'pads': [
-        {
-            'id': 'pad-0',
-            'name': 'Shimano Deore XT',
-            'description': 'Transmission Shimano XTR M9100 12 vitesses',
-            'price': 43.13,
-            'weight': 1.5,  // kg
-            'image': 'shimano-deore-xt.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        }
+    "cassettes": [
+        {"id":"cassette-0","name":"Shimano 12‑V","description":"Cassette Shimano 12 vitesses","price":43.13,"weight":0.43,"image":"shimano-box-components-2.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"cassette-1","name":"SRAM GX Eagle 10‑52t","description":"Cassette SRAM GX Eagle 12 vitesses","price":195,"weight":0.45,"image":"sram-gx-eagle.png","scale":1.0,"position":{"top":"50%","left":"50%"}}
     ],
-    'selles': [
-        {
-            'id': 'selle-0',
-            'name': 'Selle Reverse Nico Vink',
-            'description': 'Selle Reverse Nico Vink Shovel &amp; Shred noir/blanc ',
-            'price': 57.90,
-            'weight': 0.26,  // kg
-            'image': 'selle-niko-vink.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        },
-        {
-            'id': 'selle-1',
-            'name': 'Selle Reverse',
-            'description': 'Selle Reverse Nico Vink Shovel &amp; Shred noir/blanc ',
-            'price': 57.90,
-            'weight': 0.26,  // kg
-            'image': 'selle-reverse.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        },
+    "pads": [
+        {"id":"pad-0","name":"Shimano Deore XT","description":"Plaquettes Shimano Deore XT","price":43.13,"weight":0.05,"image":"shimano-deore-xt.png","scale":1.0,"position":{"top":"50%","left":"50%"}}
     ],
-    'shocks': [
-        {
-            'id': 'shock-0',
-            'name': 'Fox DHX2 Factory',
-            'description': 'Amortisseur Fox DHX2 Factory 250x75',
-            'price': 899.99,
-            'weight': 0.95,  // kg
-            'image': 'dhx2.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        },
-        {
-            'id': 'shock-1',
-            'name': 'Fox Float X2 Factory',
-            'description': 'Amortisseur Fox Float X2 Factory 250x75',
-            'price': 899.99,
-            'weight': 0.95,  // kg
-            'image': 'floatx2.png',
-            'scale': 1.0,
-            'position': {'top': '50%', 'left': '50%'}
-        },
-        {
-            'id': 'shock-2',
-            'name': 'RockShox Super Deluxe Coil',
-            'description': 'Amortisseur RockShox Vivid Ultimate 250x75',
-            'price': 399.99,
-            'weight': 0.8,  // kg
-            'image': 'super-deluxe-coil.png'
-        },
-        {
-            'id': 'shock-3',
-            'name': 'RockShox Vivid Ultimate',
-            'description': 'Amortisseur RockShox Vivid Ultimate 250x75',
-            'price': 699.99,
-            'weight': 0.8,  // kg
-            'image': 'vivid.png'
-        },
-        {
-            'id': 'shock-4',
-            'name': 'EXT Arma',
-            'description': 'Amortisseur EXT Arma 250x75',
-            'price': 1199.99,
-            'weight': 1.0,  // kg
-            'image': 'ext.png'
-        },
-        {
-            'id': 'shock-5',
-            'name': 'Öhlins TTX22',
-            'description': 'Amortisseur Öhlins TTX22 250x75',
-            'price': 999.99,
-            'weight': 1.0,  // kg
-            'image': 'ohlinsttx2.png'
-        }
+    "selles": [
+        {"id":"selle-0","name":"Selle Reverse Nico Vink","description":"Selle Reverse Nico Vink Shovel & Shred","price":57.90,"weight":0.26,"image":"selle-niko-vink.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"selle-1","name":"Selle Reverse","description":"Selle Reverse standard","price":57.90,"weight":0.26,"image":"selle-reverse.png","scale":1.0,"position":{"top":"50%","left":"50%"}}
+    ],
+    "shocks": [
+        {"id":"shock-0","name":"Fox DHX2 Factory","description":"Amortisseur Fox DHX2 Factory 250x75","price":899.99,"weight":0.95,"image":"dhx2.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"shock-1","name":"Fox Float X2 Factory","description":"Amortisseur Fox Float X2 Factory 250x75","price":899.99,"weight":0.95,"image":"floatx2.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"shock-2","name":"RockShox Super Deluxe Coil","description":"Amortisseur RockShox Super Deluxe Coil","price":399.99,"weight":0.80,"image":"super-deluxe-coil.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"shock-3","name":"RockShox Vivid Ultimate","description":"Amortisseur RockShox Vivid Ultimate","price":699.99,"weight":0.80,"image":"vivid.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"shock-4","name":"EXT Arma","description":"Amortisseur EXT Arma 250x75","price":1199.99,"weight":1.00,"image":"ext.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"shock-5","name":"Öhlins TTX22","description":"Amortisseur Öhlins TTX22 250x75","price":999.99,"weight":1.00,"image":"ohlinsttx2.png","scale":1.0,"position":{"top":"50%","left":"50%"}}
     ]
 }
 
