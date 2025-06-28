@@ -1,253 +1,140 @@
-<div align="center">
-  <img src="images/logo.png" alt="Abiclou Logo" width="200"/>
-  
-  # 🚲 Abiclou
-  
-  [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?style=for-the-badge)](https://github.com/yourusername/abiclou)
-  [![License](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge)](LICENSE)
-  
-  *Un configurateur de vélos nouvelle génération, conçu pour les passionnés.*
-</div>
-
-<p align="center">
-  <img src="images/demo.gif" alt="Abiclou Demo" width="600"/>
-</p>
-
-## ✨ Caractéristiques
+# 🚲 Abiclou
 
 <div align="center">
-
-| 🎨 Design | 🛠️ Technique | 💡 Innovation |
-|-----------|--------------|---------------|
-| Interface sombre élégante | Canvas HTML5 | Prévisualisation en temps réel |
-| Animations fluides | JavaScript ES6+ | Sauvegarde des configurations |
-| Thème cohérent | Architecture modulaire | Rotation & zoom dynamiques |
-| Responsive design | Bootstrap 5 | Capture d'écran intégrée |
-
+  <img src="images/logo.png" alt="Abiclou Logo" width="180"/>
+  <br>
+  <b>Le configurateur de vélo nouvelle génération</b>
 </div>
+
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?style=for-the-badge)](https://github.com/yourusername/abiclou)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=for-the-badge)](LICENSE)
+
+---
+
+## ✨ Fonctionnalités principales
+- Interface sombre moderne et responsive
+- Visualisation en temps réel sur canvas HTML5
+- Rotation, zoom, capture d'écran
+- Sauvegarde et chargement de configurations favorites
+- Calcul automatique du prix et du poids total
+- Architecture modulaire (ajout facile de composants)
+
+---
 
 ## 🚀 Composants Disponibles
 
 ### Cadres
 - Santa Cruz V10 Factory
-- Forbidden Dreadnought
 - Commencal Supreme DH V5
-- Rocky Mountain Altitude C50
+- Commencal FRS
+- Spicy Pro Team
+- Yeti SB160
+- Atherton S.170
+- Pivot Firebird
+- Commencal Meta V5
+- Marin Alpine Trail XR
+- Forbidden Dreadnought
 
 ### Fourches
-- Fox 40 Factory
+- Fox 40 Factory GRIP2
 - RockShox Boxxer Ultimate
 - RockShox ZEB Ultimate
+- RockShox ZEB Select+
+- EXT Ferro
+- Öhlins RXF38 m.2
 
 ### Amortisseurs
 - Fox DHX2 Factory
 - Fox Float X2 Factory
-- RockShox Super Deluxe Ultimate
-- Öhlins TTX22M
+- RockShox Super Deluxe Coil
+- RockShox Vivid Ultimate
+- EXT Arma
+- Öhlins TTX22
 
 ### Roues
-- Hydra Enduro S Carbon
-- DT Swiss XRC 1200
-- DT Swiss XR 1700
-- DT Swiss X 1900
+- Industry Nine Hydra Enduro S Carbon
+- Mavic Deemax
+- Bontrager Paradigm
+- Cranbrothers Iodine 2
+
+### Cintres
+- Renthal Fatbar Carbon
+- Race Face Next R
+- Race Face Aeffect R
+
+### Freins
+- Shimano XTR M9120
+- SRAM Code RSC
+- Shimano XT M8120
+
+### Pneus
+- Schwalbe Dirty Dan
+- Michelin DH Mud
+- Pirelli Scorpion Enduro M
+
+### Selles
+- Selle Reverse Nico Vink
+- Selle Reverse
+
+### Transmissions
+- Shimano XTR M9100
+- SRAM GX Eagle
+
+### Cassettes
+- Shimano 12‑V
+- SRAM GX Eagle 10‑52t
+
+### Plaquettes
+- Shimano Deore XT
+
+---
 
 ## 🛠️ Installation
 
 ```bash
 # Cloner le repository
 git clone https://github.com/yourusername/abiclou.git
-
-# Se déplacer dans le dossier
 cd abiclou
-
 # Lancer avec un serveur local (Python)
 python -m http.server 8080
-
 # Ou avec PHP
 php -S localhost:8080
-
 # Ou avec Node.js
 npx serve
 ```
 
-## 💻 Technologies Utilisées
+## 📂 Structure du projet
 
-<div align="center">
-  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
-  <img src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white"/>
-</div>
+```
+abiclou/
+├── css/           # Styles
+├── images/        # Images des composants
+├── js/            # Scripts JavaScript
+├── configs/       # Fichiers de configuration
+├── index.html     # Page principale
+├── LICENSE        # Licence MIT
+└── README.md      # Documentation
+```
 
-## 📱 Interface
-
-<div align="center">
-  <img src="images/interface1.png" width="30%" />
-  <img src="images/interface2.png" width="30%" />
-  <img src="images/interface3.png" width="30%" />
-</div>
-
-## 🌟 Fonctionnalités
-
-### Configuration Visuelle
-- Prévisualisation en temps réel des modifications
-- Rotation 360° du vélo
-- Zoom avant/arrière
-- Capture d'écran de la configuration
-
-### Gestion des Configurations
-- Sauvegarde des configurations favorites
-- Chargement des configurations sauvegardées
-- Calcul automatique du prix total
-- Estimation du poids total
-
-### Interface Utilisateur
-- Design moderne et épuré
-- Thème sombre élégant
-- Animations fluides
-- Navigation intuitive
-
-## 🎯 Utilisation
-
-1. **Sélection des Composants**
-   - Choisissez un cadre dans le menu de gauche
-   - Ajoutez les composants souhaités
-   - Visualisez en temps réel les changements
-
-2. **Personnalisation**
-   - Utilisez les contrôles de visualisation
-   - Ajustez l'angle de vue
-   - Zoomez sur les détails
-
-3. **Sauvegarde**
-   - Enregistrez vos configurations favorites
-   - Exportez une capture d'écran
-   - Consultez le résumé détaillé
-
-## 📈 Roadmap
-
-- [ ] Support du mode tactile
-- [ ] Comparaison de configurations
-- [ ] Export PDF des configurations
-- [ ] Plus de composants
-- [ ] Animations de suspension
+## 💻 Technologies
+- HTML5, CSS3, Bootstrap 5
+- JavaScript ES6+
+- Canvas API
 
 ## 🤝 Contribution
-
-Les contributions sont les bienvenues ! N'hésitez pas à :
+Les contributions sont les bienvenues !
 
 1. Fork le projet
-2. Créer une branche (`git checkout -b feature/AmazingFeature`)
-3. Commit vos changements (`git commit -m 'Add some AmazingFeature'`)
-4. Push sur la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrir une Pull Request
+2. Crée une branche (`git checkout -b feature/ma-feature`)
+3. Commit tes changements (`git commit -m 'Ajout de ma feature'`)
+4. Push sur la branche (`git push origin feature/ma-feature`)
+5. Ouvre une Pull Request
 
 ## 📝 Licence
-
-Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
-
-## 👥 Auteurs
-
-- **Votre Nom** - *Développement initial* - [VotreGitHub](https://github.com/votre-username)
+Ce projet est sous licence MIT.
 
 ---
 
 <div align="center">
-  <sub>Built with ❤️ by bike enthusiasts for bike enthusiasts</sub>
-  
-  [![Stargazers](https://img.shields.io/github/stars/yourusername/abiclou?style=social)](https://github.com/yourusername/abiclou/stargazers)
-  [![Forks](https://img.shields.io/github/forks/yourusername/abiclou?style=social)](https://github.com/yourusername/abiclou/network/members)
+  <sub>Made with ❤️ by bike enthusiasts</sub>
 </div>
-
-## 🎮 Utilisation
-
-1. **Sélectionner un cadre**  
-   ![Cadres](images/frames.gif) <!-- Ajouter un GIF -->
-   - Choisissez parmi 15+ cadres haut de gamme
-   - Ajustez la position et l'angle
-
-2. **Configurer les composants**  
-   ```javascript
-   // Exemple de configuration
-   {
-       "frame": "Santa Cruz V10",
-       "fork": "Fox 40 Factory",
-       "shock": "RockShox Super Deluxe",
-       "wheels": "DT Swiss XRC 1200"
-   }
-   ```
-
-3. **Personnaliser la vue**
-   - 🔍 Zoom avant/arrière
-   - ↻ Rotation 360°
-   - 🌗 Thème sombre/clair
-
-4. **Sauvegarder/Exporter**
-   - 💾 Enregistrer en local
-   - 📤 Exporter en PNG/JSON
-
-## 📂 Structure des Fichiers
-
-```
-abiclou/
-├── 📁 css/                      # Styles
-│   └── style.css               # Styles principaux
-│
-├── 📁 images/                   # Assets graphiques
-│   ├── frames/                 # Images des cadres
-│   ├── forks/                  # Images des fourches
-│   ├── shocks/                 # Images des amortisseurs
-│   ├── wheels/                 # Images des roues
-│   └── logo.png               # Logo du projet
-│
-├── 📁 js/                       # Scripts JavaScript
-│   └── main.js                # Script principal
-│
-├── 📁 configs/                  # Fichiers de configuration
-│   └── configs.json           # Configuration des composants
-│
-├── 📄 index.html               # Page principale
-├── 📄 LICENSE                  # Licence MIT
-└── 📄 README.md                # Documentation
-
-```
-
-### 📁 Détails des Composants
-
-#### CSS (`/css`)
-- `style.css`: Styles globaux, thème sombre, animations et mise en page responsive
-
-#### JavaScript (`/js`)
-- `main.js`: 
-  - Gestion du canvas et du rendu
-  - Logique des composants
-  - Gestion des événements
-  - Sauvegarde/chargement des configurations
-
-#### Configurations (`/configs`)
-- `configs.json`:
-  - Paramètres des cadres
-  - Positions des composants
-  - Échelles et rotations
-  - Points d'ancrage
-
-#### Images (`/images`)
-Chaque sous-dossier contient les images des composants au format PNG:
-- `frames/`: Cadres de vélos
-- `forks/`: Fourches
-- `shocks/`: Amortisseurs
-- `wheels/`: Roues
-
-### 🔧 Configuration Requise
-
-- Navigateur moderne avec support Canvas
-- Serveur local (Python, PHP, ou Node.js)
-- Minimum 1GB de RAM
-- Résolution d'écran minimale: 1024x768
-
-### 📚 Conventions de Code
-
-- Indentation: 4 espaces
-- Nommage: camelCase pour JavaScript
-- Commentaires: JSDoc pour les fonctions principales
-- Structure CSS: BEM
