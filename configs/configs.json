@@ -43,7 +43,7 @@
         "rotation": 0
       },
       "driveMount": {
-        "x": 465,
+        "x": 447.5,
         "y": 370,
         "rotation": 0
       },
@@ -97,7 +97,7 @@
         "rotation": 0
       },
       "driveMount": {
-        "x": 465,
+        "x": 445,
         "y": 365,
         "rotation": 0
       },
@@ -151,8 +151,8 @@
         "rotation": 0
       },
       "driveMount": {
-        "x": 455,
-        "y": 375,
+        "x": 435,
+        "y": 370,
         "rotation": 0
       },
       "cassetteMount": {
@@ -207,8 +207,8 @@
         "rotation": 0
       },
       "driveMount": {
-        "x": 465,
-        "y": 385,
+        "x": 445,
+        "y": 380,
         "rotation": 0
       },
       "cassetteMount": {
@@ -263,8 +263,8 @@
         "rotation": 0
       },
       "driveMount": {
-        "x": 470,
-        "y": 360,
+        "x": 450,
+        "y": 357.5,
         "rotation": 0
       },
       "cassetteMount": {
@@ -319,8 +319,8 @@
         "rotation": 0
       },
       "driveMount": {
-        "x": 470,
-        "y": 362.5,
+        "x": 450,
+        "y": 360,
         "rotation": 0
       },
       "cassetteMount": {
@@ -375,8 +375,8 @@
         "rotation": 0
       },
       "driveMount": {
-        "x": 462.5,
-        "y": 371,
+        "x": 440,
+        "y": 370,
         "rotation": 0
       },
       "cassetteMount": {
@@ -431,7 +431,7 @@
         "rotation": -20
       },
       "driveMount": {
-        "x": 467.5,
+        "x": 447.5,
         "y": 355,
         "rotation": 0
       },
@@ -485,7 +485,7 @@
         "rotation": -5
       },
       "driveMount": {
-        "x": 437.5,
+        "x": 415,
         "y": 375,
         "rotation": 0
       },
@@ -539,7 +539,7 @@
         "rotation": -10
       },
       "driveMount": {
-        "x": 482.5,
+        "x": 465,
         "y": 380,
         "rotation": 0
       },
@@ -959,12 +959,21 @@
   "drivetrains": [
     {
       "name": "Shimano XTR M9100",
-      "scale": 1.1,
+      "scale": 1.5,
       "dimensions": {
         "width": 0.09,
         "height": 0.09
       },
-      "zIndex": 2
+      "zIndex": 4
+    },
+    {
+      "name": "SRAM GX Eagle",
+      "scale": 1.5,
+      "dimensions": {
+        "width": 0.09,
+        "height": 0.09
+      },
+      "zIndex": 4
     }
   ],
   "cassettes": [
@@ -995,7 +1004,7 @@
         "width": 0.09,
         "height": 0.09
       },
-      "zIndex": 5
+      "zIndex": -1
     }
   ]
 }
