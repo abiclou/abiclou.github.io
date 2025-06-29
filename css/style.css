@@ -1255,6 +1255,207 @@ h2 {
     animation: slideIn var(--transition-normal) forwards;
 }
 
+/* --- Nouveau bouton flottant pour ajouter un composant sur mobile --- */
+@media (max-width: 700px) {
+  .add-component-fab {
+    position: fixed;
+    right: 24px;
+    bottom: 84px;
+    z-index: 4000;
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    box-shadow: 0 4px 16px var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  .add-component-fab:hover {
+    background: var(--primary-dark);
+    box-shadow: 0 8px 24px var(--shadow-strong);
+  }
+  .component-type-modal {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 4100;
+    background: var(--background-alt);
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 -4px 32px rgba(0,0,0,0.18);
+    padding: 2rem 1rem 1.5rem 1rem;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    animation: fadeInUp 0.3s;
+    min-height: 340px;
+  }
+  .component-type-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 1.2rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    width: 100%;
+  }
+  .component-type-btn {
+    background: #23283a;
+    color: #36EAEF;
+    border: none;
+    border-radius: 18px;
+    padding: 1.1rem 0.5rem 0.7rem 0.5rem;
+    font-size: 1.08rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.12s;
+    min-width: 90px;
+    min-height: 90px;
+    box-shadow: 0 2px 12px #0002;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    outline: none;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+  .component-type-btn:active {
+    transform: scale(0.97);
+    box-shadow: 0 1px 4px #0003;
+    background: #1e293b;
+  }
+  .component-type-btn:hover, .component-type-btn:focus {
+    background: #36EAEF;
+    color: #181c24;
+    box-shadow: 0 6px 24px #36eaef33;
+    border-color: #36EAEF;
+  }
+  .component-type-btn i {
+    font-size: 2.1rem;
+    margin-bottom: 0.2rem;
+    transition: color 0.18s, transform 0.18s;
+  }
+  .component-type-btn:active i {
+    transform: scale(0.92);
+  }
+  .component-type-btn span {
+    font-size: 1.01rem;
+    font-weight: 500;
+    color: inherit;
+    letter-spacing: 0.01em;
+    margin-top: 0.1rem;
+  }
+  .component-type-modal .btn-secondary {
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    padding: 0.7rem 1.5rem;
+    background: none;
+    color: #36EAEF;
+    border: 1.5px solid #36EAEF;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: background 0.18s, color 0.18s;
+  }
+  .component-type-modal .btn-secondary:hover {
+    background: #36EAEF;
+    color: #181c24;
+  }
+  /* Style du bouton + cadre comme le bouton flottant d'avant */
+  @media (max-width: 700px) {
+    #componentPlusBtns .plus-btn[data-target="frame-select"] {
+      position: fixed;
+      right: 24px;
+      bottom: 84px;
+      z-index: 4000;
+      background: var(--primary-gradient, linear-gradient(135deg,#36EAEF,#2BB5E5));
+      color: #ebebeb;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      box-shadow: 0 4px 16px var(--shadow, #0006);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+      padding: 0;
+    }
+    #componentPlusBtns .plus-btn[data-target="frame-select"] span {
+      display: none;
+    }
+    #componentPlusBtns .plus-btn[data-target="frame-select"]:hover {
+      background: #36EAEF;
+      color: #fff;
+      box-shadow: 0 8px 24px #36eaef55;
+    }
+    #componentPlusBtns {
+      pointer-events: none;
+    }
+    #componentPlusBtns .plus-btn[data-target="frame-select"] {
+      pointer-events: auto;
+    }
+    #componentPlusBtns .plus-btn:not([data-target="frame-select"]) {
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+  }
+}
+
+/* --- Boutons + flottants sur le canvas --- */
+@media (max-width: 700px) {
+  .plus-btn-floating {
+    position: absolute;
+    z-index: 2;
+    background: var(--primary-gradient, linear-gradient(135deg,#36EAEF,#2BB5E5));
+    color: #181c24;
+    border: none;
+    border-radius: 50%;
+    padding: 20px;
+    width: 20px;
+    height: 20px;
+    box-shadow: 0 4px 16px var(--shadow, #0006);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, color 0.2s, transform 0.12s;
+    padding: 0;
+    outline: none;
+  }
+  .plus-btn-floating:active {
+    transform: scale(0.93);
+    background: #1e293b;
+  }
+  .plus-btn-floating:hover {
+    background: #36EAEF;
+    color: #fff;
+    box-shadow: 0 8px 24px #36eaef55;
+  }
+  .plus-btn-floating span {
+    display: none;
+  }
+  .plus-btns-overlay {
+    position: absolute;
+    left: 0; top: 0; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .plus-btn-floating { pointer-events: auto; }
+}
+
 /* Responsive Design */
 @media (max-width: 1200px) {
     .config-panel,
@@ -1340,7 +1541,7 @@ h2 {
     width: 100vw !important;
     height: auto !important;
     max-width: 100vw !important;
-    max-height: 60vh !important;
+    max-height: 70vh !important;
     background: transparent !important;
     box-shadow: none !important;
     border-radius: 0 !important;

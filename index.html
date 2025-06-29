@@ -64,7 +64,7 @@
         <div class="row g-4">
             <div class="col-lg-3">
                 <div class="panel-header mgl-2">
-                    <h2><i class="fas fa-sliders"></i> CONFIGURATION</h2>
+                    <h2><i class="fas fa-sliders"></i> Preview</h2>
                 </div>
                 <div class="config-panel">
                     <!-- Component Sections -->
@@ -195,19 +195,9 @@
             </div>
         </div>
     </main>
-    <div class="bottom-nav d-lg-none">
-      <button class="bottom-nav-btn" data-target="frame-select"><i class="fas fa-mountain"></i><span>Cadre</span></button>
-      <button class="bottom-nav-btn" data-target="forks-select"><i class="fas fa-sort"></i><span>Fourche</span></button>
-      <button class="bottom-nav-btn" data-target="shocks-select"><i class="fas fa-wave-square"></i><span>Amorto</span></button>
-      <button class="bottom-nav-btn" data-target="wheels-select"><i class="fas fa-circle"></i><span>Roues</span></button>
-      <button class="bottom-nav-btn" data-target="handlebars-select"><i class="fas fa-grip-lines"></i><span>Guidon</span></button>
-      <button class="bottom-nav-btn" data-target="brakes-select"><i class="fas fa-ban"></i><span>Disques</span></button>
-      <button class="bottom-nav-btn" data-target="pads-select"><i class="fas fa-ban"></i><span>Etriers</span></button>
-      <button class="bottom-nav-btn" data-target="drivetrains-select"><i class="fas fa-link"></i><span>Pédalier</span></button>
-      <button class="bottom-nav-btn" data-target="cassettes-select"><i class="fas fa-link"></i><span>Cassette</span></button>
-      <button class="bottom-nav-btn" data-target="tires-select"><i class="fa-solid fa-tire"></i><span>Pneus</span></button>
-      <button class="bottom-nav-btn" data-target="selles-select"><i class="fas fa-chair"></i><span>Selle</span></button>
-      <button class="bottom-nav-btn btn-load-modal" type="button"><i class="fas fa-folder-open"></i><span>Charger</span></button>
+    <!-- Ajoute les boutons + dynamiques sous le canvas -->
+    <div class="component-plus-btns d-lg-none" id="componentPlusBtns" style="display:flex; justify-content:center; gap:1.2rem; margin:1.2rem 0;">
+      <button class="plus-btn" data-target="frame-select" title="Choisir un cadre" style="background:#36EAEF;color:#181c24;font-weight:600;"><i class="fa-solid fa-plus"></i></button>
     </div>
     <div class="modal fade" id="loadModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
@@ -244,6 +234,40 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
     <script>
+      // Place la fonction updateChooserDetails tout en haut pour qu'elle soit accessible partout
+      function updateChooserDetails(option, idx) {
+        if (!option) return;
+        var name = option.text || $(option).find('.slide-title').text();
+        var desc = option.dataset ? (option.dataset.specs || option.dataset.description || '') : $(option).find('.slide-desc').text();
+        var price = option.dataset ? option.dataset.price : $(option).find('.slide-price').text();
+        var weight = option.dataset ? option.dataset.weight : $(option).find('.slide-weight').text();
+        $('#chooserDetails').html(`
+          <div class="slide-title">${name || ''}</div>
+          ${desc ? `<div class='slide-desc'>${desc}</div>` : ''}
+          ${price ? `<div class='slide-price'>${price}${price && !price.includes('€') ? ' €' : ''}</div>` : ''}
+          ${weight ? `<div class='slide-weight'>${weight}${weight && !weight.includes('kg') ? ' kg' : ''}</div>` : ''}
+        `);
+      }
+      // Place la fonction updateChooserPosition tout en haut pour qu'elle soit accessible partout
+      function updateChooserPosition(idx) {
+        var $slider = $('#chooserSlider');
+        var slideWidth = 240; // largeur fixe
+        $slider.css('transform', `translateX(${-idx * slideWidth}px)`);
+        // Désactive/active les flèches selon la position
+        var $prev = $('.chooser-slider-prev');
+        var $next = $('.chooser-slider-next');
+        var $slides = $slider.find('.component-slide');
+        if (idx <= 0) {
+          $prev.css("opacity", 0)
+        } else {
+          $prev.css("opacity", 1);
+        }
+        if (idx >= $slides.length - 1) {
+          $next.css("opacity", 0);
+        } else {
+          $next.css("opacity", 1);
+        }
+      }
       let chooserCurrentIdx = 0;
       $(function() {
         // Ouvre le panneau de choix de composant au clic sur une icône
@@ -268,6 +292,7 @@
               else if (selectId.includes('selle')) img = 'images/selles/' + img;
               else if (selectId.includes('handlebar')) img = 'images/handlebars/' + img;
               else if (selectId.includes('brake')) img = 'images/brakes/' + img;
+                else if (target.includes('pad')) img = 'images/pads/' + img;
               else if (selectId.includes('cassette')) img = 'images/cassettes/' + img;
               else if (selectId.includes('drivetrain')) img = 'images/drivetrains/' + img;
               else img = 'images/' + img;
@@ -285,38 +310,6 @@
           $('#componentChooserPanel').fadeIn(200);
           updateChooserPosition(chooserCurrentIdx);
         });
-        function updateChooserDetails(option, idx) {
-          if (!option) return;
-          var name = option.text || $(option).find('.slide-title').text();
-          var desc = option.dataset ? (option.dataset.specs || option.dataset.description || '') : $(option).find('.slide-desc').text();
-          var price = option.dataset ? option.dataset.price : $(option).find('.slide-price').text();
-          var weight = option.dataset ? option.dataset.weight : $(option).find('.slide-weight').text();
-          $('#chooserDetails').html(`
-            <div class="slide-title">${name || ''}</div>
-            ${desc ? `<div class='slide-desc'>${desc}</div>` : ''}
-            ${price ? `<div class='slide-price'>${price}${price && !price.includes('€') ? ' €' : ''}</div>` : ''}
-            ${weight ? `<div class='slide-weight'>${weight}${weight && !weight.includes('kg') ? ' kg' : ''}</div>` : ''}
-          `);
-        }
-        function updateChooserPosition(idx) {
-          var $slider = $('#chooserSlider');
-          var slideWidth = 240; // largeur fixe
-          $slider.css('transform', `translateX(${-idx * slideWidth}px)`);
-          // Désactive/active les flèches selon la position
-          var $prev = $('.chooser-slider-prev');
-          var $next = $('.chooser-slider-next');
-          var $slides = $slider.find('.component-slide');
-          if (idx <= 0) {
-            $prev.css("opacity", 0)
-          } else {
-            $prev.css("opacity", 1);
-          }
-          if (idx >= $slides.length - 1) {
-            $next.css("opacity", 0);
-          } else {
-            $next.css("opacity", 1);
-          }
-        }
         $(document).on('click', '.chooser-slider-prev', function() {
           var $slider = $('#chooserSlider');
           var $slides = $slider.find('.component-slide');
@@ -366,7 +359,478 @@
           }
           $('#componentChooserPanel').fadeOut(200);
         });
+        // Affiche la modale de sélection de composant
+        $('#addComponentFab').on('click', function() {
+          $('#componentTypeModal').fadeIn(180);
+        });
+        // Ferme la modale
+        $('#closeComponentTypeModal').on('click', function() {
+          $('#componentTypeModal').fadeOut(120);
+        });
+        // Ouvre le carrousel du composant choisi (plus rapide et fluide)
+        $('.component-type-btn').on('click', function() {
+          var target = $(this).data('target');
+          $('#componentTypeModal').fadeOut(120);
+          setTimeout(function() {
+            $(".bottom-nav-btn[data-target='"+target+"']").trigger('click');
+            // Si tu n'as plus de bottom-nav-btn, déclenche directement le code d'ouverture du carrousel :
+            var select = $('#' + target);
+            if (select.length && select[0].options.length > 1) {
+              var options = Array.from(select[0].options);
+              chooserCurrentIdx = select[0].selectedIndex > 0 ? select[0].selectedIndex - 1 : 0;
+              var slides = options.map(function(option, idx) {
+                if (idx === 0 && (!option.value || option.value === '' || !option.text || option.text === '')) return '';
+                var name = option.text;
+                var img = option.dataset ? option.dataset.img : '';
+                if (img && !img.startsWith('http') && !img.startsWith('images/')) {
+                  if (target.includes('frame')) img = 'images/frames/' + img;
+                  else if (target.includes('fork')) img = 'images/forks/' + img;
+                  else if (target.includes('shock')) img = 'images/shocks/' + img;
+                  else if (target.includes('wheel')) img = 'images/wheels/' + img;
+                  else if (target.includes('tire')) img = 'images/tires/' + img;
+                  else if (target.includes('selle')) img = 'images/selles/' + img;
+                  else if (target.includes('handlebar')) img = 'images/handlebars/' + img;
+                  else if (target.includes('brake')) img = 'images/brakes/' + img;
+                  else if (target.includes('pad')) img = 'images/pads/' + img;
+                  else if (target.includes('cassette')) img = 'images/cassettes/' + img;
+                  else if (target.includes('drivetrain')) img = 'images/drivetrains/' + img;
+                  else img = 'images/' + img;
+                }
+                return `
+                  <div class="component-slide" data-idx="${idx}${option.value === '' ? ' data-empty=\"1\"' : ''}" data-select="${target}">
+                    <div class="slide-img-container">
+                      ${img ? `<img src="${img}" alt="${name}">` : `<span style='font-size:2.5rem;color:#94A3B8;'><i class='fa-regular fa-image'></i></span>`}
+                    </div>
+                  </div>
+                `;
+              }).filter(Boolean).join('');
+              $('#chooserSlider').html(slides);
+              updateChooserDetails(select[0].options[chooserCurrentIdx+1], chooserCurrentIdx);
+              $('#componentChooserPanel').fadeIn(200);
+              updateChooserPosition(chooserCurrentIdx);
+            }
+          }, 150);
+        });
+        // Affiche les boutons + après sélection du cadre
+        $('#frame-select').on('change', function() {
+          if ($(this).val()) {
+            $('#componentPlusBtns').fadeIn(200);
+          } else {
+            $('#componentPlusBtns').fadeOut(120);
+          }
+        });
+        // Ouvre le carrousel du composant choisi au clic sur +
+        $(document).on('click', '.plus-btn', function() {
+          $(this).css("display", "none")
+          var target = $(this).data('target');
+          var select = $('#' + target);
+          if (select.length && select[0].options.length > 1) {
+            var options = Array.from(select[0].options);
+            chooserCurrentIdx = select[0].selectedIndex > 0 ? select[0].selectedIndex - 1 : 0;
+            var slides = options.map(function(option, idx) {
+              if (idx === 0 && (!option.value || option.value === '' || !option.text || option.text === '')) return '';
+              var name = option.text;
+              var img = option.dataset ? option.dataset.img : '';
+              if (img && !img.startsWith('http') && !img.startsWith('images/')) {
+                if (target.includes('frame')) img = 'images/frames/' + img;
+                else if (target.includes('fork')) img = 'images/forks/' + img;
+                else if (target.includes('shock')) img = 'images/shocks/' + img;
+                else if (target.includes('wheel')) img = 'images/wheels/' + img;
+                else if (target.includes('tire')) img = 'images/tires/' + img;
+                else if (target.includes('selle')) img = 'images/selles/' + img;
+                else if (target.includes('handlebar')) img = 'images/handlebars/' + img;
+                else if (target.includes('brake')) img = 'images/brakes/' + img;
+                else if (target.includes('pad')) img = 'images/pads/' + img;
+                else if (target.includes('cassette')) img = 'images/cassettes/' + img;
+                else if (target.includes('drivetrain')) img = 'images/drivetrains/' + img;
+                else img = 'images/' + img;
+              }
+              return `
+                <div class="component-slide" data-idx="${idx}${option.value === '' ? ' data-empty=\"1\"' : ''}" data-select="${target}">
+                  <div class="slide-img-container">
+                    ${img ? `<img src="${img}" alt="${name}">` : `<span style='font-size:2.5rem;color:#94A3B8;'><i class='fa-regular fa-image'></i></span>`}
+                  </div>
+                </div>
+              `;
+            }).filter(Boolean).join('');
+            $('#chooserSlider').html(slides);
+            updateChooserDetails(select[0].options[chooserCurrentIdx+1], chooserCurrentIdx);
+            $('#componentChooserPanel').fadeIn(200);
+            updateChooserPosition(chooserCurrentIdx);
+          }
+        });
       });
     </script>
+    <script>
+// Coordonnées des boutons + pour chaque cadre (exemple, à adapter selon tes cadres réels)
+// Pour ajuster la précision de chaque bouton +, modifie ici les coordonnées (0-100)
+const plusBtnCoords = {
+  'default': {
+    'forks-select': { left: '15', top: '10' }, // exemple modifié
+    'shocks-select': { left: '47', top: '53' },
+    'wheels-select': { left: '72', top: '62' },
+    'handlebars-select': { left: '60', top: '25' },
+    'brakes-select': { left: '72.5', top: '62' },
+    'pads-select': { left: '31', top: '58' },
+    'drivetrains-select': { left: '45', top: '80' },
+    'cassettes-select': { left: '15', top: '80' },
+    'tires-select': { left: '85', top: '85' },
+    'selles-select': { left: '30', top: '10' }
+  },
+  // Ajoute ici d'autres cadres si besoin, ex :
+  // 'commencal-supreme': { ... }
+};
+
+function showPlusBtnsOverlay() {
+  const cadreId = $('#frame-select').val() || 'default';
+  const coords = plusBtnCoords[cadreId] || plusBtnCoords['default'];
+  const overlay = $('#plusBtnsOverlay');
+  overlay.empty();
+  if (!$('#frame-select').val()) {
+    overlay.hide();
+    return;
+  }
+  Object.entries(coords).forEach(([target, pos]) => {
+    overlay.append(
+      `<button class="plus-btn-floating" data-target="${target}" style="left:${pos.left};top:${pos.top};"><i class="fa-solid fa-plus"></i></button>`
+    );
+  });
+  overlay.show();
+}
+
+// Ordre précis des boutons + à afficher
+const plusOrder = [
+  'forks-select',
+  'shocks-select',
+  'wheels-select',
+  'handlebars-select',
+  'brakes-select',
+  'pads-select',
+  'cassettes-select',
+  'drivetrains-select',
+  'tires-select',
+  'selles-select'
+];
+let plusStep = 0;
+
+function showNextPlusBtnOverlay() {
+  const frameId = $('#frame-select').val();
+  const coords = getPlusBtnCoordsFromConfig(frameId) || plusBtnCoords['default'];
+  const overlay = $('#plusBtnsOverlay');
+  const canvas = document.getElementById('bike-canvas');
+  if (!canvas) return;
+  const rect = canvas.getBoundingClientRect();
+  overlay.empty();
+  if (!frameId) {
+    overlay.hide();
+    plusStep = 0;
+    return;
+  }
+  // Place l'overlay pile sur le canvas (parent position: relative conseillé)
+  const $container = $('#bike-image-container');
+  $container.css('position', 'relative');
+  overlay.css({
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    width: rect.width + 'px',
+    height: rect.height + 'px',
+    pointerEvents: 'none',
+    zIndex: 4100
+  });
+  overlay.width(rect.width);
+  overlay.height(rect.height);
+  overlay.offset({ left: rect.left + window.scrollX, top: rect.top + window.scrollY });
+  if (plusStep < plusOrder.length) {
+    const target = plusOrder[plusStep];
+    const pos = coords[target];
+    if (pos) {
+      // pos.left/top sont en pourcentage (ex: '52%'), on convertit en px
+      const leftPx = (parseFloat(pos.left) / 100) * rect.width;
+      const topPx = (parseFloat(pos.top) / 100) * rect.height;
+      overlay.append(
+        `<button class="plus-btn-floating" data-target="${target}" style="position:absolute;left:${leftPx}px;top:${topPx}px;"><i class="fa-solid fa-plus"></i></button>`
+      );
+      overlay.show();
+    }
+  } else {
+    overlay.hide();
+  }
+}
+
+$('#frame-select').on('change', function() {
+  plusStep = 0;
+  setTimeout(showNextPlusBtnOverlay, 100);
+});
+
+$(document).on('click', '.plus-btn-floating', function() {
+  var target = $(this).data('target');
+  var select = $('#' + target);
+  if (select.length && select[0].options.length > 1) {
+    var options = Array.from(select[0].options);
+    chooserCurrentIdx = select[0].selectedIndex > 0 ? select[0].selectedIndex - 1 : 0;
+    var slides = options.map(function(option, idx) {
+      if (idx === 0 && (!option.value || option.value === '' || !option.text || option.text === '')) return '';
+      var name = option.text;
+      var img = option.dataset ? option.dataset.img : '';
+      if (img && !img.startsWith('http') && !img.startsWith('images/')) {
+        if (target.includes('frame')) img = 'images/frames/' + img;
+        else if (target.includes('fork')) img = 'images/forks/' + img;
+        else if (target.includes('shock')) img = 'images/shocks/' + img;
+        else if (target.includes('wheel')) img = 'images/wheels/' + img;
+        else if (target.includes('tire')) img = 'images/tires/' + img;
+        else if (target.includes('selle')) img = 'images/selles/' + img;
+        else if (target.includes('handlebar')) img = 'images/handlebars/' + img;
+        else if (target.includes('brake')) img = 'images/brakes/' + img;
+        else if (target.includes('pad')) img = 'images/pads/' + img;
+        else if (target.includes('cassette')) img = 'images/cassettes/' + img;
+        else if (target.includes('drivetrain')) img = 'images/drivetrains/' + img;
+        else img = 'images/' + img;
+      }
+      return `
+        <div class="component-slide" data-idx="${idx}${option.value === '' ? ' data-empty=\"1\"' : ''}" data-select="${target}">
+          <div class="slide-img-container">
+            ${img ? `<img src="${img}" alt="${name}">` : `<span style='font-size:2.5rem;color:#94A3B8;'><i class='fa-regular fa-image'></i></span>`}
+          </div>
+        </div>
+      `;
+    }).filter(Boolean).join('');
+    $('#chooserSlider').html(slides);
+    updateChooserDetails(select[0].options[chooserCurrentIdx+1], chooserCurrentIdx);
+    $('#componentChooserPanel').fadeIn(200);
+    updateChooserPosition(chooserCurrentIdx);
+    // Quand on ajoute, passe au bouton suivant
+    $('#chooserAddBtn').off('click.plusstep').on('click.plusstep', function() {
+      $('#componentChooserPanel').fadeOut(200);
+      plusStep++;
+      // Redessine les boutons +
+      setTimeout(function() {
+        const canvas = document.getElementById('bike-canvas');
+        if (canvas && canvas.width && canvas.height) {
+          const ctx = canvas.getContext('2d');
+          drawPlusButtons(ctx, $('#frame-select').val(), canvas.width, canvas.height);
+        }
+      }, 250);
+    });
+  }
+});
+$('#componentChooserPanel').on('fadeIn', function(){ $('#plusBtnsOverlay').hide(); });
+$('#componentChooserPanel').on('fadeOut', function(){ showNextPlusBtnOverlay(); });
+// Fonction utilitaire pour récupérer les coordonnées des boutons + depuis la config JSON du cadre
+function getPlusBtnCoordsFromConfig(frameId) {
+  if (!window.frameConfigs || !window.frameConfigs[frameId] || !window.frameConfigs[frameId].positions) return null;
+  const pos = window.frameConfigs[frameId].positions;
+  return {
+    'forks-select': pos.forks,
+    'shocks-select': pos.shocks,
+    'wheels-select': pos.wheels,
+    'handlebars-select': pos.handlebars,
+    'brakes-select': pos.brakes,
+    'pads-select': pos.pads,
+    'drivetrains-select': pos.drivetrains,
+    'cassettes-select': pos.cassettes,
+    'tires-select': pos.tires,
+    'selles-select': pos.selles
+  };
+}
+
+// --- Boutons + dessinés dans le canvas ---
+let plusBtnHitboxes = [];
+
+function drawPlusButtons(ctx, frameId, canvasWidth, canvasHeight) {
+  plusBtnHitboxes = [];
+  const coords = getPlusBtnCoordsFromConfig(frameId) || plusBtnCoords['default'];
+  const btnRadius = 22;
+  let step = plusStep;
+  if (!frameId) return;
+  // Utilise la taille interne du canvas pour le dessin (canvas.width/canvas.height)
+  if (step < plusOrder.length) {
+    const target = plusOrder[step];
+    const pos = coords[target];
+    if (pos) {
+      const x = (parseFloat(pos.left) / 100) * canvasWidth;
+      const y = (parseFloat(pos.top) / 100) * canvasHeight;
+      plusBtnHitboxes.push({ x, y, r: btnRadius, target });
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(x, y, btnRadius, 0, 2 * Math.PI);
+      ctx.fillStyle = (plusBtnHoverIdx === 0) ? '#2BB5E5' : '#36EAEF';
+      ctx.shadowColor = '#000';
+      ctx.shadowBlur = 8;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#181c24';
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(x - 10, y);
+      ctx.lineTo(x + 10, y);
+      ctx.moveTo(x, y - 10);
+      ctx.lineTo(x, y + 10);
+      ctx.strokeStyle = '#181c24';
+      ctx.lineWidth = 3.5;
+      ctx.stroke();
+      ctx.restore();
+    }
+  }
+}
+
+// --- Gestion du curseur et du hover sur le bouton + dans le canvas ---
+let plusBtnHoverIdx = -1;
+$('#bike-canvas').on('mousemove', function(e) {
+  const canvas = this;
+  const rect = canvas.getBoundingClientRect();
+  // Utilise la taille interne du canvas pour la détection
+  const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+  const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+  let overBtn = false;
+  plusBtnHoverIdx = -1;
+  for (let i = 0; i < plusBtnHitboxes.length; i++) {
+    const btn = plusBtnHitboxes[i];
+    const dist = Math.sqrt((x - btn.x) ** 2 + (y - btn.y) ** 2);
+    if (dist <= btn.r) {
+      overBtn = true;
+      plusBtnHoverIdx = i;
+      break;
+    }
+  }
+  canvas.style.cursor = overBtn ? 'pointer' : 'default';
+  // Redessine le bouton + pour effet hover
+  const ctx = canvas.getContext('2d');
+  if (typeof drawPlusButtons === 'function') {
+    drawPlusButtons(ctx, $('#frame-select').val(), canvas.width, canvas.height);
+  }
+});
+
+// Corrige la détection du clic pour la bonne échelle
+$('#bike-canvas').on('click', function(e) {
+  const canvas = this;
+  const rect = canvas.getBoundingClientRect();
+  const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+  const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+  for (const btn of plusBtnHitboxes) {
+    const dist = Math.sqrt((x - btn.x) ** 2 + (y - btn.y) ** 2);
+    if (dist <= btn.r) {
+      // Ouvre le carrousel du composant
+      var target = btn.target;
+      var select = $('#' + target);
+      if (select.length && select[0].options.length > 1) {
+        var options = Array.from(select[0].options);
+        chooserCurrentIdx = select[0].selectedIndex > 0 ? select[0].selectedIndex - 1 : 0;
+        var slides = options.map(function(option, idx) {
+          if (idx === 0 && (!option.value || option.value === '' || !option.text || option.text === '')) return '';
+          var name = option.text;
+          var img = option.dataset ? option.dataset.img : '';
+          if (img && !img.startsWith('http') && !img.startsWith('images/')) {
+            if (target.includes('frame')) img = 'images/frames/' + img;
+            else if (target.includes('fork')) img = 'images/forks/' + img;
+            else if (target.includes('shock')) img = 'images/shocks/' + img;
+            else if (target.includes('wheel')) img = 'images/wheels/' + img;
+            else if (target.includes('tire')) img = 'images/tires/' + img;
+            else if (target.includes('selle')) img = 'images/selles/' + img;
+            else if (target.includes('handlebar')) img = 'images/handlebars/' + img;
+            else if (target.includes('brake')) img = 'images/brakes/' + img;
+            else if (target.includes('pad')) img = 'images/pads/' + img;
+            else if (target.includes('cassette')) img = 'images/cassettes/' + img;
+            else if (target.includes('drivetrain')) img = 'images/drivetrains/' + img;
+            else img = 'images/' + img;
+          }
+          return `
+            <div class="component-slide" data-idx="${idx}${option.value === '' ? ' data-empty=\"1\"' : ''}" data-select="${target}">
+              <div class="slide-img-container">
+                ${img ? `<img src="${img}" alt="${name}">` : `<span style='font-size:2.5rem;color:#94A3B8;'><i class='fa-regular fa-image'></i></span>`}
+              </div>
+            </div>
+          `;
+        }).filter(Boolean).join('');
+        $('#chooserSlider').html(slides);
+        updateChooserDetails(select[0].options[chooserCurrentIdx+1], chooserCurrentIdx);
+        $('#componentChooserPanel').css('display', 'block').fadeIn(200); // retire .hide() qui pouvait empêcher l'ouverture
+        updateChooserPosition(chooserCurrentIdx);
+        // Quand on ajoute, passe au bouton suivant
+        $('#chooserAddBtn').off('click.plusstep').on('click.plusstep', function() {
+          $('#componentChooserPanel').fadeOut(200);
+          plusStep++;
+          setTimeout(function() {
+            const canvas = document.getElementById('bike-canvas');
+            if (canvas && canvas.width && canvas.height) {
+              const ctx = canvas.getContext('2d');
+              drawPlusButtons(ctx, $('#frame-select').val(), canvas.width, canvas.height);
+            }
+          }, 250);
+        });
+      }
+      break;
+    }
+  }
+});
+// Appelle drawPlusButtons à chaque rendu du vélo pour afficher le +
+// (À placer dans main.js, pas ici)
+$('#bike-canvas').on('touchstart', function(e) {
+  const canvas = this;
+  const rect = canvas.getBoundingClientRect();
+  const touch = e.originalEvent.touches[0];
+  const x = (touch.clientX - rect.left) * (canvas.width / rect.width);
+  const y = (touch.clientY - rect.top) * (canvas.height / rect.height);
+  for (const btn of plusBtnHitboxes) {
+    const dist = Math.sqrt((x - btn.x) ** 2 + (y - btn.y) ** 2);
+    if (dist <= btn.r) {
+      // Ouvre le carrousel du composant (copie du handler click)
+      var target = btn.target;
+      var select = $('#' + target);
+      if (select.length && select[0].options.length > 1) {
+        var options = Array.from(select[0].options);
+        chooserCurrentIdx = select[0].selectedIndex > 0 ? select[0].selectedIndex - 1 : 0;
+        var slides = options.map(function(option, idx) {
+          if (idx === 0 && (!option.value || option.value === '' || !option.text || option.text === '')) return '';
+          var name = option.text;
+          var img = option.dataset ? option.dataset.img : '';
+          if (img && !img.startsWith('http') && !img.startsWith('images/')) {
+            if (target.includes('frame')) img = 'images/frames/' + img;
+            else if (target.includes('fork')) img = 'images/forks/' + img;
+            else if (target.includes('shock')) img = 'images/shocks/' + img;
+            else if (target.includes('wheel')) img = 'images/wheels/' + img;
+            else if (target.includes('tire')) img = 'images/tires/' + img;
+            else if (target.includes('selle')) img = 'images/selles/' + img;
+            else if (target.includes('handlebar')) img = 'images/handlebars/' + img;
+            else if (target.includes('brake')) img = 'images/brakes/' + img;
+            else if (target.includes('pad')) img = 'images/pads/' + img;
+            else if (target.includes('cassette')) img = 'images/cassettes/' + img;
+            else if (target.includes('drivetrain')) img = 'images/drivetrains/' + img;
+            else img = 'images/' + img;
+          }
+          return `
+            <div class="component-slide" data-idx="${idx}${option.value === '' ? ' data-empty=\"1\"' : ''}" data-select="${target}">
+              <div class="slide-img-container">
+                ${img ? `<img src="${img}" alt="${name}">` : `<span style='font-size:2.5rem;color:#94A3B8;'><i class='fa-regular fa-image'></i></span>`}
+              </div>
+            </div>
+          `;
+        }).filter(Boolean).join('');
+        $('#chooserSlider').html(slides);
+        updateChooserDetails(select[0].options[chooserCurrentIdx+1], chooserCurrentIdx);
+        $('#componentChooserPanel').css('display', 'block').fadeIn(200);
+        updateChooserPosition(chooserCurrentIdx);
+        // Quand on ajoute, passe au bouton suivant
+        $('#chooserAddBtn').off('click.plusstep').on('click.plusstep', function() {
+          $('#componentChooserPanel').fadeOut(200);
+          plusStep++;
+          setTimeout(function() {
+            const canvas = document.getElementById('bike-canvas');
+            if (canvas && canvas.width && canvas.height) {
+              const ctx = canvas.getContext('2d');
+              drawPlusButtons(ctx, $('#frame-select').val(), canvas.width, canvas.height);
+            }
+          }, 250);
+        });
+      }
+      break;
+    }
+  }
+});
+
+
+
+</script>
 </body>
 </html>

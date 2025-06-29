@@ -157,7 +157,8 @@ const COMPONENTS = {
     "wheels": [
         {"id":"wheels-0","name":"Industry Nine Hydra Enduro S Carbon","description":"Roues Industry Nine Hydra Enduro S Carbon 29\"","price":1850,"weight":1.755,"image":"hydra-enduro-s-carbon.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
         {"id":"wheels-1","name":"Mavic Deemax","description":"Roues Mavic Deemax DH 29\"","price":755,"weight":2.08,"image":"mavic-deemax.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
-        {"id":"wheels-2","name":"Bontrager Paradigm","description":"Roues Bontrager Paradigm 29\"","price":899.99,"weight":1.9,"image":"bontrager-paradigm.png","scale":1.0,"position":{"top":"50%","left":"50%"}}
+        {"id":"wheels-2","name":"Bontrager Paradigm","description":"Roues Bontrager Paradigm 29\"","price":899.99,"weight":1.9,"image":"bontrager-paradigm.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
+        {"id":"wheels-3","name":"Cranbrothers Iodine 2","description":"Roues Crankbrothers Iodine 2 29\"","price":499.99,"weight":1.7,"image":"crankbrothers-iodine.png","scale":1.0,"position":{"top":"50%","left":"50%"}}
     ],
     "handlebars": [
         {"id":"handlebars-0","name":"Renthal Fatbar Carbon","description":"Cintre carbone Renthal Fatbar 800mm","price":169.99,"weight":0.50,"image":"v10cable.png","scale":1.0,"position":{"top":"50%","left":"50%"}},
@@ -249,6 +250,24 @@ function initCanvas() {
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 }
+
+function resizeCanvas() {
+        const container = canvas.parentElement;
+        const rect = container.getBoundingClientRect();
+        
+        const baseWidth = BIKE_CONFIG.canvas.width;
+        const baseHeight = BIKE_CONFIG.canvas.height;
+        
+        const scale = Math.min(
+            rect.width / baseWidth,
+            rect.height / baseHeight
+        );
+        
+        canvas.width = 1000 * window.devicePixelRatio;
+        canvas.height = 600 * window.devicePixelRatio;
+        canvas.style.width = `${baseWidth * scale}px`;
+        canvas.style.height = `${baseHeight * scale}px`;
+    }
 
 // Charger une image
 function loadImage(src) {
@@ -367,6 +386,17 @@ function drawBike() {
     componentsToDraw.forEach(({ type, component, config }) => {
         drawComponent(type, component, config);
     });
+
+    // À la fin de ta fonction drawBike dans main.js, ajoute :
+    if (typeof drawPlusButtons === 'function') {
+      const canvas = document.getElementById('bike-canvas');
+      if (canvas && canvas.width && canvas.height) {
+        const ctx = canvas.getContext('2d');
+        
+  plusBtnHoverIdx = -1;
+        drawPlusButtons(ctx, $('#frame-select').val(), canvas.width, canvas.height);
+      }
+    }
 
     ctx.restore();
 }
