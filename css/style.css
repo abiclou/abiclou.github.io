@@ -1485,6 +1485,7 @@ h2 {
 @media (max-width: 768px) {
     .main-content {
         padding: var(--spacing-sm);
+        padding-top: 0px;
     }
     
     .component-section {
